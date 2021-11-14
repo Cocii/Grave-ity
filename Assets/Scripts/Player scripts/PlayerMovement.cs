@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovementCheck() {
         Vector2 moveInput = PlayerManager.instance.input.GetMoveInput;
-        bool jumpInput = PlayerManager.instance.input.GetSpaceDInput;
+        bool jumpInput = PlayerManager.instance.input.GetJumpDInput;
         Vector2 force = Vector2.zero;
         Vector2 gravityForce = PlayerManager.instance.currentGravity;
         PlayerManager manager = PlayerManager.instance;
@@ -23,18 +23,18 @@ public class PlayerMovement : MonoBehaviour
                 force *= -1f;
             }
 
-            manager.characterControllerDynamic.SetMoveForce(force);
+            manager.characterController.SetMoveForce(force);
         }
 
         if (jumpInput && manager.isGrounded) {
             force = -manager.currentGravity.normalized * manager.jumpForceMagnitude;
-            PlayerManager.instance.characterControllerDynamic.SetJumpForce(force);
+            PlayerManager.instance.characterController.SetJumpForce(force);
         }
 
-        jumpInput = manager.input.GetSpaceInput;
+        jumpInput = manager.input.GetJumpInput;
         if (jumpInput && manager.body.velocity.y > 0f) {
-            force = -manager.currentGravity.normalized * manager.jumpForceMagnitude * manager.jumoBoostMult * Time.deltaTime;
-            manager.characterControllerDynamic.AddJumpForce(force);
+            force = -manager.currentGravity.normalized * manager.jumpForceMagnitude * manager.jumpBoostMult * Time.deltaTime;
+            manager.characterController.AddJumpForce(force);
         }
 
     }

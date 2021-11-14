@@ -11,8 +11,8 @@ public class PlayerAnimations : MonoBehaviour
         Rigidbody2D body = manager.body;
         Animator anim = manager.animator;
 
-        float velocityX = Mathf.Abs(Mathf.Round(body.velocity.x * 100f) / 100f);
-        float velocityY = Mathf.Abs(Mathf.Round(body.velocity.y * 100f) / 100f);
+        float velocityX = Mathf.Abs(Mathf.Round(body.velocity.x * 10f) / 10f);
+        float velocityY = Mathf.Abs(Mathf.Round(body.velocity.y * 10f) / 10f);
 
         anim.SetFloat("velocityX", velocityX);
         anim.SetFloat("velocityY", velocityY);

@@ -11,6 +11,7 @@ public class GravityManager : MonoBehaviour
     public Vector2 physicsGravity;
     public Vector2 physicsGravityNormal;
     public Transform physicsGravityTransform;
+    public float gravityRatio = 1f;
 
     [Header("Gravity settings")]
     public Vector2 gravityDirection = Vector2.down;
@@ -42,7 +43,7 @@ public class GravityManager : MonoBehaviour
     }
 
     private void UpdateGravity() {
-        print("Updating gravity");
+        //print("Updating gravity");
         Vector2 targetGravity;
 
         
@@ -60,7 +61,8 @@ public class GravityManager : MonoBehaviour
         }
             
         Physics2D.gravity = physicsGravity;
-        
+
+        gravityRatio = physicsGravity.magnitude / defaultGravityMagnitude;
     }
 
     private Vector2 RoundV2(Vector2 v) {

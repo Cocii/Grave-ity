@@ -7,34 +7,37 @@ public class PlayerManager : MonoBehaviour
     [Header("References")]
     public static PlayerManager instance;
     public Rigidbody2D body;
-    public InputReader input;
+    public CapsuleCollider2D bodyCollider;
+    public SpriteRenderer spriteRenderer;
     public Animator animator;
-    public CharacterControllerDynamic2D characterControllerDynamic;
-
-    [Header("Colliders")]
-    public Collider2D crouchCollider;
+    public InputReader input;
+    public CharacterControllerDynamic2D characterController;
 
     [Header("Info")]
     public Vector2 currentGravity;
     public Vector2 currentGravityNormal;
 
     [Header("Settings")]
-    //public float artificialGravityScale = 1f;
-    public bool usePhysics = true;
     public float rotationSpeed = 1f;
-    public LayerMask groundLayer;
 
     [Header("Movement settings")]
-    public float jumpForceMagnitude = 200f;
-    public float jumoBoostMult = 1.75f;
     public float moveForceMagnitude = 10f;
-    public float crouchSpeedMult = 0.5f;
     public float maxMoveSpeed;
+
+    [Header("Jump settings")]
+    public float jumpForceMagnitude = 200f;
+    public float jumpBoostMult = 1.75f;
 
     [Header("Control bools")]
     public bool isGrounded;
     public bool wasGrounded;
     public bool facingRight;
+    public bool isRotating;
+    public bool wasRotating;
+    
+    [Header("Materials")]
+    public PhysicsMaterial2D fullFrictionMaterial;
+    public PhysicsMaterial2D defaultPhysicsMaterial;
 
     private void Awake() {
         if (instance == null) {
@@ -51,15 +54,12 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void Update() {
-        if (usePhysics) {
-            body.gravityScale = 1f;
-            currentGravity = Physics2D.gravity;
-            currentGravityNormal = GravityManager.instance.physicsGravityNormal;
-        }
+        currentGravity = Physics2D.gravity;
+        currentGravityNormal = GravityManager.instance.physicsGravityNormal;
     }
 
     public void SetGravity(Vector2 gra, Vector2 graNorm) {
-        usePhysics = false;
+        //usePhysics = false;
         body.gravityScale = 0f;
         currentGravity = gra;
         currentGravityNormal = graNorm;
