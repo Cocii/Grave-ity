@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    PlayerManager manager;
+
+    private void Start() {
+        manager = PlayerManager.instance;
+    }
+
     void Update()
     {
         MovementCheck();
@@ -14,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
         bool jumpInput = PlayerManager.instance.input.GetJumpDInput;
         Vector2 force = Vector2.zero;
         Vector2 gravityForce = PlayerManager.instance.currentGravity;
-        PlayerManager manager = PlayerManager.instance;
+        
         
         if (moveInput.magnitude > 0.1f) {
             force = manager.currentGravityNormal * moveInput * manager.moveForceMagnitude;

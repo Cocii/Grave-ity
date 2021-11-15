@@ -17,7 +17,12 @@ public class PlayerManager : MonoBehaviour
     public Vector2 currentGravity;
     public Vector2 currentGravityNormal;
 
-    [Header("Settings")]
+    [Header("Rotation settings")]
+    public float maxRotationSpeed;
+    public float minRotationSpeed;
+    public float distanceRotationMin;
+    public float distanceRotationMax;
+    [HideInInspector]
     public float rotationSpeed = 1f;
 
     [Header("Movement settings")]

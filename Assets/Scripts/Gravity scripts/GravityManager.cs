@@ -43,23 +43,15 @@ public class GravityManager : MonoBehaviour
     }
 
     private void UpdateGravity() {
-        //print("Updating gravity");
         Vector2 targetGravity;
 
-        
-        RotateTowardsGravityDirection(physicsGravityTransform);
+        //RotateTowardsGravityDirection(physicsGravityTransform);
 
-        if (onlyUpDown) {
-            targetGravity = gravityDirection * gravityMagnitude;
-            physicsGravity = Vector2.MoveTowards(physicsGravity, targetGravity, valuesLerpSpeed * Time.deltaTime);
-            physicsGravityNormal = RoundToIntV3(physicsGravityTransform.right);
-        }
-        else {
-            targetGravity = physicsGravityTransform.up * gravityMagnitude;
-            physicsGravity = RoundV2(Vector2.Lerp(physicsGravity, targetGravity, valuesLerpSpeed * Time.deltaTime));
-            physicsGravityNormal = RoundToIntV3(physicsGravityTransform.right);
-        }
-            
+        targetGravity = gravityDirection * gravityMagnitude;
+        physicsGravity = Vector2.MoveTowards(physicsGravity, targetGravity, valuesLerpSpeed * Time.deltaTime);
+
+        physicsGravityNormal = -Vector2.Perpendicular(physicsGravity).normalized;
+
         Physics2D.gravity = physicsGravity;
 
         gravityRatio = physicsGravity.magnitude / defaultGravityMagnitude;
@@ -121,18 +113,6 @@ public class GravityManager : MonoBehaviour
             gravityMagnitude = defaultGravityMagnitude;
         else if (gravityMagnitude == defaultGravityMagnitude)
             gravityMagnitude = defaultGravityMagnitude * 0.25f;
-    }
-
-    private void OnDrawGizmos() {
-        //Gizmos.color = Color.green;
-        //Gizmos.DrawRay(transform.position, physicsGravity);
-
-
-        //Gizmos.color = Color.red;
-        //Vector2 targetPoint = new Vector2(transform.position.x, transform.position.y) + gravityDirection;
-        //Gizmos.DrawSphere(targetPoint, 0.15f);
-
-        Gizmos.color = Color.white;
     }
 
 }
