@@ -57,20 +57,7 @@ public class GravityManager : MonoBehaviour
         gravityRatio = physicsGravity.magnitude / defaultGravityMagnitude;
     }
 
-    private Vector2 RoundV2(Vector2 v) {
-        v.Set(Mathf.Round(v.x * 10f) / 10f, Mathf.Round(v.y * 10f) / 10f);
-        return v;
-    }
-
-    private Vector3 RoundV3(Vector3 v) {
-        v.Set(Mathf.Round(v.x * 10f) / 10f, Mathf.Round(v.y * 10f) / 10f, Mathf.Round(v.z * 10f) / 10f);
-        return v;
-    }
-
-    private Vector3 RoundToIntV3(Vector3 v) {
-        v.Set(Mathf.Round(v.x), Mathf.Round(v.y), Mathf.Round(v.z));
-        return v;
-    }
+    
 
     private void RotateTowardsGravityDirection(Transform toRotate) {
         Vector2 targetPoint = gravityDirection;
@@ -81,7 +68,7 @@ public class GravityManager : MonoBehaviour
             toRotate.rotation = Quaternion.Lerp(toRotate.rotation, targetRotation, transformRotationSpeed * Time.deltaTime);
         }
         else {
-            toRotate.eulerAngles = RoundToIntV3(toRotate.eulerAngles);
+            toRotate.eulerAngles = Utilities.RoundToIntV3(toRotate.eulerAngles);
         }
     }
 

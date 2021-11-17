@@ -164,6 +164,7 @@ MonoBehaviour:
   animator: {fileID: 1059764090546348749}
   input: {fileID: 1059764090546348752}
   characterController: {fileID: 1059764090546348755}
+  movement: {fileID: 1059764090546348754}
   currentGravity: {x: 0, y: 0}
   currentGravityNormal: {x: 0, y: 0}
   maxRotationSpeed: 1000
@@ -173,13 +174,21 @@ MonoBehaviour:
   rotationSpeed: 500
   moveForceMagnitude: 10
   maxMoveSpeed: 5
+  moveAirForceMagnitude: 6
+  maxAirSpeed: 10
+  dashForceMagnitude: 40
   jumpForceMagnitude: 200
   jumpBoostMult: 1.675
+  wallJumpDirection: {x: 0.5, y: 0.5}
+  walljumpMult: 2
   isGrounded: 0
   wasGrounded: 0
-  facingRight: 1
+  isFacingRight: 1
   isRotating: 0
   wasRotating: 0
+  isOnHighSlope: 0
+  isBackOnWall: 0
+  walljumpExcecuted: 0
   fullFrictionMaterial: {fileID: 6200000, guid: 4abcc7bf5f92ffc4586df4b5928c8147, type: 2}
   defaultPhysicsMaterial: {fileID: 6200000, guid: 10a435132dcd33c459592c36251ecfe3, type: 2}
 --- !u!114 &1059764090546348755
@@ -198,6 +207,7 @@ MonoBehaviour:
   moveForce: {x: 0, y: 0}
   jumpForce: {x: 0, y: 0}
   externalForce: {x: 0, y: 0}
+  dashForce: {x: 0, y: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 65
@@ -205,6 +215,8 @@ MonoBehaviour:
   maxSlopeAngle: 45
   lateralOffset: 0
   rayCastDistance: 0.1
+  wallbackRaycastOrigin: {x: 0, y: 0}
+  wallbackRaycastDistance: 0
   rayCastOrigin: {x: 0, y: 0}
   capsuleCastOrigin: {x: 0, y: 0}
   groundNormal: {x: 0, y: 0}
@@ -236,6 +248,7 @@ MonoBehaviour:
   dashKey: 304
   grabKey: 306
   switchPowerKey: 9
+  doubleClickThreshold: 0
   inputBlocked: 0
   inputEnabled: 1
   resetMoveInputIfBlocked: 0

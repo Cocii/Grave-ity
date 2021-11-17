@@ -14,7 +14,7 @@ public class PlayerAnimations : MonoBehaviour
         float velocityX = Mathf.Abs(Mathf.Round(body.velocity.x * 10f) / 10f);
         float velocityY = Mathf.Abs(Mathf.Round(body.velocity.y * 10f) / 10f);
 
-        anim.SetFloat("velocityX", velocityX);
+        anim.SetFloat("velocityX", velocityX/manager.defaultMaxMoveSpeed);
         anim.SetFloat("velocityY", velocityY);
         anim.SetBool("grounded", PlayerManager.instance.isGrounded);
 

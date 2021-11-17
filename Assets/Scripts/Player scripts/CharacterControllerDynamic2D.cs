@@ -11,13 +11,18 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     public Vector2 moveForce;
     public Vector2 jumpForce;
     public Vector2 externalForce;
-    
+    public Vector2 dashForce;
+
     [Header("Ground check settings")]
     public LayerMask groundLayer;
     public Vector2 capsuleCastSize;
     public float maxSlopeAngle;
     public float lateralOffset = 0f;
     public float rayCastDistance;
+    
+    [Header("Wallback check info")]
+    public Vector2 wallbackRaycastOrigin;
+    public float wallbackRaycastDistance;
 
     [Header("Ground check info")]
     public Vector2 rayCastOrigin;
@@ -36,24 +41,89 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         rayCastOrigin = new Vector2(0f, (-manager.bodyCollider.size.y / 2) + manager.bodyCollider.offset.y);
         capsuleCastOrigin.y = rayCastOrigin.y + (-capsuleCastSize.y / 2);
         capsuleCastOrigin.x = 0f;
+        wallbackRaycastDistance = manager.bodyCollider.size.x * 0.9f;
     }
 
     private void FixedUpdate() {
         ApplyMoveForce();
         ApplyJumpForce();
+        ApplyDashForce();
     }
 
     void Update() {
         gravityForce = manager.currentGravity;
 
         RotateTowardsGravity();
-
+        AdaptParametersToGravity();
+        
         CheckSpriteFlip();
         CheckRotationLock();
 
         GroundCheck();
         Debug.DrawRay(hitPoint, groundNormal * 0.5f, Color.blue);
         Debug.DrawRay(hitPoint, groundNormalPerpendicular * 0.5f, Color.red);
+
+        WallBackCheck();
+        SlopeAdjustement();
+
+        if (Mathf.Abs(manager.body.velocity.x) < 0.001f)
+            manager.body.velocity *= new Vector2(0f, 1f);
+    }
+
+    private void OnDrawGizmos() {
+        //Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
+        //Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
+
+        //Gizmos.color = Color.magenta;
+        //Gizmos.DrawCube(capsuleOriginAdjst, capsuleCastSize);
+
+        ////Gizmos.color = Color.cyan;
+        ////Gizmos.DrawSphere(capsuleOriginAdjst, 0.015f);
+
+        //Gizmos.color = Color.gray;
+        //Gizmos.DrawRay(rayOriginAdjst, -transform.up.normalized * rayCastDistance);
+
+        //if (manager != null) {
+        //    Gizmos.color = Color.yellow;
+        //    //Gizmos.DrawSphere(hitPoint, 0.01f);
+        //    Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackRaycastOrigin.x, wallbackRaycastOrigin.y) * transform.up.y;
+        //    Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
+        //    Gizmos.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance);
+        //}
+
+
+
+        //Gizmos.color = Color.white;
+    }
+
+    private void AdaptParametersToGravity() {
+        manager.currentMaxMoveSpeed = manager.defaultMaxMoveSpeed * (1f / manager.currentGravityRatio);
+        //manager.currentMaxMoveSpeed = manager.defaultMaxMoveSpeed + (1f - manager.currentGravityRatio) * manager.defaultMaxMoveSpeed;
+    }
+
+    private void WallBackCheck() {
+        manager.wasBackOnWall = manager.isBackOnWall;
+        manager.isBackOnWall = false;
+
+        Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackRaycastOrigin.x, wallbackRaycastOrigin.y) * transform.up.y;
+        Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
+
+        Debug.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance, Color.yellow);
+        
+        RaycastHit2D hit;
+        hit = Physics2D.Raycast(wallbackRayOriginAdjst, direction, wallbackRaycastDistance, groundLayer);
+        if (hit) {
+            manager.isBackOnWall = true;
+
+            if (!manager.wasBackOnWall) {
+                manager.canWalljump = true;
+            }
+        }
+        else {
+            if (manager.wasBackOnWall && !manager.isGrounded) {
+                manager.canWalljump = true;
+            }
+        }
     }
 
     private void GroundCheck() {
@@ -65,7 +135,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         RaycastHit2D hit;
         hit = Physics2D.Raycast(rayOriginAdjst, -transform.up.normalized, rayCastDistance, groundLayer);
-        Debug.DrawRay(rayOriginAdjst, -transform.up.normalized * rayCastDistance, Color.green);
+        //Debug.DrawRay(rayOriginAdjst, -transform.up.normalized * rayCastDistance, Color.green);
         if (hit) {
             GroundHit(hit);
         }
@@ -92,6 +162,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         groundNormalDot = Vector2.Dot(transform.up.normalized, groundNormal);
         groundAngle = Vector2.Angle(groundNormal, transform.up.normalized);
         hitPoint = Physics2D.ClosestPoint(transform.position, hit.collider);
+
+        manager.canWalljump = false;
     }
 
     private void GroundNotHit() {
@@ -107,7 +179,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     private void FlipFacingAndSprite() {
-        manager.facingRight = !manager.facingRight;
+        manager.isFacingRight = !manager.isFacingRight;
         FlipSprite();
     }
 
@@ -122,12 +194,12 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Vector3 currentScale = transform.localScale;
 
         if (!upside) {
-            if ((manager.facingRight && currentScale.x < 0) || (!manager.facingRight && currentScale.x > 0)) {
+            if ((manager.isFacingRight && currentScale.x < 0) || (!manager.isFacingRight && currentScale.x > 0)) {
                 FlipSprite();
             }
         }
         else {
-            if ((manager.facingRight && currentScale.x > 0) || (!manager.facingRight && currentScale.x < 0)) {
+            if ((manager.isFacingRight && currentScale.x > 0) || (!manager.isFacingRight && currentScale.x < 0)) {
                 FlipSprite();
             }
         }
@@ -139,18 +211,18 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             checkVector = manager.body.velocity;
 
         if (gravityForce.normalized == Vector2.down) {
-            if ((checkVector.x > 0.01f) && !manager.facingRight) {
+            if ((checkVector.x > 0.01f) && !manager.isFacingRight) {
                 FlipFacingAndSprite();
             }
-            else if ((checkVector.x < -0.01f) && manager.facingRight) {
+            else if ((checkVector.x < -0.01f) && manager.isFacingRight) {
                 FlipFacingAndSprite();
             }
         }
         else if (gravityForce.normalized == Vector2.up) {
-            if ((checkVector.x > 0.01f) && !manager.facingRight) {
+            if ((checkVector.x > 0.01f) && !manager.isFacingRight) {
                 FlipFacingAndSprite();
             }
-            else if ((checkVector.x < -0.01f) && manager.facingRight) {
+            else if ((checkVector.x < -0.01f) && manager.isFacingRight) {
                 FlipFacingAndSprite();
             }
         }
@@ -158,7 +230,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
     private void RotateTowardsGravity() {
         float targetAngle = 0f;
-
         if (gravityForce.normalized == Vector2.up)
             targetAngle = 180f;
 
@@ -205,38 +276,11 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         if (hit) {
             distance = hit.distance;
-            speed = Map(distance, manager.distanceRotationMin, manager.distanceRotationMax, manager.minRotationSpeed, manager.maxRotationSpeed);
+            speed = Utilities.Map(distance, manager.distanceRotationMin, manager.distanceRotationMax, manager.minRotationSpeed, manager.maxRotationSpeed);
         }
 
         print("Speed is " + speed + " for distance " + distance);
         return speed;
-    }
-
-    private void OnDrawGizmos() {
-
-
-        //Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
-        //Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
-
-        //Gizmos.color = Color.magenta;
-        //Gizmos.DrawCube(capsuleOriginAdjst, capsuleCastSize);
-
-        //Gizmos.color = Color.cyan;
-        //Gizmos.DrawSphere(capsuleOriginAdjst, 0.015f);
-
-        //Gizmos.color = Color.gray;
-        //Gizmos.DrawSphere(rayOriginAdjst, 0.015f);
-
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawSphere(hitPoint, 0.01f);
-
-        
-
-        Gizmos.color = Color.white;
-    }
-
-    private float Map(float value, float from1, float to1, float from2, float to2) {
-        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
 
     private void CheckRotationLock() {
@@ -247,24 +291,24 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     private void ApplyMoveForce() {
-        SlopeAdjustement();
-
         if (moveForce.magnitude == 0)
             return;
 
-        if (Mathf.Sign(moveForce.x) != Mathf.Sign(manager.body.velocity.x) && manager.body.velocity.x != 0f) {
+        if (Mathf.Sign(moveForce.x) != Mathf.Sign(manager.body.velocity.x) && manager.body.velocity.x != 0f && manager.isGrounded) {
             manager.body.velocity *= new Vector2(0f, 1f);
         }
 
         //print("Moving force: " + moveForce);
         manager.body.AddForce(moveForce);
-        manager.body.velocity = Vector2.ClampMagnitude(manager.body.velocity, manager.maxMoveSpeed);
-        
+        manager.body.velocity = Vector2.ClampMagnitude(manager.body.velocity, manager.currentMaxMoveSpeed);
+
         moveForce = Vector2.zero;
     }
 
     private void SlopeAdjustement() {
-        if (groundAngle == 0f) {
+        manager.isOnHighSlope = false;
+
+        if (groundAngle == 0f) {    
             AdjustSlopeMaterial(true);
             return;
         }
@@ -278,6 +322,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
                     print("Slope too high, current anfle: " + groundAngle + " - " + dotMoveHitPoint);
                     moveForce = Vector2.zero;
                     AdjustSlopeMaterial(true);
+                    manager.isOnHighSlope = true;
                     return;
                 }
             }           
@@ -285,6 +330,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         if(groundAngle >= maxSlopeAngle) {
             AdjustSlopeMaterial(true);
+            manager.isOnHighSlope = true;
         }
         else {
             AdjustSlopeMaterial(false);
@@ -314,8 +360,24 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     private void ApplyJumpForce() {
-        PlayerManager.instance.body.AddForce(jumpForce);
+        if (jumpForce.magnitude == 0)
+            return;
+
+        if(jumpForce.normalized != -gravityForce.normalized) {
+            print("Walljump with force: " + jumpForce);
+            manager.canWalljump = false;
+        }
+
+        manager.body.AddForce(jumpForce);
         jumpForce = Vector2.zero;
+    }
+
+    private void ApplyDashForce() {
+        if (dashForce.magnitude == 0)
+            return;
+
+        manager.body.AddForce(dashForce, ForceMode2D.Impulse);
+        dashForce = Vector2.zero;
     }
 
     public void SetMoveForce(Vector2 force) {
@@ -332,5 +394,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
     public void AddJumpForce(Vector2 force) {
         jumpForce += force;
+    }
+
+    public void SetDashForce(Vector2 force) {
+        dashForce = force;
     }
 }

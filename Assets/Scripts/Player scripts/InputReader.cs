@@ -30,7 +30,12 @@ public class InputReader : MonoBehaviour
     private bool inputGravityUpsideD;
     private bool inputGravityStrongerD;
     private bool inputWeakerGravityD;
-    
+
+    private bool inputDashD;
+    private float lastTimeInputDashD;
+
+    public float doubleClickThreshold;
+
     [Header("Booleans")]
     public bool inputBlocked = false; 
     public bool inputEnabled = true;
@@ -63,6 +68,8 @@ public class InputReader : MonoBehaviour
         inputGravityStrongerD = Input.GetKeyDown(gravityStrongerKey);
         inputWeakerGravityD = Input.GetKeyDown(gravityWeakerKey);
 
+
+        inputDashD = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D);
     }
 
     void ExcecuteInputActions() {
@@ -76,6 +83,15 @@ public class InputReader : MonoBehaviour
             GravityManager.instance.StrongerGravity();
         }
 
+        if (inputDashD) {
+            if((Time.time - lastTimeInputDashD) < doubleClickThreshold) {
+                PlayerManager.instance.movement.Dash();
+                lastTimeInputDashD = 0f;
+            }
+            else {
+                lastTimeInputDashD = Time.time;
+            }
+        }
     }
 
     public void DisableInput() {
