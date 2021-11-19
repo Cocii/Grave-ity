@@ -54,7 +54,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         gravityForce = manager.currentGravity;
 
         RotateTowardsGravity();
-        AdaptParametersToGravity();
         
         CheckSpriteFlip();
         CheckRotationLock();
@@ -71,8 +70,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     private void OnDrawGizmos() {
-        //Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
-        //Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
+        Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
+        Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
 
         //Gizmos.color = Color.magenta;
         //Gizmos.DrawCube(capsuleOriginAdjst, capsuleCastSize);
@@ -80,8 +79,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         ////Gizmos.color = Color.cyan;
         ////Gizmos.DrawSphere(capsuleOriginAdjst, 0.015f);
 
-        //Gizmos.color = Color.gray;
-        //Gizmos.DrawRay(rayOriginAdjst, -transform.up.normalized * rayCastDistance);
+        Gizmos.color = Color.gray;
+        Gizmos.DrawRay(rayOriginAdjst, -transform.up.normalized * rayCastDistance);
 
         //if (manager != null) {
         //    Gizmos.color = Color.yellow;
@@ -94,11 +93,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
 
         //Gizmos.color = Color.white;
-    }
-
-    private void AdaptParametersToGravity() {
-        manager.currentMaxMoveSpeed = manager.defaultMaxMoveSpeed * (1f / manager.currentGravityRatio);
-        //manager.currentMaxMoveSpeed = manager.defaultMaxMoveSpeed + (1f - manager.currentGravityRatio) * manager.defaultMaxMoveSpeed;
     }
 
     private void WallBackCheck() {

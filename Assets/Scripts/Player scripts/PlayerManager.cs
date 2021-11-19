@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     public InputReader input;
     public CharacterControllerDynamic2D characterController;
     public PlayerMovement movement;
+    public PlayerResources resources;
 
     [Header("Gravity info")]
     public Vector2 currentGravity;
@@ -31,15 +32,19 @@ public class PlayerManager : MonoBehaviour
     public float moveForceMagnitude = 10f;
     public float currentMaxMoveSpeed = 5f;
     public float defaultMaxMoveSpeed = 5f;
+
+    [Header("Air movement settings")]
     public float moveAirForceMagnitude = 6f;
-    public float maxAirSpeed = 10f;
-    public float dashForceMult = 2f;
+    public float gravityBoostMult = 0.5f;
 
     [Header("Jump settings")]
     public float jumpForceMagnitude = 200f;
     public float jumpBoostMult = 1.75f;
     public Vector2 wallJumpDirection = new Vector2(0.5f, 0.5f);
     public float walljumpMult = 2f;
+
+    [Header("Dash settings")]
+    public float dashForceMult = 2f;
 
     [Header("Control bools")]
     public bool isGrounded;
@@ -71,16 +76,19 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void Update() {
-        currentGravity = Physics2D.gravity;
-        currentGravityNormal = GravityManager.instance.physicsGravityNormal;
-        currentGravityRatio = GravityManager.instance.gravityRatio;
+        GravityManager gManager = GravityManager.instance;
+
+        if(gManager.physicsGravity != currentGravity) {
+            currentGravity = gManager.physicsGravity;
+            currentGravityNormal = gManager.physicsGravityNormal;
+            currentGravityRatio = gManager.gravityRatio;
+
+            AdaptParametersToGravity();
+        }
     }
 
-    public void SetGravity(Vector2 gra, Vector2 graNorm) {
-        //usePhysics = false;
-        body.gravityScale = 0f;
-        currentGravity = gra;
-        currentGravityNormal = graNorm;
+    private void AdaptParametersToGravity() {
+        currentMaxMoveSpeed = defaultMaxMoveSpeed * (2f - currentGravityRatio);
     }
 
 }

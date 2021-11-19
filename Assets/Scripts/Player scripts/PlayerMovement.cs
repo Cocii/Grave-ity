@@ -19,8 +19,10 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 moveInput = manager.input.GetMoveInput;
         bool jumpInput = manager.input.GetJumpDInput;
+
         Vector2 gravityForce = manager.currentGravity;
         Vector2 gravityForceNormal = manager.currentGravityNormal;
+        float gravityRatio = manager.currentGravityRatio;
 
         //WASD
         if (moveInput.magnitude > 0.1f) {
@@ -61,6 +63,13 @@ public class PlayerMovement : MonoBehaviour
         }
         //
 
+        //GRAVITY BOOSTER
+        if(!manager.isGrounded && gravityRatio < 1) {
+            print("gravity booster added");
+            force = gravityForce * manager.gravityBoostMult;
+            manager.characterController.AddJumpForce(force);
+        }
+        //
     }
 
     public void Dash() {

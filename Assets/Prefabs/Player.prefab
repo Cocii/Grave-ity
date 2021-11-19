@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1059764090546348752}
   - component: {fileID: 1059764090546348754}
   - component: {fileID: 1059764090546348758}
+  - component: {fileID: 5283415060429025994}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -165,18 +166,21 @@ MonoBehaviour:
   input: {fileID: 1059764090546348752}
   characterController: {fileID: 1059764090546348755}
   movement: {fileID: 1059764090546348754}
+  resources: {fileID: 5283415060429025994}
   currentGravity: {x: 0, y: 0}
   currentGravityNormal: {x: 0, y: 0}
-  maxRotationSpeed: 1000
+  currentGravityRatio: 0
+  maxRotationSpeed: 1250
   minRotationSpeed: 500
   distanceRotationMin: 4
   distanceRotationMax: 1.25
   rotationSpeed: 500
   moveForceMagnitude: 10
-  maxMoveSpeed: 5
+  currentMaxMoveSpeed: 5
+  defaultMaxMoveSpeed: 5
   moveAirForceMagnitude: 6
   maxAirSpeed: 10
-  dashForceMagnitude: 40
+  dashForceMult: 2
   jumpForceMagnitude: 200
   jumpBoostMult: 1.675
   wallJumpDirection: {x: 0.5, y: 0.5}
@@ -188,7 +192,8 @@ MonoBehaviour:
   wasRotating: 0
   isOnHighSlope: 0
   isBackOnWall: 0
-  walljumpExcecuted: 0
+  wasBackOnWall: 0
+  canWalljump: 0
   fullFrictionMaterial: {fileID: 6200000, guid: 4abcc7bf5f92ffc4586df4b5928c8147, type: 2}
   defaultPhysicsMaterial: {fileID: 6200000, guid: 10a435132dcd33c459592c36251ecfe3, type: 2}
 --- !u!114 &1059764090546348755
@@ -276,3 +281,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e165ac46dbabf64bbbf5738bab5854c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5283415060429025994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059764090546348744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb3d3711fdbc4d4c8318694f2c118b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxGravityResourceAmount: 1000
+  currentGravityResourceAmount: 0
+  upsideGravityReductionAmount: 5
+  weakerGravityReductionAmount: 5
+  strongerGravityReductionAmount: 5
+  recoverIncreaseAmount: 20
+  active: 1
