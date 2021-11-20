@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1059764090546348754}
   - component: {fileID: 1059764090546348758}
   - component: {fileID: 5283415060429025994}
+  - component: {fileID: 994449071}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -178,15 +179,15 @@ MonoBehaviour:
   moveForceMagnitude: 10
   currentMaxMoveSpeed: 5
   defaultMaxMoveSpeed: 5
-  moveAirForceMagnitude: 6
-  maxAirSpeed: 10
-  dashForceMult: 2
+  moveAirForceMagnitude: 3
+  gravityBoostMult: 0.175
   jumpForceMagnitude: 200
-  jumpBoostMult: 1.675
-  wallJumpDirection: {x: 0.5, y: 0.5}
-  walljumpMult: 2
-  isGrounded: 0
-  wasGrounded: 0
+  jumpBoostMult: 1.25
+  wallJumpDirection: {x: 0.3, y: 0.9}
+  walljumpMult: 1.5
+  dashForceMult: 2
+  isGrounded: 1
+  wasGrounded: 1
   isFacingRight: 1
   isRotating: 0
   wasRotating: 0
@@ -211,15 +212,15 @@ MonoBehaviour:
   gravityForce: {x: 0, y: 0}
   moveForce: {x: 0, y: 0}
   jumpForce: {x: 0, y: 0}
-  externalForce: {x: 0, y: 0}
+  boostForce: {x: 0, y: 0}
   dashForce: {x: 0, y: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 65
   capsuleCastSize: {x: 0.275, y: 0.02}
-  maxSlopeAngle: 45
+  maxSlopeAngle: 40
   lateralOffset: 0
-  rayCastDistance: 0.1
+  rayCastDistance: 0.067
   wallbackRaycastOrigin: {x: 0, y: 0}
   wallbackRaycastDistance: 0
   rayCastOrigin: {x: 0, y: 0}
@@ -253,10 +254,10 @@ MonoBehaviour:
   dashKey: 304
   grabKey: 306
   switchPowerKey: 9
-  doubleClickThreshold: 0
+  doubleClickThreshold: 0.25
   inputBlocked: 0
   inputEnabled: 1
-  resetMoveInputIfBlocked: 0
+  resetMoveInputIfBlocked: 1
 --- !u!114 &1059764090546348754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,4 +300,22 @@ MonoBehaviour:
   weakerGravityReductionAmount: 5
   strongerGravityReductionAmount: 5
   recoverIncreaseAmount: 20
-  active: 1
+  active: 0
+--- !u!114 &994449071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059764090546348744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f4286d5638fdb84284f39ed9334d24d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir: {x: 0, y: 0}
+  force: {x: 0, y: 0}
+  magnitudeMult: 0.35
+  delayActivation: 0.9
+  delayDeactivation: 0.1
+  apply: 1

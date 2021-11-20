@@ -10,7 +10,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     public Vector2 gravityForce;
     public Vector2 moveForce;
     public Vector2 jumpForce;
-    public Vector2 externalForce;
+    public Vector2 boostForce;
     public Vector2 dashForce;
 
     [Header("Ground check settings")]
@@ -47,6 +47,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     private void FixedUpdate() {
         ApplyMoveForce();
         ApplyJumpForce();
+        ApplyBoostForce();
         ApplyDashForce();
     }
 
@@ -59,40 +60,12 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         CheckRotationLock();
 
         GroundCheck();
-        Debug.DrawRay(hitPoint, groundNormal * 0.5f, Color.blue);
-        Debug.DrawRay(hitPoint, groundNormalPerpendicular * 0.5f, Color.red);
-
         WallBackCheck();
+
         SlopeAdjustement();
 
         if (Mathf.Abs(manager.body.velocity.x) < 0.001f)
             manager.body.velocity *= new Vector2(0f, 1f);
-    }
-
-    private void OnDrawGizmos() {
-        Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
-        Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
-
-        //Gizmos.color = Color.magenta;
-        //Gizmos.DrawCube(capsuleOriginAdjst, capsuleCastSize);
-
-        ////Gizmos.color = Color.cyan;
-        ////Gizmos.DrawSphere(capsuleOriginAdjst, 0.015f);
-
-        Gizmos.color = Color.gray;
-        Gizmos.DrawRay(rayOriginAdjst, -transform.up.normalized * rayCastDistance);
-
-        //if (manager != null) {
-        //    Gizmos.color = Color.yellow;
-        //    //Gizmos.DrawSphere(hitPoint, 0.01f);
-        //    Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackRaycastOrigin.x, wallbackRaycastOrigin.y) * transform.up.y;
-        //    Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
-        //    Gizmos.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance);
-        //}
-
-
-
-        //Gizmos.color = Color.white;
     }
 
     private void WallBackCheck() {
@@ -102,7 +75,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackRaycastOrigin.x, wallbackRaycastOrigin.y) * transform.up.y;
         Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
 
-        Debug.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance, Color.yellow);
+        //Debug.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance, Color.yellow);
         
         RaycastHit2D hit;
         hit = Physics2D.Raycast(wallbackRayOriginAdjst, direction, wallbackRaycastDistance, groundLayer);
@@ -142,6 +115,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
                 GroundNotHit();
             }
         }
+
+        //Debug.DrawRay(hitPoint, groundNormal * 0.5f, Color.blue);
+        //Debug.DrawRay(hitPoint, groundNormalPerpendicular * 0.5f, Color.red);
     }
 
     private void GroundHit(RaycastHit2D hit) {
@@ -284,21 +260,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         }
     }
 
-    private void ApplyMoveForce() {
-        if (moveForce.magnitude == 0)
-            return;
-
-        if (Mathf.Sign(moveForce.x) != Mathf.Sign(manager.body.velocity.x) && manager.body.velocity.x != 0f && manager.isGrounded) {
-            manager.body.velocity *= new Vector2(0f, 1f);
-        }
-
-        //print("Moving force: " + moveForce);
-        manager.body.AddForce(moveForce);
-        manager.body.velocity = Vector2.ClampMagnitude(manager.body.velocity, manager.currentMaxMoveSpeed);
-
-        moveForce = Vector2.zero;
-    }
-
     private void SlopeAdjustement() {
         manager.isOnHighSlope = false;
 
@@ -341,7 +302,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             return;
         }
 
-        if (moveForce.magnitude == 0f && externalForce.magnitude == 0f) {
+        if (moveForce.magnitude == 0f) {
             if (manager.body.sharedMaterial == manager.defaultPhysicsMaterial) {
                 manager.body.sharedMaterial = manager.fullFrictionMaterial;
             }
@@ -353,17 +314,42 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         }
     }
 
+    //----------------------------------------------------------
+
+    private void ApplyMoveForce() {
+        if (moveForce.magnitude == 0)
+            return;
+
+        if (Mathf.Sign(moveForce.x) != Mathf.Sign(manager.body.velocity.x) && manager.body.velocity.x != 0f && manager.isGrounded) {
+            manager.body.velocity *= new Vector2(0f, 1f);
+        }
+
+        //print("Moving force: " + moveForce);
+        manager.body.AddForce(moveForce);
+        manager.body.velocity = Vector2.ClampMagnitude(manager.body.velocity, manager.currentMaxMoveSpeed);
+
+        moveForce = Vector2.zero;
+    }
+
     private void ApplyJumpForce() {
         if (jumpForce.magnitude == 0)
             return;
 
-        if(jumpForce.normalized != -gravityForce.normalized) {
+        if(jumpForce.normalized != Vector2.up && jumpForce.normalized != Vector2.down) {
             print("Walljump with force: " + jumpForce);
             manager.canWalljump = false;
         }
 
         manager.body.AddForce(jumpForce);
         jumpForce = Vector2.zero;
+    }
+
+    private void ApplyBoostForce() {
+        if (boostForce.magnitude == 0)
+            return;
+
+        manager.body.AddForce(boostForce);
+        boostForce = Vector2.zero;
     }
 
     private void ApplyDashForce() {
@@ -392,5 +378,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
     public void SetDashForce(Vector2 force) {
         dashForce = force;
+    }
+
+    public void AddBoostForce(Vector2 force) {
+        boostForce += force;
     }
 }

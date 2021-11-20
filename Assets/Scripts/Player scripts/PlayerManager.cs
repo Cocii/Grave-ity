@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour
     public CharacterControllerDynamic2D characterController;
     public PlayerMovement movement;
     public PlayerResources resources;
+    public PlayerActions actions;
 
     [Header("Gravity info")]
     public Vector2 currentGravity;
@@ -56,6 +57,7 @@ public class PlayerManager : MonoBehaviour
     public bool isBackOnWall;
     public bool wasBackOnWall;
     public bool canWalljump;
+    public bool isGrabbing;
 
     [Header("Materials")]
     public PhysicsMaterial2D fullFrictionMaterial;
@@ -88,7 +90,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void AdaptParametersToGravity() {
-        currentMaxMoveSpeed = defaultMaxMoveSpeed * (2f - currentGravityRatio);
+        //currentMaxMoveSpeed = defaultMaxMoveSpeed * (2f - currentGravityRatio);
+        if (currentGravityRatio == 1)
+            currentMaxMoveSpeed = defaultMaxMoveSpeed;
+        else
+            currentMaxMoveSpeed = defaultMaxMoveSpeed * 0.5f;
     }
 
 }

@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //JUMP
-        if (jumpInput && manager.isGrounded && !manager.isOnHighSlope) {
+        if (jumpInput && CanJump()) {
             force = -gravityForce.normalized * manager.jumpForceMagnitude;
             manager.characterController.SetJumpForce(force);
         }
@@ -57,23 +57,22 @@ public class PlayerMovement : MonoBehaviour
 
         //JUMP BOOSTER
         jumpInput = manager.input.GetJumpInput;
-        if (jumpInput && manager.body.velocity.y > 0f) {
+        if (jumpInput && manager.body.velocity.y > 0.5f) {
             force = -gravityForce.normalized * manager.jumpForceMagnitude * manager.jumpBoostMult * Time.deltaTime;
-            manager.characterController.AddJumpForce(force);
+            manager.characterController.AddBoostForce(force);
         }
         //
 
         //GRAVITY BOOSTER
         if(!manager.isGrounded && gravityRatio < 1) {
-            print("gravity booster added");
+            //print("gravity booster added");
             force = gravityForce * manager.gravityBoostMult;
-            manager.characterController.AddJumpForce(force);
+            manager.characterController.AddBoostForce(force);
         }
         //
     }
 
-    public void Dash() {
-        Vector2 force = manager.dashForceMult * manager.moveForceMagnitude * manager.input.GetMoveInput;
-        manager.characterController.SetDashForce(force);
+    public bool CanJump() {
+        return manager.isGrounded && !manager.isOnHighSlope && !manager.isGrabbing;
     }
 }
