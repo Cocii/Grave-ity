@@ -16,7 +16,7 @@ public class PlayerAnimations : MonoBehaviour
 
         anim.SetFloat("velocityX", velocityX/manager.defaultMaxMoveSpeed);
         anim.SetFloat("velocityY", velocityY);
-        anim.SetBool("grounded", PlayerManager.instance.isGrounded);
-
+        anim.SetBool("grounded", manager.isGrounded);
+        anim.SetBool("dashing", manager.isDashing);
     }
 }

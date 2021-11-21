@@ -7,10 +7,12 @@ public class PlayerActions : MonoBehaviour
     PlayerManager manager;
 
     public GameObject grabbedObj;
-    public float checkDistance;
+    public float grabCheckDistance;
     public LayerMask propsLayer;
     public float grabPositioningDistance = 0.6f;
     public float grabMassMult = 0.1f;
+
+    public float lastDashTime = 0f;
 
     private void Start() {
         manager = PlayerManager.instance;
@@ -23,7 +25,7 @@ public class PlayerActions : MonoBehaviour
     public void Grab() {
         RaycastHit2D hit;
         Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
-        hit = Physics2D.Raycast(transform.position, direction, checkDistance, propsLayer);
+        hit = Physics2D.Raycast(transform.position, direction, grabCheckDistance, propsLayer);
         if (hit) {
             AttachGrabbedObject(hit.transform.gameObject);
         }
@@ -86,8 +88,33 @@ public class PlayerActions : MonoBehaviour
         //}
     }
 
+    private bool CanDash() {
+        if (manager.isDashing || (Time.time - lastDashTime) <= manager.dashCooldown)
+            return false;
+
+        RaycastHit2D hit;
+        Vector2 direction = manager.input.GetMoveInput;
+        hit = Physics2D.Raycast(transform.position, direction, manager.dashCheckDistance, propsLayer);
+
+        return hit.transform == null;
+    }
+
     public void Dash() {
+        if (CanDash()) {
+            StartCoroutine(DashCo());
+        }
+    }
+
+    private IEnumerator DashCo() {
+        manager.isDashing = true;
         Vector2 force = manager.dashForceMult * manager.moveForceMagnitude * manager.input.GetMoveInput;
+        
         manager.characterController.SetDashForce(force);
+        lastDashTime = Time.time;
+        yield return new WaitForSeconds(manager.dashTime);
+
+        manager.isDashing = false;
+        manager.body.velocity *= new Vector2(0.1f, 1f);
+        yield break;
     }
 }

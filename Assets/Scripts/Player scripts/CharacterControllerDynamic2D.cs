@@ -66,6 +66,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         if (Mathf.Abs(manager.body.velocity.x) < 0.001f)
             manager.body.velocity *= new Vector2(0f, 1f);
+
+        if(!manager.isDashing)
+            manager.body.velocity = Vector2.ClampMagnitude(manager.body.velocity, manager.currentMaxMoveSpeed);
     }
 
     private void WallBackCheck() {
@@ -326,7 +329,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         //print("Moving force: " + moveForce);
         manager.body.AddForce(moveForce);
-        manager.body.velocity = Vector2.ClampMagnitude(manager.body.velocity, manager.currentMaxMoveSpeed);
+        
 
         moveForce = Vector2.zero;
     }

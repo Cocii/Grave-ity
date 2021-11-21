@@ -45,7 +45,10 @@ public class PlayerManager : MonoBehaviour
     public float walljumpMult = 2f;
 
     [Header("Dash settings")]
-    public float dashForceMult = 2f;
+    public float dashForceMult = 1f;
+    public float dashTime = 0.2f;
+    public float dashCheckDistance = 2f;
+    public float dashCooldown = 1.5f;
 
     [Header("Control bools")]
     public bool isGrounded;
@@ -58,6 +61,7 @@ public class PlayerManager : MonoBehaviour
     public bool wasBackOnWall;
     public bool canWalljump;
     public bool isGrabbing;
+    public bool isDashing;
 
     [Header("Materials")]
     public PhysicsMaterial2D fullFrictionMaterial;
