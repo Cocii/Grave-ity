@@ -15,10 +15,10 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
     [Header("Ground check settings")]
     public LayerMask groundLayer;
-    public Vector2 capsuleCastSize;
+    public Vector2 groundCapsuleCastSize;
     public float maxSlopeAngle;
     public float lateralOffset = 0f;
-    public float rayCastDistance;
+    public float groundRayCastDistance;
     
     [Header("Wallback check info")]
     public Vector2 wallbackRaycastOrigin;
@@ -39,7 +39,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager = PlayerManager.instance;
 
         rayCastOrigin = new Vector2(0f, (-manager.bodyCollider.size.y / 2) + manager.bodyCollider.offset.y);
-        capsuleCastOrigin.y = rayCastOrigin.y + (-capsuleCastSize.y / 2);
+        capsuleCastOrigin.y = rayCastOrigin.y + (-groundCapsuleCastSize.y / 2);
         capsuleCastOrigin.x = 0f;
         wallbackRaycastDistance = manager.bodyCollider.size.x * 0.9f;
     }
@@ -78,8 +78,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackRaycastOrigin.x, wallbackRaycastOrigin.y) * transform.up.y;
         Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
 
-        //Debug.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance, Color.yellow);
-        
         RaycastHit2D hit;
         hit = Physics2D.Raycast(wallbackRayOriginAdjst, direction, wallbackRaycastDistance, groundLayer);
         if (hit) {
@@ -104,13 +102,13 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
 
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(rayOriginAdjst, -transform.up.normalized, rayCastDistance, groundLayer);
+        hit = Physics2D.Raycast(rayOriginAdjst, -transform.up.normalized, groundRayCastDistance, groundLayer);
         //Debug.DrawRay(rayOriginAdjst, -transform.up.normalized * rayCastDistance, Color.green);
         if (hit) {
             GroundHit(hit);
         }
         else {
-            hit = Physics2D.CapsuleCast(capsuleOriginAdjst, capsuleCastSize, CapsuleDirection2D.Horizontal, 0f, Vector2.right, 0, groundLayer);
+            hit = Physics2D.CapsuleCast(capsuleOriginAdjst, groundCapsuleCastSize, CapsuleDirection2D.Horizontal, 0f, Vector2.right, 0, groundLayer);
             if (hit) {
                 GroundHit(hit);
             }

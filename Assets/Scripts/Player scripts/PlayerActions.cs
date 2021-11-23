@@ -6,12 +6,17 @@ public class PlayerActions : MonoBehaviour
 {
     PlayerManager manager;
 
+    [Header("Grab info")]
     public GameObject grabbedObj;
+    public float grabPositioningDistance;
+
+    [Header("Grab settings")]
     public float grabCheckDistance;
     public LayerMask propsLayer;
-    public float grabPositioningDistance = 0.6f;
     public float grabMassMult = 0.1f;
+    public float grabReleaseDistanceOffset = 0.001f;
 
+    [Header("Dash info")]
     public float lastDashTime = 0f;
 
     private void Start() {
@@ -19,14 +24,50 @@ public class PlayerActions : MonoBehaviour
     }
 
     private void Update() {
-        checkGrabbedObj();
+        CheckGrabbedObj();
+        CheckDash();
     }
+
+    //CHECKS-----------------------------
+
+    private void CheckGrabbedObj() {
+        if (grabbedObj == null)
+            return;
+
+        float distance = Vector3.Distance(transform.position, grabbedObj.transform.position);
+        print(distance);
+        if (distance > grabPositioningDistance + grabReleaseDistanceOffset) {
+            print(distance + " eccede la distanza di grab " + (grabPositioningDistance+grabReleaseDistanceOffset));
+            ReleaseGrab();
+        }
+
+        //if (grabbedObj == null)
+        //    return;
+
+        //RaycastHit2D hit = Physics2D.Raycast(grabbedObj.transform.position, manager.currentGravity.normalized, grabbedObj.GetComponent<BoxCollider2D>().size.y * 0.75f);
+        //if (!hit) {
+        //    print("no terrain under grabbed obj");
+        //    if (grabbedObj.GetComponent<DistanceJoint2D>())
+        //        grabbedObj.GetComponent<DistanceJoint2D>().breakForce = 50f;
+        //}
+    }
+
+    private void CheckDash() {
+        if (!manager.isDashing)
+            return;
+
+        if (CheckPropInFront())
+            StopDash(0.05f);
+    }
+
+    //GRAB-----------------------------
 
     public void Grab() {
         RaycastHit2D hit;
         Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
         hit = Physics2D.Raycast(transform.position, direction, grabCheckDistance, propsLayer);
         if (hit) {
+            grabPositioningDistance = (float)(manager.bodyCollider.size.x * 0.75) + (hit.transform.localScale.x * 0.5f);
             AttachGrabbedObject(hit.transform.gameObject);
         }
     }
@@ -67,36 +108,29 @@ public class PlayerActions : MonoBehaviour
         grabbedObj = null;
     }
 
-    private void checkGrabbedObj() {
-        if (grabbedObj == null)
-            return;
+    //DASH-----------------------------
 
-        float distance = Vector3.Distance(transform.position, grabbedObj.transform.position);
-        if (distance > grabPositioningDistance) {
-            print(distance);
-            ReleaseGrab();
+    private bool CheckPropInFront() {
+        RaycastHit2D hit;
+        Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+        hit = Physics2D.Raycast(transform.position, direction, manager.dashCheckDistance, propsLayer);
+        if (hit) {
+            return true;
         }
-
-        //if (grabbedObj == null)
-        //    return;
-
-        //RaycastHit2D hit = Physics2D.Raycast(grabbedObj.transform.position, manager.currentGravity.normalized, grabbedObj.GetComponent<BoxCollider2D>().size.y * 0.75f);
-        //if (!hit) {
-        //    print("no terrain under grabbed obj");
-        //    if (grabbedObj.GetComponent<DistanceJoint2D>())
-        //        grabbedObj.GetComponent<DistanceJoint2D>().breakForce = 50f;
-        //}
+        return false;
     }
 
     private bool CanDash() {
-        if (manager.isDashing || (Time.time - lastDashTime) <= manager.dashCooldown)
+        if (manager.isDashing || (Time.time - lastDashTime) <= manager.dashCooldown || CheckPropInFront())
             return false;
 
-        RaycastHit2D hit;
-        Vector2 direction = manager.input.GetMoveInput;
-        hit = Physics2D.Raycast(transform.position, direction, manager.dashCheckDistance, propsLayer);
+        //RaycastHit2D hit;
+        //Vector2 direction = manager.input.GetMoveInput;
+        //hit = Physics2D.Raycast(transform.position, direction, manager.dashCheckDistance, propsLayer);
 
-        return hit.transform == null;
+        //return hit.transform == null;
+
+        return true;
     }
 
     public void Dash() {
@@ -108,13 +142,17 @@ public class PlayerActions : MonoBehaviour
     private IEnumerator DashCo() {
         manager.isDashing = true;
         Vector2 force = manager.dashForceMult * manager.moveForceMagnitude * manager.input.GetMoveInput;
-        
         manager.characterController.SetDashForce(force);
         lastDashTime = Time.time;
+
         yield return new WaitForSeconds(manager.dashTime);
 
-        manager.isDashing = false;
-        manager.body.velocity *= new Vector2(0.1f, 1f);
+        StopDash(0.25f);
         yield break;
+    }
+
+    private void StopDash(float stopSpeedMult) {
+        manager.isDashing = false;
+        manager.body.velocity *= new Vector2(stopSpeedMult, 1f);
     }
 }

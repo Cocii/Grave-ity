@@ -9,6 +9,7 @@ public class GravityIndicatorController : MonoBehaviour
     public Vector2 gravity;
     public GravityManager gManager;
     public Slider slider;
+    public RectTransform handle;
 
     void Start()
     {
@@ -31,6 +32,7 @@ public class GravityIndicatorController : MonoBehaviour
             targetAngle = 180f;
 
         transform.rotation = Quaternion.Euler(0f, 0f, targetAngle);
+        handle.rotation = Quaternion.Euler(0f, 0f, targetAngle + 180f);
 
         slider.value = gravity.magnitude;
     }

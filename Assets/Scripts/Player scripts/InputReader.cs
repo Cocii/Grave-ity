@@ -33,7 +33,7 @@ public class InputReader : MonoBehaviour
 
     private bool inputDashD;
     private float lastTimeInputDashD;
-    private bool inputDashaltD;
+    private bool inputDashAltD;
     public float doubleClickThreshold;
 
     private bool inputGrabD;
@@ -71,7 +71,7 @@ public class InputReader : MonoBehaviour
         inputGravityStrongerD = Input.GetKeyDown(gravityStrongerKey);
         inputGravityWeakerD = Input.GetKeyDown(gravityWeakerKey);
 
-        inputDashaltD = Input.GetKeyDown(dashKey);
+        inputDashAltD = Input.GetKeyDown(dashKey);
         inputDashD = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D);
 
         inputGrabD = Input.GetKeyDown(grabKey);
@@ -99,7 +99,7 @@ public class InputReader : MonoBehaviour
             }
         }
 
-        if (inputDashaltD && !inputBlocked) {
+        if (inputDashAltD && !inputBlocked) {
             PlayerManager.instance.actions.Dash();
         }
 
