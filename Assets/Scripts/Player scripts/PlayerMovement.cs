@@ -5,24 +5,26 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     PlayerManager manager;
+    public Vector2 moveInput;
+    public bool jumpInput;
 
     private void Start() {
         manager = PlayerManager.instance;
     }
 
     void Update() {
-        MovementCheck();
+        moveInput = manager.input.GetMoveInput;
+        jumpInput = manager.input.GetJumpDInput;
+
+        HorizontalMovementUpdate();
+        VerticalMovementUpdate();
     }
 
-    private void MovementCheck() {
+    private void HorizontalMovementUpdate() {
         Vector2 force = Vector2.zero;
-
-        Vector2 moveInput = manager.input.GetMoveInput;
-        bool jumpInput = manager.input.GetJumpDInput;
-
+        
         Vector2 gravityForce = manager.currentGravity;
         Vector2 gravityForceNormal = manager.currentGravityNormal;
-        float gravityRatio = manager.currentGravityRatio;
 
         //WASD
         if (moveInput.magnitude > 0.1f) {
@@ -39,6 +41,13 @@ public class PlayerMovement : MonoBehaviour
 
             manager.characterController.SetMoveForce(force);
         }
+    }
+
+    private void VerticalMovementUpdate() {
+        Vector2 force = Vector2.zero;
+
+        Vector2 gravityForce = manager.currentGravity;
+        float gravityRatio = manager.currentGravityRatio;
 
         //JUMP
         if (jumpInput && CanJump()) {
@@ -48,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         //
 
         //WALLJUMP
-        if(jumpInput && !manager.isGrounded && manager.isBackOnWall && manager.canWalljump && moveInput.x!=0f) {
+        if (jumpInput && CanWalljump(moveInput.x)) {
             force.Set(manager.wallJumpDirection.x * moveInput.x, manager.wallJumpDirection.y * -gravityForce.normalized.y);
             force *= manager.jumpForceMagnitude * manager.walljumpMult;
             manager.characterController.SetJumpForce(force);
@@ -57,22 +66,33 @@ public class PlayerMovement : MonoBehaviour
 
         //JUMP BOOSTER
         jumpInput = manager.input.GetJumpInput;
-        if (jumpInput && manager.body.velocity.y > 0.5f) {
+        if (jumpInput && CanBoostJump()) {
             force = -gravityForce.normalized * manager.jumpForceMagnitude * manager.jumpBoostMult * Time.deltaTime;
             manager.characterController.AddBoostForce(force);
         }
         //
 
         //GRAVITY BOOSTER
-        if(!manager.isGrounded && gravityRatio < 1) {
-            //print("gravity booster added");
+        if (CanBoostgravity(gravityRatio)) {
             force = gravityForce * manager.gravityBoostMult;
             manager.characterController.AddBoostForce(force);
         }
         //
     }
 
-    public bool CanJump() {
+    private bool CanJump() {
         return manager.isGrounded && !manager.isOnHighSlope && !manager.isGrabbing;
+    }
+
+    private bool CanWalljump(float xInput) {
+        return !manager.isGrounded && manager.isBackOnWall && manager.canWalljump && xInput != 0f;
+    }
+
+    private bool CanBoostJump() {
+        return manager.body.velocity.y > 0.5f;
+    }
+
+    private bool CanBoostgravity(float gravityRatio) {
+        return !manager.isGrounded && gravityRatio < 1;
     }
 }

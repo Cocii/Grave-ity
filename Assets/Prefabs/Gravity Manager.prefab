@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5329770461832004635}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -46,14 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicsGravity: {x: 0, y: -9.8}
   physicsGravityNormal: {x: -1, y: 0}
-  physicsGravityTransform: {fileID: 5329770462923772052}
   gravityRatio: 1
+  defaultGravityMagnitude: 9.8
   gravityDirection: {x: 0, y: -1}
   gravityMagnitude: 9.8
-  transformRotationSpeed: 100
-  valuesLerpSpeed: 50
-  onlyUpDown: 1
-  defaultGravityMagnitude: 9.8
+  valuesLerpSpeed: Infinity
+  weakerGravityMult: 0.5
+  strongergravityMult: 1.5
 --- !u!1 &5329770462923772075
 GameObject:
   m_ObjectHideFlags: 0

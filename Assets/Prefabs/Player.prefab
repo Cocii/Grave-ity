@@ -187,9 +187,10 @@ MonoBehaviour:
   jumpBoostMult: 1.25
   wallJumpDirection: {x: 0.3, y: 0.9}
   walljumpMult: 1.5
-  dashForceMult: 1.5
+  dashForceMult: 1
   dashTime: 0.2
-  dashCheckDistance: 2
+  dashCheckDistance: 0.5
+  dashCooldown: 1
   isGrounded: 1
   wasGrounded: 1
   isFacingRight: 1
@@ -223,10 +224,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 65
-  capsuleCastSize: {x: 0.275, y: 0.02}
+  groundCapsuleCastSize: {x: 0.275, y: 0.02}
   maxSlopeAngle: 40
   lateralOffset: 0
-  rayCastDistance: 0.067
+  groundRayCastDistance: 0.067
   wallbackRaycastOrigin: {x: 0, y: 0}
   wallbackRaycastDistance: 0
   rayCastOrigin: {x: 0, y: 0}
@@ -276,6 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab26cd9fa4d9c343a8689eb13a3594f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveInput: {x: 0, y: 0}
+  jumpInput: 0
 --- !u!114 &1059764090546348758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,9 +342,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabbedObj: {fileID: 0}
-  grabCheckDistance: 0
+  grabCheckDistance: 0.3
   propsLayer:
     serializedVersion: 2
     m_Bits: 129
-  grabPositioningDistance: 0.6
+  grabPositioningDistance: 1
   grabMassMult: 0.1
+  grabReleaseDistanceOffset: 0.001
+  lastDashTime: 0
