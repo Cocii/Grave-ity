@@ -27,6 +27,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     [Header("Ground check info")]
     public Vector2 rayCastOrigin;
     public Vector2 capsuleCastOrigin;
+    public float lastDistanceFromGround;
+    public float currentDistanceFromGround;
 
     [Header("Ground info")]
     public Vector2 groundNormal;
@@ -64,11 +66,15 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         SlopeAdjustement();
 
-        if (Mathf.Abs(manager.body.velocity.x) < 0.001f)
+        VelocityFix();
+    }
+
+    private void VelocityFix() {
+        if (Mathf.Abs(manager.body.velocity.x) < 0.01f)
             manager.body.velocity *= new Vector2(0f, 1f);
 
-        if(!manager.isDashing)
-            manager.body.velocity = Vector2.ClampMagnitude(manager.body.velocity, manager.currentMaxMoveSpeed);
+        if (!manager.isDashing)
+            manager.body.velocity = new Vector2(Mathf.Clamp(manager.body.velocity.x, -manager.currentMaxMoveSpeed, manager.currentMaxMoveSpeed), manager.body.velocity.y);
     }
 
     private void WallBackCheck() {
@@ -98,12 +104,14 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager.wasGrounded = manager.isGrounded;
         manager.isGrounded = false;
 
+        lastDistanceFromGround = currentDistanceFromGround;
+
         Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
         Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
 
         RaycastHit2D hit;
         hit = Physics2D.Raycast(rayOriginAdjst, -transform.up.normalized, groundRayCastDistance, groundLayer);
-        //Debug.DrawRay(rayOriginAdjst, -transform.up.normalized * rayCastDistance, Color.green);
+        Debug.DrawRay(rayOriginAdjst, -transform.up.normalized * groundRayCastDistance, Color.green);
         if (hit) {
             GroundHit(hit);
         }
@@ -123,6 +131,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
     private void GroundHit(RaycastHit2D hit) {
         manager.isGrounded = true;
+
+        currentDistanceFromGround = hit.distance;
 
         if (manager.wasGrounded == false) {
             PlayerLand();
@@ -212,8 +222,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             return;
         }
 
-        if (manager.isGrounded)
-            return;
+        //if (manager.isGrounded)
+        //    return;
 
         PlayerRotate(targetAngle);
 
@@ -235,8 +245,14 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         float absDiff = Mathf.Abs(transform.eulerAngles.z - targetAngle);
         if (absDiff < 10f || absDiff > 350f) {
-            transform.eulerAngles = new Vector3(0f, 0f, targetAngle);   
+            transform.eulerAngles = new Vector3(0f, 0f, targetAngle);
+            return;
         }
+
+        //if(manager.isRotating && manager.isGrounded) {
+        //    transform.eulerAngles = new Vector3(0f, 0f, targetAngle);
+        //    print("Rotation stuck bug fix applied");
+        //}
     }
 
     private float CalculateRotationSpeed() {

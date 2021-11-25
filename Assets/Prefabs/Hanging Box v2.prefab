@@ -46,8 +46,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -76,8 +76,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729381366627819
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -140,8 +140,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -170,8 +170,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729381386993250
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -234,8 +234,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -264,8 +264,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729381398206470
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -413,7 +413,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!233 &3931729381496065913
 HingeJoint2D:
   m_ObjectHideFlags: 0
@@ -484,8 +484,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -507,15 +507,15 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.10312581, y: -0.0000017505367}
+  m_ConnectedAnchor: {x: 0.10312588, y: 0.000002063694}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729381629507726
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -541,6 +541,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3931729381650705417}
+  - component: {fileID: 259174832}
   m_Layer: 0
   m_Name: Hanging Box v2
   m_TagString: Untagged
@@ -564,6 +565,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &259174832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3931729381650705416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc7c6a8fd1139bd4a89d0370658f19a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ropeBonesObjs:
+  - {fileID: 3931729382840621257}
+  - {fileID: 3931729383008773403}
+  - {fileID: 3931729382075486356}
+  - {fileID: 3931729381629507714}
+  - {fileID: 3931729382750320364}
+  - {fileID: 3931729382720338196}
+  - {fileID: 3931729381836833271}
+  - {fileID: 3931729381398206522}
+  - {fileID: 3931729381386993254}
+  - {fileID: 3931729382948663493}
+  - {fileID: 3931729381366627823}
+  - {fileID: 3931729381946608059}
+  gManager: {fileID: 0}
+  forceMagnitude: 0
 --- !u!1 &3931729381836833271
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,8 +638,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -640,8 +668,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729381836833267
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -704,8 +732,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -734,8 +762,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 30
+    m_UpperAngle: -30
 --- !u!70 &3931729381946608007
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -798,8 +826,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -821,15 +849,15 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.101348855, y: -0.000001410022}
+  m_ConnectedAnchor: {x: 0.10134892, y: 0.0000024040921}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729382075486352
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -886,7 +914,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3931729382166863384}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -914,7 +942,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -56.64609, y: 7.6823773}
+  m_ConnectedAnchor: {x: -71.486084, y: 8.538378}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1046,8 +1074,8 @@ MonoBehaviour:
   - {fileID: 3931729381366627818}
   - {fileID: 3931729381946608056}
   m_Bounds:
-    m_Center: {x: 0.009998091, y: 0.00000017881393, z: 0}
-    m_Extent: {x: 0.11000191, y: 0.63999975, z: 0}
+    m_Center: {x: 0.009996176, y: 0.0000004172325, z: 0}
+    m_Extent: {x: 0.11000336, y: 0.64, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &3931729382720338196
@@ -1096,8 +1124,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -1126,8 +1154,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729382720338192
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1190,8 +1218,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -1213,15 +1241,15 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.10490389, y: -0.000000643893}
+  m_ConnectedAnchor: {x: 0.10490396, y: -0.0000044580074}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729382750320360
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1284,8 +1312,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -1312,10 +1340,10 @@ HingeJoint2D:
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729382840621269
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1378,8 +1406,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -1408,8 +1436,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729382948663489
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1472,8 +1500,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -1495,15 +1523,15 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.09957136, y: -0.000000079977326}
+  m_ConnectedAnchor: {x: 0.0995717, y: -0.00000771659}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 60
-    m_UpperAngle: -60
+    m_LowerAngle: 45
+    m_UpperAngle: -45
 --- !u!70 &3931729383008773479
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
