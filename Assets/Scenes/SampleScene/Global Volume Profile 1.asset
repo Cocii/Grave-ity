@@ -284,5 +284,5 @@ MonoBehaviour:
     m_Value: {fileID: 2800000, guid: 333b2b087d16078439d8be2052c71abd, type: 3}
   dirtIntensity:
     m_OverrideState: 1
-    m_Value: 7.94
+    m_Value: 7.95
     min: 0
