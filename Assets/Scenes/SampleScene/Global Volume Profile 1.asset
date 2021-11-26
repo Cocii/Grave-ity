@@ -16,7 +16,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.099
+    m_Value: 0.302
     min: 0
     max: 1
 --- !u!114 &-1630495333239909865
@@ -103,7 +103,7 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.044
+    m_Value: 0.116
     min: 0
     max: 1
   clamp:
@@ -150,12 +150,12 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.117
+    m_Value: 0.413
     min: 0
     max: 1
   response:
     m_OverrideState: 1
-    m_Value: 0.531
+    m_Value: 0.7
     min: 0
     max: 1
   texture:
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.135
+    m_Value: 0.11
     min: -1
     max: 1
   xMultiplier:
@@ -254,11 +254,11 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.44
+    m_Value: 3.96
     min: 0
   scatter:
-    m_OverrideState: 0
-    m_Value: 0.973
+    m_OverrideState: 1
+    m_Value: 0.713
     min: 0
     max: 1
   clamp:
@@ -266,14 +266,14 @@ MonoBehaviour:
     m_Value: 65472
     min: 0
   tint:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {r: 0.5182004, g: 0.68246573, b: 0.8018868, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
   highQualityFiltering:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   skipIterations:
     m_OverrideState: 0
     m_Value: 1
@@ -284,5 +284,5 @@ MonoBehaviour:
     m_Value: {fileID: 2800000, guid: 333b2b087d16078439d8be2052c71abd, type: 3}
   dirtIntensity:
     m_OverrideState: 1
-    m_Value: 7.95
+    m_Value: 8.7
     min: 0
