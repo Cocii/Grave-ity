@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         //JUMP BOOSTER
         jumpInput = manager.input.GetJumpInput;
         if (jumpInput && CanBoostJump(gravityForce)) {
-            print("Boost jump");
+            //print("Boost jump");
             force = -gravityForce.normalized * manager.jumpForceMagnitude * manager.jumpBoostMult * Time.deltaTime;
             manager.characterController.AddBoostForce(force);
         }
@@ -75,8 +75,8 @@ public class PlayerMovement : MonoBehaviour
 
         //GRAVITY BOOSTER
         if (CanBoostgravity(gravityRatio, gravityForce)) {
-            print("Boost gravity");
-            force = gravityForce * manager.gravityBoostMult;
+            //print("Boost gravity");
+            force = gravityForce * manager.gravityBoostMult * Time.deltaTime;
             //force *= (2f - gravityRatio);
             manager.characterController.AddBoostForce(force);
         }

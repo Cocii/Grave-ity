@@ -36,6 +36,7 @@ public class GravityManager : MonoBehaviour
     private void Start() {
         gravityMagnitude = defaultGravityMagnitude;
         physicsGravity = gravityMagnitude * gravityDirection;
+        Physics2D.gravity = physicsGravity;
     }
 
     private void Update() {

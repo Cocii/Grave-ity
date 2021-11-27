@@ -32,6 +32,8 @@ public class PlayerManager : MonoBehaviour
     public float moveForceMagnitude = 10f;
     public float currentMaxMoveSpeed = 5f;
     public float defaultMaxMoveSpeed = 5f;
+    public float weakGravityMoveSpeedMult = 0.75f;
+    public float strongGravityMoveSpeedMult = 0.5f;
 
     [Header("Air movement settings")]
     public float moveAirForceMagnitude = 6f;
@@ -98,7 +100,7 @@ public class PlayerManager : MonoBehaviour
         if (currentGravityRatio == 1)
             currentMaxMoveSpeed = defaultMaxMoveSpeed;
         else
-            currentMaxMoveSpeed = defaultMaxMoveSpeed * 0.5f;
+            currentMaxMoveSpeed = currentGravityRatio < 1 ? currentMaxMoveSpeed * weakGravityMoveSpeedMult : currentMaxMoveSpeed * strongGravityMoveSpeedMult;
     }
 
 }

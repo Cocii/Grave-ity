@@ -11,10 +11,10 @@ public class PlayerAnimations : MonoBehaviour
         Rigidbody2D body = manager.body;
         Animator anim = manager.animator;
 
-        float velocityX = Mathf.Abs(Mathf.Round(body.velocity.x * 10f) / 10f);
+        float velocityX = Mathf.Abs(Mathf.Round((body.velocity.x / manager.defaultMaxMoveSpeed) * 10f) / 10f);
         float velocityY = (Mathf.Round(body.velocity.y * 10f) / 10f);
 
-        anim.SetFloat("velocityX", velocityX/manager.defaultMaxMoveSpeed);
+        anim.SetFloat("velocityX", velocityX);
         anim.SetFloat("velocityY", velocityY);
         anim.SetBool("grounded", manager.isGrounded);
         anim.SetBool("dashing", manager.isDashing);

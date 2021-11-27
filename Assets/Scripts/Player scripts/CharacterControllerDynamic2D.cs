@@ -391,6 +391,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         }
 
         manager.body.AddForce(jumpForce);
+        //print("Jump with force: " + jumpForce);
         jumpForce = Vector2.zero;
     }
 
@@ -399,6 +400,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             return;
 
         manager.body.AddForce(boostForce);
+        print("Boost with force: " + boostForce);
         boostForce = Vector2.zero;
     }
 
