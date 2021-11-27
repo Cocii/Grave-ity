@@ -13,6 +13,8 @@ TagManager:
   - HealthBar
   - BreakingBox
   - BreakablePiece
+  - Death Trigger
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
