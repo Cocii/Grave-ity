@@ -40,8 +40,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     private void Start() {
         manager = PlayerManager.instance;
 
-        rayCastOrigin = new Vector2(0f, (-manager.bodyCollider.size.y / 2) + manager.bodyCollider.offset.y);
-        capsuleCastOrigin.y = rayCastOrigin.y + (-groundCapsuleCastSize.y / 2);
+        rayCastOrigin = new Vector2(0f, (-(manager.bodyCollider.size.y * transform.localScale.y) / 2) + manager.bodyCollider.offset.y);
+        capsuleCastOrigin.y = rayCastOrigin.y + (-(groundCapsuleCastSize.y * transform.localScale.y) / 2);
         
         wallbackRaycastDistance = manager.bodyCollider.size.x * 0.9f;
     }
@@ -291,9 +291,11 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         }
 
         if (groundAngle >= maxSlopeAngle) {
+            print("Check max slope");
             manager.isOnHighSlope = true;
         }
         else if (manager.input.GetMoveInput.magnitude > 0f && Mathf.Approximately(Mathf.Floor(manager.body.velocity.magnitude), 0f) && !manager.isGrounded) {
+            print("Check slope with vel");
             manager.isOnHighSlope = true;
         }
 
@@ -302,8 +304,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     private void SlopeAdjustement() {
-        
-
         if(manager.isOnHighSlope) {
             AdjustSlopeMaterial(true);
 
@@ -314,10 +314,10 @@ public class CharacterControllerDynamic2D : MonoBehaviour
                 print("Slope too high to walk: " + groundAngle);
                 
                 moveForce = Vector2.zero;
-                if (Mathf.Abs(manager.body.velocity.x) > 1f) {
-                    manager.body.velocity *= new Vector2(0.01f, 1f);
-                    print("Limito velocità x su high slope");
-                }
+                //if (Mathf.Abs(manager.body.velocity.x) > 0f) {
+                //    manager.body.velocity *= new Vector2(0.01f, 1f);
+                //    print("Limito velocità x su high slope");
+                //}
 
             }
 
@@ -338,6 +338,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             return;
         }
 
+        
         if (moveForce.magnitude == 0f) {
             if (manager.body.sharedMaterial == manager.defaultPhysicsMaterial) {
                 manager.body.sharedMaterial = manager.fullFrictionMaterial;

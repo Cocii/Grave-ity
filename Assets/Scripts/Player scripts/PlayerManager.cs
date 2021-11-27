@@ -41,7 +41,12 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Jump settings")]
     public float jumpForceMagnitude = 200f;
-    public float jumpBoostMult = 1.75f;
+    public float currentJumpBoostMult = 0.5f;
+    public float defaultJumpBoostMult = 0.5f;
+    public float weakGravityJumpBoostMult = 0.85f;
+    public float jumpBoostVelocityThreshold = 1.5f;
+
+    [Header("Walljump settings")]
     public Vector2 wallJumpDirection = new Vector2(0.5f, 0.5f);
     public float walljumpMult = 2f;
 
@@ -83,6 +88,10 @@ public class PlayerManager : MonoBehaviour
         this.gameObject.transform.parent = null;
     }
 
+    private void Start() {
+        AdaptParametersToGravity();
+    }
+
     private void Update() {
         GravityManager gManager = GravityManager.instance;
 
@@ -96,11 +105,30 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void AdaptParametersToGravity() {
-        //currentMaxMoveSpeed = defaultMaxMoveSpeed * (2f - currentGravityRatio);
         if (currentGravityRatio == 1)
-            currentMaxMoveSpeed = defaultMaxMoveSpeed;
-        else
-            currentMaxMoveSpeed = currentGravityRatio < 1 ? currentMaxMoveSpeed * weakGravityMoveSpeedMult : currentMaxMoveSpeed * strongGravityMoveSpeedMult;
+            DefaultGravityParams();
+        else {
+            if (currentGravityRatio < 1)
+                WeakGravityParams();
+            else
+                StrongGravityParams();
+        }
+            
+    }
+
+    private void DefaultGravityParams() {
+        currentMaxMoveSpeed = defaultMaxMoveSpeed;
+        currentJumpBoostMult = defaultJumpBoostMult;
+    }
+
+    private void WeakGravityParams() {
+        currentMaxMoveSpeed = defaultMaxMoveSpeed * weakGravityMoveSpeedMult;
+        currentJumpBoostMult = weakGravityJumpBoostMult;
+    }
+
+    private void StrongGravityParams() {
+        currentMaxMoveSpeed = defaultMaxMoveSpeed * strongGravityMoveSpeedMult;
+        currentJumpBoostMult = defaultJumpBoostMult;
     }
 
 }

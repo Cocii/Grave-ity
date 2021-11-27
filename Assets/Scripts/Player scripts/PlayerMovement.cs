@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         jumpInput = manager.input.GetJumpInput;
         if (jumpInput && CanBoostJump(gravityForce)) {
             //print("Boost jump");
-            force = -gravityForce.normalized * manager.jumpForceMagnitude * manager.jumpBoostMult * Time.deltaTime;
+            force = -gravityForce.normalized * manager.jumpForceMagnitude * manager.currentJumpBoostMult * Time.deltaTime;
             manager.characterController.AddBoostForce(force);
         }
         //
@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         //GRAVITY BOOSTER
         if (CanBoostgravity(gravityRatio, gravityForce)) {
             //print("Boost gravity");
-            force = gravityForce * manager.gravityBoostMult * Time.deltaTime;
+            force = gravityForce * manager.gravityBoostMult;
             //force *= (2f - gravityRatio);
             manager.characterController.AddBoostForce(force);
         }
@@ -94,10 +94,10 @@ public class PlayerMovement : MonoBehaviour
     private bool CanBoostJump(Vector2 gravityForce) {
         bool can = false;
         if(Mathf.Sign(gravityForce.y) < 0f) {
-            can = manager.body.velocity.y > 0.5f;
+            can = manager.body.velocity.y > manager.jumpBoostVelocityThreshold;
         }
         else {
-            can = manager.body.velocity.y < -0.5f;
+            can = manager.body.velocity.y < -manager.jumpBoostVelocityThreshold;
         }
 
         return can;
