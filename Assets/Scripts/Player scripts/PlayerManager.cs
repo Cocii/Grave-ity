@@ -8,7 +8,6 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance;
     public Rigidbody2D body;
     public CapsuleCollider2D bodyCollider;
-    public SpriteRenderer spriteRenderer;
     public Animator animator;
     public InputReader input;
     public CharacterControllerDynamic2D characterController;
@@ -57,6 +56,7 @@ public class PlayerManager : MonoBehaviour
     public bool isRotating;
     public bool wasRotating;
     public bool isOnHighSlope;
+    public bool wasOnHighSlope;
     public bool isBackOnWall;
     public bool wasBackOnWall;
     public bool canWalljump;

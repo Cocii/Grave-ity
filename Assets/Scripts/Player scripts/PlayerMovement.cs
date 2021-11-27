@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     PlayerManager manager;
-    public Vector2 moveInput;
-    public bool jumpInput;
+    private Vector2 moveInput;
+    private bool jumpInput;
 
     private void Start() {
         manager = PlayerManager.instance;
@@ -66,15 +66,18 @@ public class PlayerMovement : MonoBehaviour
 
         //JUMP BOOSTER
         jumpInput = manager.input.GetJumpInput;
-        if (jumpInput && CanBoostJump()) {
+        if (jumpInput && CanBoostJump(gravityForce)) {
+            print("Boost jump");
             force = -gravityForce.normalized * manager.jumpForceMagnitude * manager.jumpBoostMult * Time.deltaTime;
             manager.characterController.AddBoostForce(force);
         }
         //
 
         //GRAVITY BOOSTER
-        if (CanBoostgravity(gravityRatio)) {
+        if (CanBoostgravity(gravityRatio, gravityForce)) {
+            print("Boost gravity");
             force = gravityForce * manager.gravityBoostMult;
+            //force *= (2f - gravityRatio);
             manager.characterController.AddBoostForce(force);
         }
         //
@@ -88,11 +91,19 @@ public class PlayerMovement : MonoBehaviour
         return !manager.isGrounded && manager.isBackOnWall && manager.canWalljump && xInput != 0f;
     }
 
-    private bool CanBoostJump() {
-        return manager.body.velocity.y > 0.5f;
+    private bool CanBoostJump(Vector2 gravityForce) {
+        bool can = false;
+        if(Mathf.Sign(gravityForce.y) < 0f) {
+            can = manager.body.velocity.y > 0.5f;
+        }
+        else {
+            can = manager.body.velocity.y < -0.5f;
+        }
+
+        return can;
     }
 
-    private bool CanBoostgravity(float gravityRatio) {
-        return !manager.isGrounded && gravityRatio < 1;
+    private bool CanBoostgravity(float gravityRatio, Vector2 gravityForce) {
+        return !manager.isGrounded && gravityRatio <= 1 && Mathf.Sign(manager.body.velocity.y) == Mathf.Sign(gravityForce.y);
     }
 }

@@ -42,7 +42,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         rayCastOrigin = new Vector2(0f, (-manager.bodyCollider.size.y / 2) + manager.bodyCollider.offset.y);
         capsuleCastOrigin.y = rayCastOrigin.y + (-groundCapsuleCastSize.y / 2);
-        capsuleCastOrigin.x = 0f;
+        
         wallbackRaycastDistance = manager.bodyCollider.size.x * 0.9f;
     }
 
@@ -64,7 +64,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         GroundCheck();
         WallBackCheck();
 
-        SlopeAdjustement();
+        SlopeCheck();
 
         VelocityFix();
     }
@@ -106,12 +106,16 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         lastDistanceFromGround = currentDistanceFromGround;
 
+        float offsetAdjst = manager.isFacingRight ? lateralOffset : -lateralOffset;
+        capsuleCastOrigin.x = offsetAdjst;
+        rayCastOrigin.x = offsetAdjst;
+
         Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
         Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
 
         RaycastHit2D hit;
         hit = Physics2D.Raycast(rayOriginAdjst, -transform.up.normalized, groundRayCastDistance, groundLayer);
-        Debug.DrawRay(rayOriginAdjst, -transform.up.normalized * groundRayCastDistance, Color.green);
+        //Debug.DrawRay(rayOriginAdjst, -transform.up.normalized * groundRayCastDistance, Color.green);
         if (hit) {
             GroundHit(hit);
         }
@@ -277,38 +281,53 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         }
     }
 
-    private void SlopeAdjustement() {
+    private void SlopeCheck() {
+        manager.wasOnHighSlope = manager.isOnHighSlope;
         manager.isOnHighSlope = false;
 
-        if (groundAngle == 0f) {    
+        if (groundAngle == 0) {
             AdjustSlopeMaterial(true);
             return;
         }
 
-        if (manager.input.GetMoveInput.magnitude > 0f && Mathf.Approximately(Mathf.Floor(manager.body.velocity.magnitude), 0f)) {
-            if(!manager.isGrounded || groundAngle >= maxSlopeAngle) {
-                Vector2 position = transform.position;
-                Vector2 hitPointDirection = hitPoint - position;
-                float dotMoveHitPoint = Vector2.Dot(moveForce.normalized, hitPointDirection.normalized);
-                if (dotMoveHitPoint >= 0) {
-                    print("Slope too high, current anfle: " + groundAngle + " - " + dotMoveHitPoint);
-                    moveForce = Vector2.zero;
-                    AdjustSlopeMaterial(true);
-                    manager.isOnHighSlope = true;
-                    return;
-                }
-            }           
+        if (groundAngle >= maxSlopeAngle) {
+            manager.isOnHighSlope = true;
+        }
+        else if (manager.input.GetMoveInput.magnitude > 0f && Mathf.Approximately(Mathf.Floor(manager.body.velocity.magnitude), 0f) && !manager.isGrounded) {
+            manager.isOnHighSlope = true;
         }
 
-        if(groundAngle >= maxSlopeAngle) {
+        SlopeAdjustement();
+
+    }
+
+    private void SlopeAdjustement() {
+        
+
+        if(manager.isOnHighSlope) {
             AdjustSlopeMaterial(true);
-            manager.isOnHighSlope = true;
+
+            Vector2 position = transform.position;
+            Vector2 hitPointDirection = hitPoint - position;
+            float dotMoveHitPoint = Vector2.Dot(moveForce.normalized, hitPointDirection.normalized);
+            if (dotMoveHitPoint >= 0) {
+                print("Slope too high to walk: " + groundAngle);
+                
+                moveForce = Vector2.zero;
+                if (Mathf.Abs(manager.body.velocity.x) > 1f) {
+                    manager.body.velocity *= new Vector2(0.01f, 1f);
+                    print("Limito velocità x su high slope");
+                }
+
+            }
+
         }
         else {
             AdjustSlopeMaterial(false);
+            moveForce = new Vector2(moveForce.magnitude, moveForce.magnitude) * -groundNormalPerpendicular * moveForce.normalized.x * Mathf.Sign(transform.right.x);
         }
 
-        moveForce = new Vector2(moveForce.magnitude, moveForce.magnitude) * -groundNormalPerpendicular * moveForce.normalized.x * Mathf.Sign(transform.right.x);
+        
     }
 
     private void AdjustSlopeMaterial(bool forceDefault) {
@@ -333,6 +352,21 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
     //----------------------------------------------------------
 
+    private void OnDrawGizmos() {
+        Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
+        Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawCube(capsuleOriginAdjst, groundCapsuleCastSize);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(rayOriginAdjst, -transform.up.normalized * groundRayCastDistance);
+
+        Gizmos.color = Color.white;
+    }
+
+    //----------------------------------------------------------
+
     private void ApplyMoveForce() {
         if (moveForce.magnitude == 0)
             return;
@@ -344,7 +378,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         //print("Moving force: " + moveForce);
         manager.body.AddForce(moveForce);
         
-
         moveForce = Vector2.zero;
     }
 
