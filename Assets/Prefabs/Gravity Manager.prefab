@@ -51,4 +51,4 @@ MonoBehaviour:
   gravityMagnitude: 39.2
   valuesLerpSpeed: Infinity
   weakerGravityMult: 0.5
-  strongergravityMult: 1.5
+  strongerGravityMult: 1.5

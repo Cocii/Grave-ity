@@ -27,7 +27,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     [Header("Ground check info")]
     public Vector2 rayCastOrigin;
     public Vector2 capsuleCastOrigin;
-    public float lastDistanceFromGround;
     public float currentDistanceFromGround;
 
     [Header("Ground info")]
@@ -40,8 +39,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     private void Start() {
         manager = PlayerManager.instance;
 
-        rayCastOrigin = new Vector2(0f, (-(manager.bodyCollider.size.y * transform.localScale.y) / 2) + manager.bodyCollider.offset.y);
-        capsuleCastOrigin.y = rayCastOrigin.y + (-(groundCapsuleCastSize.y * transform.localScale.y) / 2);
+        rayCastOrigin = new Vector2(0f, (-(manager.bodyCollider.size.y / 2) + manager.bodyCollider.offset.y) * transform.localScale.y);
+        capsuleCastOrigin.y = rayCastOrigin.y + (-(groundCapsuleCastSize.y  / 2) * transform.localScale.y);
         
         wallbackRaycastDistance = manager.bodyCollider.size.x * 0.9f;
     }
@@ -104,7 +103,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager.wasGrounded = manager.isGrounded;
         manager.isGrounded = false;
 
-        lastDistanceFromGround = currentDistanceFromGround;
 
         float offsetAdjst = manager.isFacingRight ? lateralOffset : -lateralOffset;
         capsuleCastOrigin.x = offsetAdjst;
@@ -118,19 +116,22 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         //Debug.DrawRay(rayOriginAdjst, -transform.up.normalized * groundRayCastDistance, Color.green);
         if (hit) {
             GroundHit(hit);
+            Debug.DrawRay(hitPoint, groundNormal * 0.75f, Color.red);
+            Debug.DrawRay(hitPoint, groundNormalPerpendicular * 0.75f, Color.red);
         }
         else {
             hit = Physics2D.CapsuleCast(capsuleOriginAdjst, groundCapsuleCastSize, CapsuleDirection2D.Horizontal, 0f, Vector2.right, 0, groundLayer);
             if (hit) {
                 GroundHit(hit);
+                Debug.DrawRay(hitPoint, groundNormal * 0.75f, Color.green);
+                Debug.DrawRay(hitPoint, groundNormalPerpendicular * 0.75f, Color.green);
             }
             else {
                 GroundNotHit();
             }
         }
 
-        //Debug.DrawRay(hitPoint, groundNormal * 0.5f, Color.blue);
-        //Debug.DrawRay(hitPoint, groundNormalPerpendicular * 0.5f, Color.red);
+        
     }
 
     private void GroundHit(RaycastHit2D hit) {
@@ -142,12 +143,12 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             PlayerLand();
         }
 
-        groundNormal = hit.normal.normalized;
+        hitPoint = hit.point;
+        groundNormal = hit.normal;
         groundNormalPerpendicular = Vector2.Perpendicular(groundNormal).normalized;
         groundNormalDot = Vector2.Dot(transform.up.normalized, groundNormal);
         groundAngle = Vector2.Angle(groundNormal, transform.up.normalized);
-        hitPoint = Physics2D.ClosestPoint(transform.position, hit.collider);
-
+        
         manager.canWalljump = false;
     }
 
@@ -325,6 +326,17 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         else {
             AdjustSlopeMaterial(false);
             moveForce = new Vector2(moveForce.magnitude, moveForce.magnitude) * -groundNormalPerpendicular * moveForce.normalized.x * Mathf.Sign(transform.right.x);
+
+            if (groundAngle != 0f) {
+                moveForce *= manager.moveForceMultOnSlopes;
+            }
+
+            //float boost = Utilities.Map(groundAngle, 0, maxSlopeAngle, 1f, maxForceMultOnSlopes);
+            //moveForce *= boost;
+            //print(moveForce.magnitude + " magnitude - ground angle: " + groundAngle);
+           
+            
+            
         }
 
         
@@ -363,6 +375,12 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawRay(rayOriginAdjst, -transform.up.normalized * groundRayCastDistance);
 
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(hitPoint, .15f);
+
+        Gizmos.DrawRay(transform.position, moveForce * 0.01f);
+
+
         Gizmos.color = Color.white;
     }
 
@@ -376,9 +394,12 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             manager.body.velocity *= new Vector2(0f, 1f);
         }
 
-        //print("Moving force: " + moveForce);
+
+        //print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude);
+        
         manager.body.AddForce(moveForce);
         
+
         moveForce = Vector2.zero;
     }
 
@@ -401,7 +422,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             return;
 
         manager.body.AddForce(boostForce);
-        print("Boost with force: " + boostForce);
+        //print("Boost with force: " + boostForce);
         boostForce = Vector2.zero;
     }
 

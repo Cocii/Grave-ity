@@ -14,6 +14,8 @@ public class GravityIndicatorController : MonoBehaviour
     void Start()
     {
         gManager = GravityManager.instance;
+
+        slider.maxValue = gManager.defaultGravityMagnitude * gManager.strongerGravityMult;
     }
 
 

@@ -34,6 +34,7 @@ public class PlayerManager : MonoBehaviour
     public float defaultMaxMoveSpeed = 5f;
     public float weakGravityMoveSpeedMult = 0.75f;
     public float strongGravityMoveSpeedMult = 0.5f;
+    public float moveForceMultOnSlopes = 1.3f;
 
     [Header("Air movement settings")]
     public float moveAirForceMagnitude = 6f;

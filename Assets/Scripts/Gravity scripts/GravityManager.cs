@@ -18,7 +18,7 @@ public class GravityManager : MonoBehaviour
     public float gravityMagnitude = 9.8f;
     public float valuesLerpSpeed = 100f;
     public float weakerGravityMult;
-    public float strongergravityMult;
+    public float strongerGravityMult;
     
 
     private void Awake() {
@@ -75,7 +75,7 @@ public class GravityManager : MonoBehaviour
         if (gravityMagnitude < defaultGravityMagnitude)
             gravityMagnitude = defaultGravityMagnitude;
         else if (gravityMagnitude == defaultGravityMagnitude)
-            gravityMagnitude = defaultGravityMagnitude * strongergravityMult;
+            gravityMagnitude = defaultGravityMagnitude * strongerGravityMult;
     }
 
     public void WeakerGravity() {
