@@ -24,17 +24,19 @@ public class InputReader : MonoBehaviour
     public KeyCode dashKey;
     public KeyCode grabKey;
     public KeyCode switchPowerKey;
+    public KeyCode crouchKey;
 
     private bool inputJump;
     private bool inputJumpD;
     private bool inputGravityUpsideD;
     private bool inputGravityStrongerD;
     private bool inputGravityWeakerD;
-
     private bool inputDashD;
-    private float lastTimeInputDashD;
-    private bool inputDashAltD;
-    public float doubleClickThreshold;
+    private bool inputCrouchD;
+    private bool inputCrouchU;
+
+    //private float lastTimeInput;
+    //public float doubleClickThreshold;
 
     private bool inputGrabD;
     private bool inputGrabU;
@@ -71,11 +73,11 @@ public class InputReader : MonoBehaviour
         inputGravityStrongerD = Input.GetKeyDown(gravityStrongerKey);
         inputGravityWeakerD = Input.GetKeyDown(gravityWeakerKey);
 
-        inputDashAltD = Input.GetKeyDown(dashKey);
-        inputDashD = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D);
-
         inputGrabD = Input.GetKeyDown(grabKey);
         inputGrabU = Input.GetKeyUp(grabKey);
+        inputDashD = Input.GetKeyDown(dashKey);
+        inputCrouchD = Input.GetKeyDown(crouchKey);
+        inputCrouchU = Input.GetKeyUp(crouchKey);
     }
 
     void ExcecuteInputActions() {
@@ -89,17 +91,17 @@ public class InputReader : MonoBehaviour
             GravityManager.instance.WeakerGravity();
         }
 
-        if (inputDashD && !inputBlocked) {
-            if((Time.time - lastTimeInputDashD) < doubleClickThreshold) {
-                PlayerManager.instance.actions.Dash();
-                lastTimeInputDashD = 0f;
-            }
-            else {
-                lastTimeInputDashD = Time.time;
-            }
-        }
+        //if (inputDashD && !inputBlocked) {
+        //    if((Time.time - lastTimeInput) < doubleClickThreshold) {
+        //        PlayerManager.instance.actions.Dash();
+        //        lastTimeInput = 0f;
+        //    }
+        //    else {
+        //        lastTimeInput = Time.time;
+        //    }
+        //}
 
-        if (inputDashAltD && !inputBlocked) {
+        if (inputDashD && !inputBlocked) {
             PlayerManager.instance.actions.Dash();
         }
 
@@ -108,6 +110,12 @@ public class InputReader : MonoBehaviour
         }
         else if (inputGrabU && !inputBlocked) {
             PlayerManager.instance.actions.ReleaseGrab();
+        }
+
+        if(inputCrouchD && !inputBlocked) {
+            PlayerManager.instance.actions.Crouch();
+        }else if (inputCrouchU && !inputBlocked) {
+            PlayerManager.instance.actions.CrouchStop();
         }
     }
 

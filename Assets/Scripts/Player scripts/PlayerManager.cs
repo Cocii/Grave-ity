@@ -57,6 +57,11 @@ public class PlayerManager : MonoBehaviour
     public float dashCheckDistance = 2f;
     public float dashCooldown = 1.5f;
 
+    [Header("Crouch settings")]
+    public float crouchMoveSpeedMult = 0.5f;
+    [HideInInspector]
+    public float crouchColliderHeightMult = 0.5f;
+
     [Header("Control bools")]
     public bool isGrounded;
     public bool wasGrounded;
@@ -70,6 +75,7 @@ public class PlayerManager : MonoBehaviour
     public bool canWalljump;
     public bool isGrabbing;
     public bool isDashing;
+    public bool isCrouching;
 
     [Header("Materials")]
     public PhysicsMaterial2D fullFrictionMaterial;

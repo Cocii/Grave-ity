@@ -134,6 +134,8 @@ public class PlayerActions : MonoBehaviour
     }
 
     public void Dash() {
+        //print("Try to dash");
+
         if (CanDash()) {
             StartCoroutine(DashCo());
         }
@@ -154,5 +156,28 @@ public class PlayerActions : MonoBehaviour
     private void StopDash(float stopSpeedMult) {
         manager.isDashing = false;
         manager.body.velocity *= new Vector2(stopSpeedMult, 1f);
+    }
+
+    //CROUCH-----------------------------
+
+    public void Crouch() {
+        if (!manager.isCrouching) {
+            manager.currentMaxMoveSpeed *= manager.crouchMoveSpeedMult;
+            manager.bodyCollider.size *= new Vector2(1f, manager.crouchColliderHeightMult);
+            manager.bodyCollider.offset = new Vector2(manager.bodyCollider.offset.x, manager.bodyCollider.offset.y - (manager.bodyCollider.size.y * manager.crouchColliderHeightMult));
+        }
+        
+        manager.isCrouching = true;
+
+    }
+
+    public void CrouchStop() {
+        if (manager.isCrouching) {
+            manager.currentMaxMoveSpeed *= (1f/manager.crouchMoveSpeedMult);
+            manager.bodyCollider.offset = new Vector2(manager.bodyCollider.offset.x, manager.bodyCollider.offset.y + (manager.bodyCollider.size.y * manager.crouchColliderHeightMult));
+            manager.bodyCollider.size *= new Vector2(1f, 1f/manager.crouchColliderHeightMult);
+        }
+
+        manager.isCrouching = false;
     }
 }

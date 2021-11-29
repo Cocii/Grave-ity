@@ -42,7 +42,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         rayCastOrigin = new Vector2(0f, (-(manager.bodyCollider.size.y / 2) + manager.bodyCollider.offset.y) * transform.localScale.y);
         capsuleCastOrigin.y = rayCastOrigin.y + (-(groundCapsuleCastSize.y  / 2) * transform.localScale.y);
         
-        wallbackRaycastDistance = manager.bodyCollider.size.x * 0.9f;
+        wallbackRaycastDistance = manager.bodyCollider.size.x * transform.localScale.y * 1.1f;
     }
 
     private void FixedUpdate() {
@@ -88,11 +88,11 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         if (hit) {
             manager.isBackOnWall = true;
 
-            if (!manager.wasBackOnWall) {
+            if (!manager.wasBackOnWall && !manager.isGrounded) {
                 manager.canWalljump = true;
             }
         }
-        else {
+        else { //TESTARE SE QUESTO ELSE NON SERVE
             if (manager.wasBackOnWall && !manager.isGrounded) {
                 manager.canWalljump = true;
             }
@@ -162,6 +162,11 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
     private void PlayerLand() {
             
+    }
+
+    private void PlayerWalljump() {
+        print("Walljump with force: " + jumpForce);
+        manager.canWalljump = false;
     }
 
     private void FlipFacingAndSprite() {
@@ -315,10 +320,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
                 print("Slope too high to walk: " + groundAngle);
                 
                 moveForce = Vector2.zero;
-                //if (Mathf.Abs(manager.body.velocity.x) > 0f) {
-                //    manager.body.velocity *= new Vector2(0.01f, 1f);
-                //    print("Limito velocità x su high slope");
-                //}
 
             }
 
@@ -334,12 +335,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             //float boost = Utilities.Map(groundAngle, 0, maxSlopeAngle, 1f, maxForceMultOnSlopes);
             //moveForce *= boost;
             //print(moveForce.magnitude + " magnitude - ground angle: " + groundAngle);
-           
-            
             
         }
-
-        
+  
     }
 
     private void AdjustSlopeMaterial(bool forceDefault) {
@@ -368,6 +366,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     private void OnDrawGizmos() {
         Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
         Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
+        Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackRaycastOrigin.x, wallbackRaycastOrigin.y) * transform.up.y;
+        Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawCube(capsuleOriginAdjst, groundCapsuleCastSize);
@@ -380,6 +380,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         Gizmos.DrawRay(transform.position, moveForce * 0.01f);
 
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance);
 
         Gizmos.color = Color.white;
     }
@@ -407,9 +409,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         if (jumpForce.magnitude == 0)
             return;
 
-        if(jumpForce.normalized != Vector2.up && jumpForce.normalized != Vector2.down) {
-            print("Walljump with force: " + jumpForce);
-            manager.canWalljump = false;
+        if(jumpForce.x != 0f) {
+            PlayerWalljump();
         }
 
         manager.body.AddForce(jumpForce);
