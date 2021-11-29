@@ -12,7 +12,7 @@ public class PlayerAnimations : MonoBehaviour
         Animator anim = manager.animator;
 
         float velocityX = Mathf.Abs(Mathf.Round((body.velocity.x / manager.defaultMaxMoveSpeed) * 10f) / 10f);
-        float velocityY = (Mathf.Round(body.velocity.y * 10f) / 10f);
+        float velocityY = (Mathf.Round(body.velocity.y * 10f) / 10f) * -Mathf.Sign(manager.currentGravity.y);
 
         anim.SetFloat("velocityX", velocityX);
         anim.SetFloat("velocityY", velocityY);
