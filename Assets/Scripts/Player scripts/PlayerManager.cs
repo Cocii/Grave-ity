@@ -54,7 +54,6 @@ public class PlayerManager : MonoBehaviour
     [Header("Dash settings")]
     public float dashForceMult = 1f;
     public float dashTime = 0.2f;
-    public float dashCheckDistance = 2f;
     public float dashCooldown = 1.5f;
 
     [Header("Crouch settings")]
