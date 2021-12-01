@@ -143,7 +143,7 @@ HingeJoint2D:
   serializedVersion: 4
   m_EnableCollision: 1
   m_ConnectedRigidBody: {fileID: 3931729381946608006}
-  m_BreakForce: 3000
+  m_BreakForce: 3250
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0.51}
@@ -225,7 +225,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.1173469, y: 0.0000021301648}
+  m_ConnectedAnchor: {x: 0.11734685, y: -0.0000009006116}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -319,7 +319,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.1084442, y: -0.00000003404242}
+  m_ConnectedAnchor: {x: 0.108444385, y: -0.00000003404248}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -413,7 +413,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.113777876, y: -0.00000003571675}
+  m_ConnectedAnchor: {x: 0.11377769, y: -0.00000003571669}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -507,7 +507,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.10312637, y: -0.000002477051}
+  m_ConnectedAnchor: {x: 0.10312599, y: -0.0000024703909}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -755,7 +755,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.088906914, y: -0.0000017592264}
+  m_ConnectedAnchor: {x: 0.088906854, y: 0.0000012713643}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -849,7 +849,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.101348765, y: 0.0000011124437}
+  m_ConnectedAnchor: {x: 0.101349086, y: -0.000001924992}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -942,7 +942,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 239.43535, y: 27.651289}
+  m_ConnectedAnchor: {x: -282.98032, y: 19.61129}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1074,8 +1074,8 @@ MonoBehaviour:
   - {fileID: 3931729381366627818}
   - {fileID: 3931729381946608056}
   m_Bounds:
-    m_Center: {x: 0.009997927, y: 0, z: 0}
-    m_Extent: {x: 0.11000173, y: 0.64000005, z: 0}
+    m_Center: {x: 0.009998091, y: 0.00000017881393, z: 0}
+    m_Extent: {x: 0.11000191, y: 0.64, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &3931729382720338196
@@ -1241,7 +1241,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.10490398, y: -0.000000028490991}
+  m_ConnectedAnchor: {x: 0.10490393, y: 0.0000030022845}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0

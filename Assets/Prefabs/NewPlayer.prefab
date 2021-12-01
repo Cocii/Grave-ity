@@ -279,20 +279,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabbedObj: {fileID: 0}
-  grabPositioningDistance: 1
-  grabCheckDistance: 0.3
+  grabPositioningDistance: 5
+  grabCheckDistance: 0
   propsLayer:
     serializedVersion: 2
     m_Bits: 129
   propsGround:
     serializedVersion: 2
     m_Bits: 65
-  grabMassMult: 0.1
-  grabReleaseDistanceOffset: 0.2
+  grabMassMult: 0.2
+  grabReleaseDistanceOffset: 1
   grabReleaseReactionForce: Infinity
   defaultBreakForce: Infinity
+  minimalBreakForce: 500
   lastDashTime: 0
-  propCheckDistance: 2
+  propCheckDistance: 0
 --- !u!114 &22507600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e5d640c0b891fb4399dc5b9e8cc50cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpoint: {fileID: 0}
+  checkpoints: []
 --- !u!95 &3245997715313147043
 Animator:
   serializedVersion: 3

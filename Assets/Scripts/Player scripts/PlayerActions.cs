@@ -18,6 +18,7 @@ public class PlayerActions : MonoBehaviour
     public float grabReleaseDistanceOffset = 0.001f;
     public float grabReleaseReactionForce = Mathf.Infinity;
     public float defaultBreakForce = Mathf.Infinity;
+    public float minimalBreakForce = 1000f;
 
     [Header("Dash info")]
     public float lastDashTime = 0f;
@@ -52,11 +53,44 @@ public class PlayerActions : MonoBehaviour
             return;
         }
 
-        //float distance = Vector3.Distance(transform.position, grabbedObj.transform.position);
-        //float distanceOffset = Mathf.Abs(distance - grabPositioningDistance);
-        //if (distanceOffset < 0.001) {
-        //    distanceOffset = 0f;
-        //}
+
+        float distance = Vector3.Distance(transform.position, grabbedObj.transform.position);
+        float distanceOffset = Mathf.Abs(distance - grabPositioningDistance);
+        if (distanceOffset < 0.001) {
+            distanceOffset = 0f;
+        }
+        print(distanceOffset);
+
+
+        Vector2 directionToPlayer = (transform.position - grabbedObj.transform.position);
+        Vector2 scale = grabbedObj.transform.lossyScale * 1.5f;
+        print("scale:" + scale);
+        Debug.DrawRay(grabbedObj.transform.position, manager.currentGravity.normalized * scale.y, Color.green);
+        RaycastHit2D hit = Physics2D.Raycast(grabbedObj.transform.position, manager.currentGravity.normalized, scale.y, propsGround);
+        if (hit) {
+            if(grabbedObjJoint.breakForce<defaultBreakForce)
+                grabbedObjJoint.breakForce = defaultBreakForce;
+            return;
+        }
+        else {
+            print("Center not grounded, keep checking");
+            Vector3 pointTowardsPlayer = grabbedObj.transform.position + new Vector3(grabbedObjJoint.distance * 0.25f, 0f, 0f)*Mathf.Sign(directionToPlayer.x);
+
+            hit = Physics2D.Raycast(pointTowardsPlayer, manager.currentGravity.normalized, scale.y, propsGround);
+            if (hit) {
+                return;
+            }
+            else {
+                print("Grabbed not grounded on player side");
+                //TODO: mettere break force al minimo che regga la vent
+                grabbedObjJoint.breakForce = minimalBreakForce;
+                //ReleaseGrab();
+            }
+        }
+
+        //--------------------------------------
+
+        
 
         //float grabReactionForce = grabbedObjJoint.reactionForce.magnitude;
 
@@ -67,29 +101,9 @@ public class PlayerActions : MonoBehaviour
         //    ReleaseGrab();
         //}
 
-        //--------------------------------------
 
-        Vector2 directionToPlayer = (transform.position - grabbedObj.transform.position);
-        Vector2 scale = grabbedObj.transform.lossyScale * 1.5f;
-        print("scale:" + scale);
-        Debug.DrawRay(grabbedObj.transform.position, manager.currentGravity.normalized * scale.y, Color.green);
-        RaycastHit2D hit = Physics2D.Raycast(grabbedObj.transform.position, manager.currentGravity.normalized, scale.y, propsGround);
-        if (hit) {
-            return;
-        }
-        else {
-            print("Center not grounded, keep checking");
-            Vector3 pointTowardsPlayer = grabbedObj.transform.position + new Vector3(grabbedObjJoint.distance * 0.35f, 0f, 0f)*Mathf.Sign(directionToPlayer.x);
 
-            hit = Physics2D.Raycast(pointTowardsPlayer, manager.currentGravity.normalized, scale.y, propsGround);
-            if (hit) {
-                return;
-            }
-            else {
-                print("Grabbed not grounded on player side");
-                ReleaseGrab();
-            }
-        }
+
     }
 
     private void CheckDash() {
