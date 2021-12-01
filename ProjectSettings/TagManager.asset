@@ -15,6 +15,7 @@ TagManager:
   - BreakablePiece
   - Death Trigger
   - Checkpoint
+  - FadeScreen
   layers:
   - Default
   - TransparentFX

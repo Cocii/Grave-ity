@@ -21,6 +21,11 @@ public class Checkpoint : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        ResetCheckpoints();
+    }
+
     public void ResetCheckpoints()
     {
         PlayerPrefs.SetInt("currentCheckPoint", 0);
