@@ -16,6 +16,7 @@ TagManager:
   - Death Trigger
   - Checkpoint
   - FadeScreen
+  - LevelLoader
   layers:
   - Default
   - TransparentFX

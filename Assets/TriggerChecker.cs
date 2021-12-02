@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class TriggerChecker : MonoBehaviour
 {
-
     public GameObject[] checkpoints;
     private int tempCheckPoint;
 
@@ -56,17 +55,20 @@ public class TriggerChecker : MonoBehaviour
             //Fade Screen
             //...
             GameObject fadeScreen = GameObject.FindGameObjectWithTag("FadeScreen");
+            /*
             if(fadeScreen != null)
             {
                 Image _img = fadeScreen.GetComponent<Image>();
                 StartCoroutine(FadeIn(_img, 10f));
 
             }
+            */
 
             //fadeScreen.GetComponent<Image>().enabled = true;
 
             StartCoroutine(DelayReset());
-            StartCoroutine(LoadScene("GameScene"));
+            LevelLoader loader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
+            loader.ReloadScene();
 
         }
     }
@@ -123,7 +125,7 @@ public class TriggerChecker : MonoBehaviour
 
     IEnumerator DelayReset()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
         GravityManager.instance.ResetGravity();
         transform.position = checkpoints[PlayerPrefs.GetInt("currentCheckPoint", 0)].transform.position;
     }
