@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[SerializeField]
+public enum GroundTypeEnum { 
+    grass, 
+    glass, 
+    metal 
+}
+
 public class PlayerManager : MonoBehaviour
 {
     [Header("References")]
@@ -19,6 +26,9 @@ public class PlayerManager : MonoBehaviour
     public Vector2 currentGravity;
     public Vector2 currentGravityNormal;
     public float currentGravityRatio;
+
+    [Header("Ground info")]
+    public GroundTypeEnum groundType;
 
     [Header("Rotation settings")]
     public float maxRotationSpeed;
@@ -79,6 +89,8 @@ public class PlayerManager : MonoBehaviour
     [Header("Materials")]
     public PhysicsMaterial2D fullFrictionMaterial;
     public PhysicsMaterial2D defaultPhysicsMaterial;
+
+    
 
     private void Awake() {
         if (instance == null) {

@@ -19,7 +19,12 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     public float maxSlopeAngle;
     public float lateralOffset = 0f;
     public float groundRayCastDistance;
-    
+
+    [Header("Ground type settings")]
+    public const string grassSurfaceTag = "GrassSurface";
+    public const string glassSurfaceTag = "GlassSurface";
+    public const string metalSurfaceTag = "MetalSurface";
+
     [Header("Wallback check info")]
     public Vector2 wallbackRaycastOrigin;
     public float wallbackRaycastDistance;
@@ -56,7 +61,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         gravityForce = manager.currentGravity;
 
         RotateTowardsGravity();
-        
+
         CheckSpriteFlip();
         CheckRotationLock();
 
@@ -150,6 +155,38 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         groundAngle = Vector2.Angle(groundNormal, transform.up.normalized);
         
         manager.canWalljump = false;
+
+        manager.groundType = DetectGroundType(hit.transform.gameObject.tag);
+    }
+
+    private GroundTypeEnum DetectGroundType(string tag) {
+        GroundTypeEnum detected;
+
+        //print("detecting with: " + tag);
+        switch (tag) {
+            case grassSurfaceTag:
+                //print("grass detected");
+                detected = GroundTypeEnum.grass;
+                break;
+
+            case glassSurfaceTag:
+                //print("glass detected");
+                detected = GroundTypeEnum.glass;
+                break;
+
+            case metalSurfaceTag:
+                //print("metal detected");
+                detected = GroundTypeEnum.metal;
+                break;
+
+            default:
+                print("Ground tag not recognized, putting it to grass");
+                detected = GroundTypeEnum.grass;
+                break;
+        }
+
+
+        return detected;
     }
 
     private void GroundNotHit() {
@@ -200,6 +237,17 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Vector2 checkVector = manager.input.GetMoveInput;
         if(checkVector==Vector2.zero)
             checkVector = manager.body.velocity;
+
+        if (manager.isGrabbing) {
+            Vector2 grabDir = manager.actions.grabbedObjPlayerSide;
+            if((manager.isFacingRight && grabDir==Vector2.right) || (!manager.isFacingRight && grabDir == Vector2.left)) {
+                return;
+            }
+            else {
+                FlipFacingAndSprite();
+                return;
+            }
+        }
 
         if (gravityForce.normalized == Vector2.down) {
             if ((checkVector.x > 0.01f) && !manager.isFacingRight) {
@@ -398,12 +446,10 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             manager.body.velocity *= new Vector2(0f, 1f);
         }
 
-
         //print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude);
         
         manager.body.AddForce(moveForce);
         
-
         moveForce = Vector2.zero;
     }
 

@@ -16,6 +16,9 @@ TagManager:
   - Death Trigger
   - Checkpoint
   - FadeScreen
+  - MetalSurface
+  - GrassSurface
+  - GlassSurface
   layers:
   - Default
   - TransparentFX

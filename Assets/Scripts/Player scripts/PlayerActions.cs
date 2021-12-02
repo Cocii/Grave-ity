@@ -10,6 +10,7 @@ public class PlayerActions : MonoBehaviour
     public GameObject grabbedObj;
     public float grabPositioningDistance;
     public float grabCheckDistance;
+    public Vector2 grabbedObjPlayerSide;
 
     [Header("Grab settings")]
     public LayerMask propsLayer;
@@ -54,12 +55,12 @@ public class PlayerActions : MonoBehaviour
         }
 
 
-        float distance = Vector3.Distance(transform.position, grabbedObj.transform.position);
-        float distanceOffset = Mathf.Abs(distance - grabPositioningDistance);
-        if (distanceOffset < 0.001) {
-            distanceOffset = 0f;
-        }
-        print(distanceOffset);
+        //float distance = Vector3.Distance(transform.position, grabbedObj.transform.position);
+        //float distanceOffset = Mathf.Abs(distance - grabPositioningDistance);
+        //if (distanceOffset < 0.001) {
+        //    distanceOffset = 0f;
+        //}
+        //print(distanceOffset);
 
 
         Vector2 directionToPlayer = (transform.position - grabbedObj.transform.position);
@@ -68,8 +69,7 @@ public class PlayerActions : MonoBehaviour
         Debug.DrawRay(grabbedObj.transform.position, manager.currentGravity.normalized * scale.y, Color.green);
         RaycastHit2D hit = Physics2D.Raycast(grabbedObj.transform.position, manager.currentGravity.normalized, scale.y, propsGround);
         if (hit) {
-            if(grabbedObjJoint.breakForce<defaultBreakForce)
-                grabbedObjJoint.breakForce = defaultBreakForce;
+            
             return;
         }
         else {
@@ -78,6 +78,9 @@ public class PlayerActions : MonoBehaviour
 
             hit = Physics2D.Raycast(pointTowardsPlayer, manager.currentGravity.normalized, scale.y, propsGround);
             if (hit) {
+                if (grabbedObjJoint.breakForce < defaultBreakForce)
+                    grabbedObjJoint.breakForce = defaultBreakForce;
+
                 return;
             }
             else {
@@ -142,6 +145,7 @@ public class PlayerActions : MonoBehaviour
 
             //grabPositioningDistance = (float)(manager.bodyCollider.size.x * 0.75 * transform.localScale.x) + (hit.transform.localScale.x * 0.5f);
             grabPositioningDistance = Vector3.Distance(transform.position, hit.transform.position);
+            
 
             AttachGrabbedObject(hit.transform.gameObject);
         }
@@ -164,6 +168,7 @@ public class PlayerActions : MonoBehaviour
 
         grabbedObj.GetComponent<Rigidbody2D>().mass = grabbedObj.GetComponent<Rigidbody2D>().mass * grabMassMult;
         manager.isGrabbing = true;
+        grabbedObjPlayerSide = grabbedObj.transform.position.x > transform.position.x ? Vector2.right : Vector2.left;
     }
 
     public void ReleaseGrab() {
