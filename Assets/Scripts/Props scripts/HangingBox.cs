@@ -24,4 +24,5 @@ public class HangingBox : MonoBehaviour
             body.AddForce(direction * forceMagnitude);
         }
     }
+
 }
