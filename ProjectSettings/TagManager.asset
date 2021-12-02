@@ -17,6 +17,9 @@ TagManager:
   - Checkpoint
   - FadeScreen
   - LevelLoader
+  - MetalSurface
+  - GrassSurface
+  - GlassSurface
   layers:
   - Default
   - TransparentFX
