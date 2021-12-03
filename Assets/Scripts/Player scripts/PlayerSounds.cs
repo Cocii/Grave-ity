@@ -10,6 +10,10 @@ public class PlayerSounds : MonoBehaviour
     public AudioClip[] glassStepAudioClips;
     public AudioClip[] metalStepAudioClips;
 
+    public AudioSource gravityChangeAudioSource;
+    public AudioClip gravityWeakerClip;
+    public AudioClip gravityStrongerClip;
+
     private void Start() {
         manager = PlayerManager.instance;
     }
@@ -37,7 +41,17 @@ public class PlayerSounds : MonoBehaviour
         }
     }
 
-    public AudioClip SelectRandomFrom(AudioClip[] possibilities) {
+    private AudioClip SelectRandomFrom(AudioClip[] possibilities) {
         return possibilities[Random.RandomRange(0, possibilities.Length)];
+    }
+
+    public void PlayGravvityWeaker() {
+        gravityChangeAudioSource.clip = gravityWeakerClip;
+        gravityChangeAudioSource.Play();
+    }
+
+    public void PlayGravvityStronger() {
+        gravityChangeAudioSource.clip = gravityStrongerClip;
+        gravityChangeAudioSource.Play();
     }
 }

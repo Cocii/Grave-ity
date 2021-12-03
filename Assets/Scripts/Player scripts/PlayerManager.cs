@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerMovement movement;
     public PlayerResources resources;
     public PlayerActions actions;
+    public PlayerSounds sound;
 
     [Header("Gravity info")]
     public Vector2 currentGravity;

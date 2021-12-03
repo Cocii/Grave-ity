@@ -86,9 +86,11 @@ public class InputReader : MonoBehaviour
         }
         if (inputGravityStrongerD && !inputBlocked) {
             GravityManager.instance.StrongerGravity();
+            PlayerManager.instance.sound.PlayGravvityStronger();
         }
         if (inputGravityWeakerD && !inputBlocked) {
             GravityManager.instance.WeakerGravity();
+            PlayerManager.instance.sound.PlayGravvityWeaker();
         }
 
         //if (inputDashD && !inputBlocked) {
