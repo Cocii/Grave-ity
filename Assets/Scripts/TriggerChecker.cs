@@ -42,7 +42,7 @@ public class TriggerChecker : MonoBehaviour
            
             if (index > previousIndex)
             {
-                //I'm saving every checkpoint as an index in playerprefs, they are ordered in scene
+                
                 tempCheckPoint = previousIndex + 1;
                 PlayerPrefs.SetInt("currentCheckPoint", tempCheckPoint);
             }
@@ -52,75 +52,22 @@ public class TriggerChecker : MonoBehaviour
 
         if (collision.tag == "Death Trigger")
         {
-            //Fade Screen
-            //...
-            GameObject fadeScreen = GameObject.FindGameObjectWithTag("FadeScreen");
-            /*
-            if(fadeScreen != null)
-            {
-                Image _img = fadeScreen.GetComponent<Image>();
-                StartCoroutine(FadeIn(_img, 10f));
-
-            }
-            */
-
-            //fadeScreen.GetComponent<Image>().enabled = true;
 
             StartCoroutine(DelayReset());
             LevelLoader loader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
             loader.ReloadScene();
 
         }
-    }
 
-    IEnumerator FadeImage(Image img, bool fadeAway)
-    {
-        // fade from opaque to transparent
-        if (fadeAway)
+        if (collision.tag == "EndLevel")
         {
-            // loop over 1 second backwards
-            for (float i = 1; i >= 0; i -= Time.deltaTime)
-            {
-                // set color with i as alpha
-                img.color = new Color(1, 1, 1, i);
-                yield return null;
-            }
-        }
-        // fade from transparent to opaque
-        else
-        {
-            // loop over 1 second
-            for (float i = 0; i <= 1; i += Time.deltaTime)
-            {
-                // set color with i as alpha
-                img.color = new Color(1, 1, 1, i);
-                yield return null;
-            }
-        }
-    }
 
-    IEnumerator FadeIn(Image image, float FadeRate)
-    {
-        float targetAlpha = 1.0f;
-        Color curColor = image.color;
-        while (Mathf.Abs(curColor.a - targetAlpha) > 0.0001f)
-        {
-            Debug.Log(image.material.color.a);
-            curColor.a = Mathf.Lerp(curColor.a, targetAlpha, FadeRate * Time.deltaTime);
-            image.color = curColor;
-            yield return null;
+            //StartCoroutine(DelayReset());
+            LevelLoader loader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
+            loader.LoadMainMenuScene();
+            
+
         }
-
-        curColor.a = targetAlpha; 
-        image.color = curColor;
-
-    }
-    IEnumerator LoadScene(string scene)
-    {
-        
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(scene);
-        
     }
 
     IEnumerator DelayReset()

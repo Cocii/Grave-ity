@@ -20,6 +20,10 @@ TagManager:
   - MetalSurface
   - GrassSurface
   - GlassSurface
+  - WeightPlatform
+  - Door
+  - DoorTarget
+  - EndLevel
   layers:
   - Default
   - TransparentFX

@@ -33,6 +33,11 @@ public class GravityManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void ManualDestroy()
+    {
+        Destroy(gameObject);
+    }
+
     private void Start() {
         gravityMagnitude = defaultGravityMagnitude;
         physicsGravity = gravityMagnitude * gravityDirection;

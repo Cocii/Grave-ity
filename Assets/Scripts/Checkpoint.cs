@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    private static Checkpoint instance;
+    public static Checkpoint instance;
 
     private void Awake()
     {
@@ -21,6 +21,11 @@ public class Checkpoint : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void ManualDestroy()
+    {
+        Destroy(gameObject);
+    }
+
     private void Start()
     {
         ResetCheckpoints();
@@ -32,12 +37,4 @@ public class Checkpoint : MonoBehaviour
         Debug.Log(PlayerPrefs.GetInt("currentCheckPoint", 0));
     }
 
-    //CALL THIS IF YOU FINISH THE LEVEL
-    public void ManuallyDestroy()
-    {
-        if(instance)
-        {
-            Destroy(this.gameObject);
-        }
-    }
 }

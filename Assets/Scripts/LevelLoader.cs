@@ -28,6 +28,9 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadMainMenuScene()
     {
+        PlayerManager.instance.ManualDestroy();
+        GravityManager.instance.ManualDestroy();
+        Checkpoint.instance.ManualDestroy();
         StartCoroutine(LoadLevel(0));
     }
 

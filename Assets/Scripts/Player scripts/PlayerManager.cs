@@ -106,6 +106,11 @@ public class PlayerManager : MonoBehaviour
         this.gameObject.transform.parent = null;
     }
 
+    public void ManualDestroy()
+    {
+        Destroy(gameObject);
+    }
+
     private void Start() {
         AdaptParametersToGravity();
     }
