@@ -25,5 +25,7 @@ public class PlayerAnimations : MonoBehaviour
         float grabVelocityX = velocityX * manager.actions.grabbedObjPlayerSide.x;
         anim.SetFloat("grabVelocityX", grabVelocityX);
 
+        float grabHeight = manager.actions.grabbedHeight;
+        anim.SetFloat("grabHeight", grabHeight);
     }
 }

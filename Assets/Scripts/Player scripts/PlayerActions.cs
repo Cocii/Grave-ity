@@ -11,6 +11,7 @@ public class PlayerActions : MonoBehaviour
     public float grabPositioningDistance;
     public float grabCheckDistance;
     public Vector2 grabbedObjPlayerSide;
+    public float grabbedHeight;
 
     [Header("Grab settings")]
     public LayerMask propsLayer;
@@ -65,7 +66,7 @@ public class PlayerActions : MonoBehaviour
 
         Vector2 directionToPlayer = (transform.position - grabbedObj.transform.position);
         Vector2 scale = grabbedObj.transform.lossyScale * 1.5f;
-        print("scale:" + scale);
+        //print("scale:" + scale);
         Debug.DrawRay(grabbedObj.transform.position, manager.currentGravity.normalized * scale.y, Color.green);
         RaycastHit2D hit = Physics2D.Raycast(grabbedObj.transform.position, manager.currentGravity.normalized, scale.y, propsGround);
         if (hit) {
@@ -141,7 +142,7 @@ public class PlayerActions : MonoBehaviour
 
         hit = Physics2D.Raycast(transform.position, direction.normalized, distance, propsLayer);
         if (hit) {
-            print("Grab hit: " + hit.collider);
+            //print("Grab hit: " + hit.collider);
 
             //grabPositioningDistance = (float)(manager.bodyCollider.size.x * 0.75 * transform.localScale.x) + (hit.transform.localScale.x * 0.5f);
             grabPositioningDistance = Vector3.Distance(transform.position, hit.transform.position);
@@ -169,6 +170,8 @@ public class PlayerActions : MonoBehaviour
         grabbedObj.GetComponent<Rigidbody2D>().mass = grabbedObj.GetComponent<Rigidbody2D>().mass * grabMassMult;
         manager.isGrabbing = true;
         grabbedObjPlayerSide = grabbedObj.transform.position.x > transform.position.x ? Vector2.right : Vector2.left;
+        //print("lossy scale: " + grabbedObj.transform.lossyScale);
+        grabbedHeight = grabbedObj.transform.lossyScale.y;
     }
 
     public void ReleaseGrab() {
@@ -185,6 +188,7 @@ public class PlayerActions : MonoBehaviour
         }
 
         grabbedObj = null;
+        grabbedHeight = 0f;
     }
 
     //DASH-----------------------------

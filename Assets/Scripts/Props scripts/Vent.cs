@@ -6,6 +6,7 @@ public class Vent : MonoBehaviour
 {
     GravityManager gManager;
     public float raiseHeight;
+    public float defaultForceMagnitude;
     public float forceMagnitude;
     public LayerMask layerToAffect;
     public Rigidbody2D targetBody;
@@ -27,6 +28,8 @@ public class Vent : MonoBehaviour
     }
 
     void Update() {
+        forceMagnitude = (2 - gManager.gravityRatio) * defaultForceMagnitude;
+
         Vector2 direction = transform.up;
 
         Debug.DrawRay(transform.position, direction * raiseHeight, Color.cyan);

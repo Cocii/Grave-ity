@@ -303,36 +303,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1090705979290935535}
     m_Position: {x: 450, y: 260, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -3305356896501924369}
-    m_Position: {x: 101.81152, y: 648.2468, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -9155687346012732478}
-    m_Position: {x: 111.81152, y: 658.2468, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 7195596381371346248}
-    m_Position: {x: 121.81152, y: 668.2468, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -805253260748907450}
-    m_Position: {x: 131.81152, y: 678.2468, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -7826108802649005637}
-    m_Position: {x: 141.81152, y: 688.2468, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -1455900544552342974}
-    m_Position: {x: 151.81152, y: 698.2468, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -7408633940887175756}
-    m_Position: {x: 161.81152, y: 708.2468, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -4104997170318682759}
-    m_Position: {x: 171.81152, y: 718.2468, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -3812602700525077366}
-    m_Position: {x: 181.81152, y: 728.2468, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 759544758037061724}
-    m_Position: {x: 191.81152, y: 738.2468, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: -1433130080820619356}
@@ -781,6 +751,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: grabVelocityX
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: grabHeight
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
