@@ -116,6 +116,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void Start() {
+        Application.targetFrameRate = 60;
         AdaptParametersToGravity();
     }
 
