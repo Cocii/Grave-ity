@@ -27,17 +27,17 @@ public class PlayerResources : MonoBehaviour
         float amount = 0f;
 
         if (gravity.magnitude > GravityManager.instance.defaultGravityMagnitude) {
-            amount -= strongerGravityReductionAmount;
+            amount -= strongerGravityReductionAmount * Time.deltaTime;
         }
         else if (gravity.magnitude < GravityManager.instance.defaultGravityMagnitude) {
-            amount -= weakerGravityReductionAmount;
+            amount -= weakerGravityReductionAmount * Time.deltaTime;
         }
 
         if (gravity.normalized != Vector2.down) {
-            amount -= upsideGravityReductionAmount;
+            amount -= upsideGravityReductionAmount * Time.deltaTime;
         } 
         else if (gravity.magnitude == GravityManager.instance.defaultGravityMagnitude) {
-            amount += recoverIncreaseAmount;
+            amount += recoverIncreaseAmount * Time.deltaTime;
         }
 
         if(active)

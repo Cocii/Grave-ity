@@ -15,6 +15,8 @@ public class TriggerChecker : MonoBehaviour
     void Start()
     {
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        currentCheckpoint = checkpoints[0];
+        PlayerPrefs.SetInt("currentCheckPoint", 0);
     }
 
     // Update is called once per frame
@@ -27,32 +29,19 @@ public class TriggerChecker : MonoBehaviour
     {
         if (collision.tag == "Checkpoint")
         {
-            int index = 0;
-            int previousIndex = PlayerPrefs.GetInt("currentCheckPoint", 0);
-            currentCheckpoint = checkpoints[previousIndex];          
-
-            for (int i = 0; i < checkpoints.Length; i++)
-            {
-                if (GameObject.ReferenceEquals(checkpoints[i], collision.gameObject))
-                {
-                    index = i;
-                    break;
-                }
-            }
-           
-            if (index > previousIndex)
-            {
-                
-                tempCheckPoint = previousIndex + 1;
-                PlayerPrefs.SetInt("currentCheckPoint", tempCheckPoint);
-            }
 
             
+            if (!GameObject.ReferenceEquals(currentCheckpoint, collision.gameObject))
+            {
+                  currentCheckpoint = collision.gameObject;
+            }
+            
+
         }
 
         if (collision.tag == "Death Trigger")
         {
-
+            
             StartCoroutine(DelayReset());
             LevelLoader loader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
             loader.ReloadScene();
@@ -70,10 +59,33 @@ public class TriggerChecker : MonoBehaviour
         }
     }
 
+    public void SaveCheckpoint(Collider2D _col)
+    {
+        int index = 0;
+        int previousIndex = PlayerPrefs.GetInt("currentCheckPoint", 0);
+        currentCheckpoint = checkpoints[previousIndex];
+
+        for (int i = 0; i < checkpoints.Length; i++)
+        {
+            if (GameObject.ReferenceEquals(checkpoints[i], _col.gameObject))
+            {
+                index = i;
+                break;
+            }
+        }
+
+        if (index > previousIndex)
+        {
+
+            tempCheckPoint = previousIndex + 1;
+            PlayerPrefs.SetInt("currentCheckPoint", tempCheckPoint);
+        }
+    }
+
     IEnumerator DelayReset()
     {
         yield return new WaitForSeconds(0.8f);
         GravityManager.instance.ResetGravity();
-        transform.position = checkpoints[PlayerPrefs.GetInt("currentCheckPoint", 0)].transform.position;
+        transform.position = currentCheckpoint.transform.position;
     }
 }
