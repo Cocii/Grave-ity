@@ -49,6 +49,10 @@ public class PlayerResources : MonoBehaviour
         }
     }
 
+    private void FixedUpdate() {
+        
+    }
+
     private void Reduce(float amount) {
         currentGravityResourceAmount -= amount;
         currentGravityResourceAmount = Mathf.Clamp(currentGravityResourceAmount, 0f, maxGravityResourceAmount);

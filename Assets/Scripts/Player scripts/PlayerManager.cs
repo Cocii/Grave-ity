@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [SerializeField]
 public enum GroundTypeEnum { 
@@ -22,6 +23,8 @@ public class PlayerManager : MonoBehaviour
     public PlayerResources resources;
     public PlayerActions actions;
     public PlayerSounds sound;
+
+    public Text debugText;
 
     [Header("Gravity info")]
     public Vector2 currentGravity;

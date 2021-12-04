@@ -31,7 +31,7 @@ public class PlayerActions : MonoBehaviour
     private void Start() {
         manager = PlayerManager.instance;
 
-        grabCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * 0.7f;
+        grabCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * 1f;
         propCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * 1.75f;
     }
 
