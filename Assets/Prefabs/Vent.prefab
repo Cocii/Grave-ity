@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raiseHeight: 19.28
+  defaultForceMagnitude: 1270
   forceMagnitude: 1900
   layerToAffect:
     serializedVersion: 2
