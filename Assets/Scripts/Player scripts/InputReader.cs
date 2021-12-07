@@ -25,6 +25,7 @@ public class InputReader : MonoBehaviour
     public KeyCode grabKey;
     public KeyCode switchPowerKey;
     public KeyCode crouchKey;
+    public KeyCode menuKey;
 
     private bool inputJump;
     private bool inputJumpD;
@@ -34,6 +35,7 @@ public class InputReader : MonoBehaviour
     private bool inputDashD;
     private bool inputCrouchD;
     private bool inputCrouchU;
+    private bool inputMenuD;
 
     //private float lastTimeInput;
     //public float doubleClickThreshold;
@@ -78,6 +80,8 @@ public class InputReader : MonoBehaviour
         inputDashD = Input.GetKeyDown(dashKey);
         inputCrouchD = Input.GetKeyDown(crouchKey);
         inputCrouchU = Input.GetKeyUp(crouchKey);
+
+        inputMenuD = Input.GetKeyDown(menuKey);
     }
 
     void ExcecuteInputActions() {
@@ -123,6 +127,10 @@ public class InputReader : MonoBehaviour
             PlayerManager.instance.actions.Crouch();
         }else if (inputCrouchU && !inputBlocked) {
             PlayerManager.instance.actions.CrouchStop();
+        }
+
+        if (inputMenuD) {
+            GameMenuManager.instance.SwitchState();
         }
     }
 

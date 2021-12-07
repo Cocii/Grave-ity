@@ -76,8 +76,8 @@ public class PlayerManager : MonoBehaviour
     public float crouchColliderHeightMult = 0.5f;
 
     [Header("Control bools")]
-    public bool isGrounded;
-    public bool wasGrounded;
+    public bool isGrounded = true;
+    public bool wasGrounded = true;
     public bool isFacingRight = true;
     public bool isRotating;
     public bool wasRotating;
