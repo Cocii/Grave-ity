@@ -21,9 +21,13 @@ public class PlayerActions : MonoBehaviour
     public float grabReleaseReactionForce = Mathf.Infinity;
     public float defaultBreakForce = Mathf.Infinity;
     public float minimalBreakForce = 1000f;
+    public float grabDistanceMult = 1f;
 
     [Header("Dash info")]
     public float lastDashTime = 0f;
+
+    [Header("Dash settings")]
+    public float dashDistanceMult = 1.75f;
 
     [Header("General info")]
     public float propCheckDistance = 2f;
@@ -31,8 +35,8 @@ public class PlayerActions : MonoBehaviour
     private void Start() {
         manager = PlayerManager.instance;
 
-        grabCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * 1f;
-        propCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * 1.75f;
+        grabCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * grabDistanceMult;
+        propCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * dashDistanceMult;
     }
 
     private void Update() {
@@ -44,6 +48,21 @@ public class PlayerActions : MonoBehaviour
 
     private void CheckGrabbedObj() {
         if (grabbedObj == null) {
+
+            Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+            float distance = grabCheckDistance;
+
+            if (manager.characterController.groundAngle != 0f) {
+                direction = new Vector2(1, 1) * -manager.characterController.groundNormalPerpendicular * direction.x * Mathf.Sign(transform.right.x);
+                //direction = (new Vector2(direction.x, 1) * (manager.characterController.groundNormalPerpendicular) * Mathf.Sign(-manager.currentGravity.y)).normalized;
+                distance *= 1.75f;
+            }
+
+            Debug.DrawRay(transform.position, direction.normalized * distance, Color.red);
+
+
+
+
             return;
         }
             
@@ -136,7 +155,7 @@ public class PlayerActions : MonoBehaviour
         float distance = grabCheckDistance;
 
         if(manager.characterController.groundAngle != 0f) {
-            direction = new Vector2(1, 1) * -(manager.characterController.groundNormalPerpendicular) * direction.x;
+            direction = new Vector2(1, 1) * -manager.characterController.groundNormalPerpendicular * direction.x * Mathf.Sign(transform.right.x);
             distance *= 1.75f;
         }
 

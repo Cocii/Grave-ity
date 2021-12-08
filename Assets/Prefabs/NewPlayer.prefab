@@ -43,8 +43,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.15
-  m_Pitch: 1
+  m_Volume: 0.215
+  m_Pitch: 0.1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -87,7 +87,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -102,7 +102,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -170,7 +170,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.15
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -397,13 +397,13 @@ MonoBehaviour:
   distanceRotationMin: 4
   distanceRotationMax: 1.25
   rotationSpeed: 500
-  moveForceMagnitude: 1000
+  moveForceMagnitude: 2000
   currentMaxMoveSpeed: 12
   defaultMaxMoveSpeed: 12
   weakGravityMoveSpeedMult: 0.75
   strongGravityMoveSpeedMult: 0.5
   moveForceMultOnSlopes: 1.3
-  moveAirForceMagnitude: 500
+  moveAirForceMagnitude: 2000
   gravityBoostMult: 8
   jumpForceMagnitude: 30000
   currentJumpBoostMult: 0.5
@@ -412,7 +412,7 @@ MonoBehaviour:
   jumpBoostVelocityThreshold: 1.5
   wallJumpDirection: {x: 0.3, y: 0.9}
   walljumpMult: 2
-  dashForceMult: 1
+  dashForceMult: 0.5
   dashTime: 0.2
   dashCooldown: 1
   crouchMoveSpeedMult: 0.5
@@ -430,7 +430,6 @@ MonoBehaviour:
   isGrabbing: 0
   isDashing: 0
   isCrouching: 0
-  inPause: 0
   fullFrictionMaterial: {fileID: 6200000, guid: 4abcc7bf5f92ffc4586df4b5928c8147, type: 2}
   defaultPhysicsMaterial: {fileID: 6200000, guid: 10a435132dcd33c459592c36251ecfe3, type: 2}
 --- !u!114 &7195747485142191347
@@ -534,11 +533,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxGravityResourceAmount: 1000
   currentGravityResourceAmount: 0
-  upsideGravityReductionAmount: 3.4
-  weakerGravityReductionAmount: 3
-  strongerGravityReductionAmount: 15
-  recoverIncreaseAmount: 20
-  active: 0
+  upsideGravityReductionAmount: 200
+  weakerGravityReductionAmount: 200
+  strongerGravityReductionAmount: 550
+  recoverIncreaseAmount: 630
+  active: 1
 --- !u!114 &7883946859703793807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,7 +656,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 59889b077185e744c84bdec523e62f0f, type: 3}
   gravityChangeAudioSource: {fileID: 6403734297725080883}
   gravityWeakerClip: {fileID: 8300000, guid: 0932df9e66758624e8b18a73c825b03c, type: 3}
-  gravityStrongerClip: {fileID: 8300000, guid: cad9a55ab659c7449be0165125b98897, type: 3}
+  gravityStrongerClip: {fileID: 8300000, guid: 0932df9e66758624e8b18a73c825b03c, type: 3}
 --- !u!1001 &3245997715104304413
 PrefabInstance:
   m_ObjectHideFlags: 0

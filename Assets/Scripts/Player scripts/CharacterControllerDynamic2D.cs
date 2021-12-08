@@ -326,7 +326,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             speed = Utilities.Map(distance, manager.distanceRotationMin, manager.distanceRotationMax, manager.minRotationSpeed, manager.maxRotationSpeed);
         }
 
-        print("Speed is " + speed + " for distance " + distance);
+        //print("Speed is " + speed + " for distance " + distance);
         return speed;
     }
 
@@ -356,7 +356,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         }
 
         //manager.isOnHighSlope = false;
-        SlopeAdjustement();
+        //SlopeAdjustement();
 
     }
 
