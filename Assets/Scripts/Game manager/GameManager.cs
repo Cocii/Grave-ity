@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public int framerate = 60;
+
     public AudioSource[] ambientAudioSources;
     public AudioSource[] playerAudioSources;
     public AudioSource[] gravityChangeAudioSources;
@@ -22,5 +24,7 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        Application.targetFrameRate = framerate;
     }
 }

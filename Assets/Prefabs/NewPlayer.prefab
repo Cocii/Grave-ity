@@ -397,13 +397,13 @@ MonoBehaviour:
   distanceRotationMin: 4
   distanceRotationMax: 1.25
   rotationSpeed: 500
-  moveForceMagnitude: 2000
+  moveForceMagnitude: 500
   currentMaxMoveSpeed: 12
   defaultMaxMoveSpeed: 12
   weakGravityMoveSpeedMult: 0.75
   strongGravityMoveSpeedMult: 0.5
   moveForceMultOnSlopes: 1.3
-  moveAirForceMagnitude: 2000
+  moveAirForceMagnitude: 500
   gravityBoostMult: 8
   jumpForceMagnitude: 30000
   currentJumpBoostMult: 0.5
@@ -411,8 +411,8 @@ MonoBehaviour:
   weakGravityJumpBoostMult: 0.85
   jumpBoostVelocityThreshold: 1.5
   wallJumpDirection: {x: 0.3, y: 0.9}
-  walljumpMult: 2
-  dashForceMult: 0.5
+  walljumpForceMult: 2
+  dashForceMult: 1.25
   dashTime: 0.2
   dashCooldown: 1
   crouchMoveSpeedMult: 0.5
@@ -430,8 +430,6 @@ MonoBehaviour:
   isGrabbing: 0
   isDashing: 0
   isCrouching: 0
-  fullFrictionMaterial: {fileID: 6200000, guid: 4abcc7bf5f92ffc4586df4b5928c8147, type: 2}
-  defaultPhysicsMaterial: {fileID: 6200000, guid: 10a435132dcd33c459592c36251ecfe3, type: 2}
 --- !u!114 &7195747485142191347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,7 +451,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 193
   groundCapsuleCastSize: {x: 1.475, y: 0.1}
-  maxSlopeAngle: 70
+  maxSlopeAngle: 60
   lateralOffset: 0
   groundRayCastDistance: 0.3
   wallbackRaycastOrigin: {x: 0, y: 0}
@@ -570,7 +568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabbedObj: {fileID: 0}
-  grabPositioningDistance: 5
+  grabPositioningDistance: 0
   grabCheckDistance: 0
   grabbedObjPlayerSide: {x: 0, y: 0}
   grabbedHeight: 0
@@ -581,11 +579,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65
   grabMassMult: 0.2
-  grabReleaseDistanceOffset: 1
-  grabReleaseReactionForce: Infinity
   defaultBreakForce: Infinity
   minimalBreakForce: 500
+  grabDistanceMult: 1.35
+  grabDistanceMultOnSlope: 1.75
   lastDashTime: 0
+  dashDistanceMult: 1.85
   propCheckDistance: 0
 --- !u!114 &22507600
 MonoBehaviour:

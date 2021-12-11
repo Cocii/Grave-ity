@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879219a66a61f7f478f00e632327e3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raiseHeight: 19.28
+  raiseHeight: 19.5
   defaultForceMagnitude: 1270
   forceMagnitude: 1900
   layerToAffect:

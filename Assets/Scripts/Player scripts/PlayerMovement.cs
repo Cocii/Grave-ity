@@ -39,7 +39,10 @@ public class PlayerMovement : MonoBehaviour
                 force *= -1f;
             }
 
-            manager.characterController.SetMoveForce(force);
+            force = force * 100f * Time.fixedDeltaTime;
+
+            //manager.characterController.SetMoveForce(force);
+            manager.characterController.AddMoveForce(force);
         }
     }
 
@@ -59,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         //WALLJUMP
         if (jumpInput && CanWalljump(moveInput.x)) {
             force.Set(manager.wallJumpDirection.x * moveInput.x, manager.wallJumpDirection.y * -gravityForce.normalized.y);
-            force *= manager.jumpForceMagnitude * manager.walljumpMult;
+            force *= manager.jumpForceMagnitude * manager.walljumpForceMult;
             manager.characterController.SetJumpForce(force);
         }
         //
@@ -68,7 +71,8 @@ public class PlayerMovement : MonoBehaviour
         jumpInput = manager.input.GetJumpInput;
         if (jumpInput && CanBoostJump(gravityForce)) {
             //print("Boost jump");
-            force = -gravityForce.normalized * manager.jumpForceMagnitude * manager.currentJumpBoostMult * Time.deltaTime;
+            force = -gravityForce.normalized * manager.jumpForceMagnitude * manager.currentJumpBoostMult;
+            force *= Time.fixedDeltaTime;
             manager.characterController.AddBoostForce(force);
         }
         //

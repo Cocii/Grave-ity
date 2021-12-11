@@ -63,7 +63,7 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Walljump settings")]
     public Vector2 wallJumpDirection = new Vector2(0.5f, 0.5f);
-    public float walljumpMult = 2f;
+    public float walljumpForceMult = 2f;
 
     [Header("Dash settings")]
     public float dashForceMult = 1f;
@@ -90,11 +90,9 @@ public class PlayerManager : MonoBehaviour
     public bool isDashing;
     public bool isCrouching;
 
-    [Header("Materials")]
-    public PhysicsMaterial2D fullFrictionMaterial;
-    public PhysicsMaterial2D defaultPhysicsMaterial;
-
-    
+    //[Header("Materials")]
+    //public PhysicsMaterial2D fullFrictionMaterial;
+    //public PhysicsMaterial2D defaultPhysicsMaterial;
 
     private void Awake() {
         if (instance == null) {
@@ -116,7 +114,6 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void Start() {
-        Application.targetFrameRate = 60;
         AdaptParametersToGravity();
     }
 

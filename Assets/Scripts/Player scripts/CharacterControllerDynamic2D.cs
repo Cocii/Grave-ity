@@ -67,8 +67,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         GroundCheck();
         WallBackCheck();
-
-        //SlopeCheck();
+        SlopeCheck();
 
         VelocityFix();
     }
@@ -342,7 +341,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager.isOnHighSlope = false;
 
         if (groundAngle == 0) {
-            AdjustSlopeMaterial(true);
             return;
         }
 
@@ -354,63 +352,42 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             print("Check slope with vel");
             manager.isOnHighSlope = true;
         }
-
-        //manager.isOnHighSlope = false;
-        //SlopeAdjustement();
-
     }
 
-    private void SlopeAdjustement() {
-        if(manager.isOnHighSlope) {
-            AdjustSlopeMaterial(true);
+    private void SlopeMoveAdjustement() {
+        if (groundAngle == 0f) {
+            return;
+        }
 
+        //moveForce = new Vector2(moveForce.magnitude, moveForce.magnitude) * -groundNormalPerpendicular * moveForce.normalized.x * Mathf.Sign(transform.right.x);
+        //if (groundAngle != 0f) {
+        //    moveForce *= manager.moveForceMultOnSlopes;
+        //}
+        //if (groundAngle > maxSlopeAngle) {
+        //    moveForce = Vector2.zero;
+        //}
+
+        if (manager.isOnHighSlope) {
             Vector2 position = transform.position;
             Vector2 hitPointDirection = hitPoint - position;
             float dotMoveHitPoint = Vector2.Dot(moveForce.normalized, hitPointDirection.normalized);
+
             if (dotMoveHitPoint >= 0) {
                 print("Slope too high to walk: " + groundAngle);
-                
                 moveForce = Vector2.zero;
-
             }
 
         }
         else {
-            AdjustSlopeMaterial(false);
+            print("Adjusting move force to slope");
             moveForce = new Vector2(moveForce.magnitude, moveForce.magnitude) * -groundNormalPerpendicular * moveForce.normalized.x * Mathf.Sign(transform.right.x);
 
-            if (groundAngle != 0f) {
-                moveForce *= manager.moveForceMultOnSlopes;
-            }
-
-            //float boost = Utilities.Map(groundAngle, 0, maxSlopeAngle, 1f, maxForceMultOnSlopes);
-            //moveForce *= boost;
-            //print(moveForce.magnitude + " magnitude - ground angle: " + groundAngle);
+            moveForce *= manager.moveForceMultOnSlopes;
             
         }
   
     }
 
-    private void AdjustSlopeMaterial(bool forceDefault) {
-        //if (forceDefault) {
-        //    if (manager.body.sharedMaterial == manager.fullFrictionMaterial) {
-        //        manager.body.sharedMaterial = manager.defaultPhysicsMaterial;
-        //    }
-        //    return;
-        //}
-
-        
-        //if (moveForce.magnitude == 0f) {
-        //    if (manager.body.sharedMaterial == manager.defaultPhysicsMaterial) {
-        //        manager.body.sharedMaterial = manager.fullFrictionMaterial;
-        //    }
-        //}
-        //else {
-        //    if (manager.body.sharedMaterial == manager.fullFrictionMaterial) {
-        //        manager.body.sharedMaterial = manager.defaultPhysicsMaterial;
-        //    }
-        //}
-    }
 
     //----------------------------------------------------------
 
@@ -431,7 +408,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(hitPoint, .15f);
 
-        Gizmos.DrawRay(transform.position, moveForce * 0.01f);
 
         //Gizmos.color = Color.yellow;
         //Gizmos.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance);
@@ -449,16 +425,11 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             manager.body.velocity *= new Vector2(0f, 1f);
         }
 
-        moveForce = new Vector2(moveForce.magnitude, moveForce.magnitude) * -groundNormalPerpendicular * moveForce.normalized.x * Mathf.Sign(transform.right.x);
-        if (groundAngle != 0f) {
-            moveForce *= manager.moveForceMultOnSlopes;
-        }
-        if (groundAngle > maxSlopeAngle) {
-            moveForce = Vector2.zero;
-        }
+        SlopeMoveAdjustement();
 
-        print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude);
-        //print(manager.body.sharedMaterial);
+        print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude + " - angle: " + groundAngle);
+
+        Debug.DrawRay(transform.position, moveForce * 0.005f, Color.green);
 
         manager.body.AddForce(moveForce);
         

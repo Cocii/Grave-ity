@@ -17,11 +17,12 @@ public class PlayerActions : MonoBehaviour
     public LayerMask propsLayer;
     public LayerMask propsGround;
     public float grabMassMult = 0.1f;
-    public float grabReleaseDistanceOffset = 0.001f;
-    public float grabReleaseReactionForce = Mathf.Infinity;
+    //public float grabReleaseDistanceOffset = 0.001f;
+    //public float grabReleaseReactionForce = Mathf.Infinity;
     public float defaultBreakForce = Mathf.Infinity;
     public float minimalBreakForce = 1000f;
-    public float grabDistanceMult = 1f;
+    public float grabDistanceMult = 1.25f;
+    public float grabDistanceMultOnSlope = 1.75f;
 
     [Header("Dash info")]
     public float lastDashTime = 0f;
@@ -55,13 +56,10 @@ public class PlayerActions : MonoBehaviour
             if (manager.characterController.groundAngle != 0f) {
                 direction = new Vector2(1, 1) * -manager.characterController.groundNormalPerpendicular * direction.x * Mathf.Sign(transform.right.x);
                 //direction = (new Vector2(direction.x, 1) * (manager.characterController.groundNormalPerpendicular) * Mathf.Sign(-manager.currentGravity.y)).normalized;
-                distance *= 1.75f;
+                distance *= grabDistanceMultOnSlope;
             }
 
             Debug.DrawRay(transform.position, direction.normalized * distance, Color.red);
-
-
-
 
             return;
         }
@@ -94,8 +92,8 @@ public class PlayerActions : MonoBehaviour
         }
         else {
             print("Center not grounded, keep checking");
-            Vector3 pointTowardsPlayer = grabbedObj.transform.position + new Vector3(grabbedObjJoint.distance * 0.25f, 0f, 0f)*Mathf.Sign(directionToPlayer.x);
-
+            Vector3 pointTowardsPlayer = grabbedObj.transform.position + new Vector3(grabbedObjJoint.distance * 0.35f, 0f, 0f)*Mathf.Sign(directionToPlayer.x);
+            Debug.DrawRay(pointTowardsPlayer, manager.currentGravity.normalized * scale.y, Color.green);
             hit = Physics2D.Raycast(pointTowardsPlayer, manager.currentGravity.normalized, scale.y, propsGround);
             if (hit) {
                 if (grabbedObjJoint.breakForce < defaultBreakForce)
@@ -156,7 +154,7 @@ public class PlayerActions : MonoBehaviour
 
         if(manager.characterController.groundAngle != 0f) {
             direction = new Vector2(1, 1) * -manager.characterController.groundNormalPerpendicular * direction.x * Mathf.Sign(transform.right.x);
-            distance *= 1.75f;
+            distance *= grabDistanceMultOnSlope;
         }
 
         hit = Physics2D.Raycast(transform.position, direction.normalized, distance, propsLayer);
@@ -167,11 +165,11 @@ public class PlayerActions : MonoBehaviour
             grabPositioningDistance = Vector3.Distance(transform.position, hit.transform.position);
             
 
-            AttachGrabbedObject(hit.transform.gameObject);
+            AttachToDistanceJoint(hit.transform.gameObject);
         }
     }
 
-    private void AttachGrabbedObject(GameObject toAttach) {
+    private void AttachToDistanceJoint(GameObject toAttach) {
         grabbedObj = toAttach;
         
         DistanceJoint2D grabbedObjJoint = grabbedObj.GetComponent<DistanceJoint2D>();
@@ -201,13 +199,17 @@ public class PlayerActions : MonoBehaviour
         manager.isGrabbing = false;
         grabbedObj.GetComponent<Rigidbody2D>().mass = grabbedObj.GetComponent<Rigidbody2D>().mass * (1/grabMassMult);
 
-        DistanceJoint2D grabbedObjJoint = grabbedObj.GetComponent<DistanceJoint2D>();
-        if (grabbedObjJoint != null) {
-            grabbedObjJoint.connectedBody = grabbedObj.GetComponent<Rigidbody2D>();  
-        }
+        DetachToDistanceJoint();
 
         grabbedObj = null;
         grabbedHeight = 0f;
+    }
+
+    private void DetachToDistanceJoint() {
+        DistanceJoint2D grabbedObjJoint = grabbedObj.GetComponent<DistanceJoint2D>();
+        if (grabbedObjJoint != null) {
+            grabbedObjJoint.connectedBody = grabbedObj.GetComponent<Rigidbody2D>();
+        }
     }
 
     //DASH-----------------------------
