@@ -83,11 +83,9 @@ public class PlayerActions : MonoBehaviour
 
         Vector2 directionToPlayer = (transform.position - grabbedObj.transform.position);
         Vector2 scale = grabbedObj.transform.lossyScale * 1.5f;
-        //print("scale:" + scale);
         Debug.DrawRay(grabbedObj.transform.position, manager.currentGravity.normalized * scale.y, Color.green);
         RaycastHit2D hit = Physics2D.Raycast(grabbedObj.transform.position, manager.currentGravity.normalized, scale.y, propsGround);
         if (hit) {
-            
             return;
         }
         else {
@@ -98,14 +96,11 @@ public class PlayerActions : MonoBehaviour
             if (hit) {
                 if (grabbedObjJoint.breakForce < defaultBreakForce)
                     grabbedObjJoint.breakForce = defaultBreakForce;
-
                 return;
             }
             else {
                 print("Grabbed not grounded on player side");
-                //TODO: mettere break force al minimo che regga la vent
                 grabbedObjJoint.breakForce = minimalBreakForce;
-                //ReleaseGrab();
             }
         }
 
