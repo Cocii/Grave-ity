@@ -123,7 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879219a66a61f7f478f00e632327e3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raiseHeight: 19.5
+  state: 0
+  colliderDefaultSize: {x: 1, y: 1}
+  raiseHeight: 23.5
+  pushHeightThreshold: 17.5
   defaultForceMagnitude: 1270
   forceMagnitude: 1900
   layerToAffect:
@@ -131,6 +134,9 @@ MonoBehaviour:
     m_Bits: 128
   targetBody: {fileID: 0}
   underPropCollider: {fileID: 3858004150703960498}
+  applyForce: 0
+  targetDistance: 0
+  rayHitDistance: 0
 --- !u!114 &309635183
 MonoBehaviour:
   m_ObjectHideFlags: 0

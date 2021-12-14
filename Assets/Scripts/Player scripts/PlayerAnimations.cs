@@ -7,7 +7,6 @@ public class PlayerAnimations : MonoBehaviour
     void Update()
     {
         PlayerManager manager = PlayerManager.instance;
-
         Rigidbody2D body = manager.body;
         Animator anim = manager.animator;
 
@@ -22,10 +21,15 @@ public class PlayerAnimations : MonoBehaviour
         anim.SetBool("dashing", manager.isDashing);
         anim.SetBool("grabbing", manager.isGrabbing);
 
+        bool wallback = manager.isBackOnWall && !manager.isGrounded;
+        anim.SetBool("wallback", wallback);
+
         float grabVelocityX = velocityX * manager.actions.grabbedObjPlayerSide.x;
         anim.SetFloat("grabVelocityX", grabVelocityX);
 
         float grabHeight = manager.actions.grabbedHeight;
         anim.SetFloat("grabHeight", grabHeight);
+
+
     }
 }

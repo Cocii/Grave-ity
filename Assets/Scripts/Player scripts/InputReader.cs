@@ -85,11 +85,6 @@ public class InputReader : MonoBehaviour
     }
 
     void ExcecuteInputActions() {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-
         if (inputGravityUpsideD && !inputBlocked) {
             GravityManager.instance.RotateGravityUpsideDown();
         }

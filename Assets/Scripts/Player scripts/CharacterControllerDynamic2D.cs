@@ -203,7 +203,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     private void PlayerWalljump() {
-        print("Walljump with force: " + jumpForce);
+        //print("Walljump with force: " + jumpForce);
         manager.canWalljump = false;
     }
 
@@ -373,13 +373,13 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             float dotMoveHitPoint = Vector2.Dot(moveForce.normalized, hitPointDirection.normalized);
 
             if (dotMoveHitPoint >= 0) {
-                print("Slope too high to walk: " + groundAngle);
+                //print("Slope too high to walk: " + groundAngle);
                 moveForce = Vector2.zero;
             }
 
         }
         else {
-            print("Adjusting move force to slope");
+            //print("Adjusting move force to slope");
             moveForce = new Vector2(moveForce.magnitude, moveForce.magnitude) * -groundNormalPerpendicular * moveForce.normalized.x * Mathf.Sign(transform.right.x);
 
             moveForce *= manager.moveForceMultOnSlopes;
@@ -427,7 +427,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         SlopeMoveAdjustement();
 
-        print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude + " - angle: " + groundAngle);
+        //print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude + " - angle: " + groundAngle);
 
         Debug.DrawRay(transform.position, moveForce * 0.005f, Color.green);
 
