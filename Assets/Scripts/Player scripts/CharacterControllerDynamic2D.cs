@@ -26,8 +26,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     public const string metalSurfaceTag = "MetalSurface";
 
     [Header("Wallback check info")]
-    public Vector2 wallbackRaycastOrigin;
+    public Vector2 wallbackOrigin;
     public float wallbackRaycastDistance;
+    public Vector2 wallbackBoxcastSize;
 
     [Header("Ground check info")]
     public Vector2 rayCastOrigin;
@@ -47,7 +48,10 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         rayCastOrigin = new Vector2(0f, (-(manager.bodyCollider.size.y / 2) + manager.bodyCollider.offset.y) * transform.localScale.y);
         capsuleCastOrigin.y = rayCastOrigin.y + (-(groundCapsuleCastSize.y  / 2) * transform.localScale.y);
         
+        wallbackOrigin = new Vector2 (((-manager.bodyCollider.size.x * 0.5f) * transform.localScale.x) - wallbackBoxcastSize.x*0.5f, (manager.bodyCollider.size.y * 0.15f) * transform.localScale.y);
+
         wallbackRaycastDistance = manager.bodyCollider.size.x * transform.localScale.y * 1.1f;
+
     }
 
     private void FixedUpdate() {
@@ -69,10 +73,10 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         WallBackCheck();
         SlopeCheck();
 
-        VelocityFix();
+        VelocityLimit();
     }
 
-    private void VelocityFix() {
+    private void VelocityLimit() {
         if (Mathf.Abs(manager.body.velocity.x) < 0.01f)
             manager.body.velocity *= new Vector2(0f, 1f);
 
@@ -84,20 +88,21 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager.wasBackOnWall = manager.isBackOnWall;
         manager.isBackOnWall = false;
 
-        Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackRaycastOrigin.x, wallbackRaycastOrigin.y) * transform.up.y;
+        
         Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
 
+        Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackOrigin.x * -Mathf.Sign(direction.x), wallbackOrigin.y) * transform.up.y;
+
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(wallbackRayOriginAdjst, direction, wallbackRaycastDistance, groundLayer);
+        //Debug.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance, Color.yellow);
+        hit = Physics2D.BoxCast(wallbackRayOriginAdjst, wallbackBoxcastSize, 0f, direction, 0f, groundLayer);
         if (hit) {
             manager.isBackOnWall = true;
 
-            if (!manager.wasBackOnWall && !manager.isGrounded) {
+            if(!manager.canWalljump && !manager.wasBackOnWall) {
                 manager.canWalljump = true;
             }
-        }
-        else { //TESTARE SE QUESTO ELSE NON SERVE
-            if (manager.wasBackOnWall && !manager.isGrounded) {
+            if(!manager.wasGrounded && manager.isBackOnWall) {
                 manager.canWalljump = true;
             }
         }
@@ -394,10 +399,13 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     private void OnDrawGizmos() {
         Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
         Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
-        Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackRaycastOrigin.x, wallbackRaycastOrigin.y) * transform.up.y;
+        Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackOrigin.x, wallbackOrigin.y) * transform.up.y;
         Vector2 direction = Vector2.right;
+
         if (manager!=null)
             direction = manager.isFacingRight ? Vector2.left : Vector2.right;
+
+        wallbackRayOriginAdjst.x *= -Mathf.Sign(direction.x);
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawCube(capsuleOriginAdjst, groundCapsuleCastSize);
@@ -408,9 +416,11 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(hitPoint, .15f);
 
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(wallbackRayOriginAdjst, .15f);
 
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawCube(wallbackRayOriginAdjst, wallbackBoxcastSize);
 
         Gizmos.color = Color.white;
     }
