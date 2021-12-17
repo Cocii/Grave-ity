@@ -51,7 +51,7 @@ public class PlayerManager : MonoBehaviour
     public float moveForceMultOnSlopes = 1.3f;
 
     [Header("Air movement settings")]
-    public float moveAirForceMagnitude = 6f;
+    public float moveAirForceMult = 0.8f;
     public float gravityBoostMult = 0.5f;
 
     [Header("Jump settings")]

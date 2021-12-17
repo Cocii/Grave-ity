@@ -397,13 +397,13 @@ MonoBehaviour:
   distanceRotationMin: 4
   distanceRotationMax: 1.25
   rotationSpeed: 500
-  moveForceMagnitude: 500
+  moveForceMagnitude: 1000
   currentMaxMoveSpeed: 12
-  defaultMaxMoveSpeed: 12
+  defaultMaxMoveSpeed: 10
   weakGravityMoveSpeedMult: 0.75
   strongGravityMoveSpeedMult: 0.5
   moveForceMultOnSlopes: 1.3
-  moveAirForceMagnitude: 500
+  moveAirForceMult: 0.75
   gravityBoostMult: 8
   jumpForceMagnitude: 30000
   currentJumpBoostMult: 0.5
@@ -454,8 +454,9 @@ MonoBehaviour:
   maxSlopeAngle: 60
   lateralOffset: 0
   groundRayCastDistance: 0.3
-  wallbackRaycastOrigin: {x: 0, y: 0}
+  wallbackOrigin: {x: 0, y: 0}
   wallbackRaycastDistance: 0
+  wallbackBoxcastSize: {x: 0.75, y: 3}
   rayCastOrigin: {x: 0, y: 0}
   capsuleCastOrigin: {x: 0, y: 0}
   currentDistanceFromGround: 0

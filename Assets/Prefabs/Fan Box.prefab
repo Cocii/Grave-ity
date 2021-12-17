@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3858004150703960496}
   - component: {fileID: 309635183}
   m_Layer: 6
-  m_Name: Vent
+  m_Name: Fan Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -109,7 +109,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.9, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &3858004150703960496
 MonoBehaviour:
@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  colliderDefaultSize: {x: 1, y: 1}
-  raiseHeight: 23.5
+  colliderDefaultSize: {x: 0.9, y: 1}
+  raiseHeight: 22
   pushHeightThreshold: 17.5
   defaultForceMagnitude: 1270
   forceMagnitude: 1900

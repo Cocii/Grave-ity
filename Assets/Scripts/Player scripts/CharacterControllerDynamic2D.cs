@@ -397,30 +397,17 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     //----------------------------------------------------------
 
     private void OnDrawGizmos() {
-        Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
-        Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
-        Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackOrigin.x, wallbackOrigin.y) * transform.up.y;
-        Vector2 direction = Vector2.right;
-
-        if (manager!=null)
-            direction = manager.isFacingRight ? Vector2.left : Vector2.right;
-
-        wallbackRayOriginAdjst.x *= -Mathf.Sign(direction.x);
-
+        
         Gizmos.color = Color.cyan;
-        Gizmos.DrawCube(capsuleOriginAdjst, groundCapsuleCastSize);
+        
 
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(rayOriginAdjst, -transform.up.normalized * groundRayCastDistance);
+        
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(hitPoint, .15f);
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(wallbackRayOriginAdjst, .15f);
-
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawCube(wallbackRayOriginAdjst, wallbackBoxcastSize);
 
         Gizmos.color = Color.white;
     }

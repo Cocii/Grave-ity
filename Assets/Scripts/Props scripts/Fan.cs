@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vent : MonoBehaviour
+public class Fan : MonoBehaviour
 {
     public enum VentStates {
         NoTarget,
@@ -118,7 +118,10 @@ public class Vent : MonoBehaviour
     }
 
     private GameObject CheckObjectRay(float checkDistance) {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, checkDistance, layerToAffect);
+        Vector3 origin = new Vector3(targetBody.transform.position.x, transform.position.y, transform.position.z);
+
+        Debug.DrawRay(origin, transform.up * checkDistance, Color.green);
+        RaycastHit2D hit = Physics2D.Raycast(origin, transform.up, checkDistance, layerToAffect);
         if (hit) {
             rayHitDistance = hit.distance;
             return hit.transform.gameObject;
@@ -130,6 +133,8 @@ public class Vent : MonoBehaviour
 
     private float CheckObjectDistanceRay() {
         Vector2 origin = new Vector3(targetBody.transform.position.x, transform.position.y, transform.position.z);
+
+        Debug.DrawRay(origin, transform.up * raiseHeight * 2f, Color.green);
         RaycastHit2D hit = Physics2D.Raycast(origin, transform.up, raiseHeight*2f, layerToAffect);
         if (hit) {
             
@@ -153,7 +158,9 @@ public class Vent : MonoBehaviour
     }
 
     private void MovePropCollider(float distance) {
-        if (distance == 0 || gManager.gravityRatio >= 1f) {
+        //print("Fan: moving coll at distance " + distance);
+
+        if (distance == 0) {
             ResetPropCollider();
             return;
         }

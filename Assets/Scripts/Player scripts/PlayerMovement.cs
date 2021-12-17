@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
                 force = gravityForceNormal * moveInput * manager.moveForceMagnitude;
             }
             else {
-                force = gravityForceNormal * moveInput * manager.moveAirForceMagnitude;
+                force = gravityForceNormal * moveInput * manager.moveForceMagnitude * manager.moveAirForceMult;
             }
 
             if (gravityForce.normalized == Vector2.down) {

@@ -190,7 +190,7 @@ public class PlayerActions : MonoBehaviour
         if (grabbedObj == null)
             return;
 
-        print("Release grab");
+        //print("Release grab");
         manager.isGrabbing = false;
         grabbedObj.GetComponent<Rigidbody2D>().mass = grabbedObj.GetComponent<Rigidbody2D>().mass * (1/grabMassMult);
 
