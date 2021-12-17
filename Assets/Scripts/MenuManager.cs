@@ -27,6 +27,11 @@ public class MenuManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("currentCheckPoint", 0);
     }
+
+    public void Back()
+    {
+        levelLoader.BackToMainMenu();
+    }
     
     public void QuitGame()
     {

@@ -16,6 +16,16 @@ public class LevelLoader : MonoBehaviour
         
     }
 
+    public void LoadMemoriesPage()
+    {
+        StartCoroutine(LoadLevel(1));
+    }
+
+    public void LoadFirstLevel()
+    {
+        StartCoroutine(LoadLevel(2));
+    }
+
     public void LoadNextLevel()
     {
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
@@ -24,6 +34,11 @@ public class LevelLoader : MonoBehaviour
     public void ReloadScene()
     {
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
+    }
+
+    public void BackToMainMenu()
+    {
+        StartCoroutine(LoadLevel(0));
     }
 
     public void LoadMainMenuScene()
