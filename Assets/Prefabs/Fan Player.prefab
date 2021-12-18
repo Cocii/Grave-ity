@@ -127,8 +127,8 @@ MonoBehaviour:
   colliderDefaultSize: {x: 0.9, y: 1}
   raiseHeight: 8
   pushHeightThreshold: 4
-  defaultForceMagnitude: 1270
-  forceMagnitude: 1900
+  defaultForceMagnitude: 1750
+  forceMagnitude: 1750
   layerToAffect:
     serializedVersion: 2
     m_Bits: 8
