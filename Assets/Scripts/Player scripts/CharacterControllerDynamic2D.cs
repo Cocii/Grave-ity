@@ -67,10 +67,13 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         RotateTowardsGravity();
 
         CheckSpriteFlip();
-        CheckRotationLock();
+        CheckRotationLimitations();
 
         GroundCheck();
-        WallBackCheck();
+
+        if(!manager.isGrounded)
+            WallBackCheck();
+
         SlopeCheck();
 
         VelocityLimit();
@@ -186,7 +189,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
                 break;
 
             default:
-                //print("Ground tag not recognized, putting it to grass");
+                print("Ground tag not recognized");
                 detected = GroundTypeEnum.grass;
                 break;
         }
@@ -295,7 +298,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         if (!manager.isRotating) {
             manager.isRotating = true;
-            manager.input.DisableInput();
+            //manager.input.DisableInput();
+            manager.input.DisableGravityChange();
         }
     }
 
@@ -334,10 +338,11 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         return speed;
     }
 
-    private void CheckRotationLock() {
+    private void CheckRotationLimitations() {
         if (manager.wasRotating && manager.isGrounded) {
             manager.wasRotating = false;
-            manager.input.EnableInput();
+            //manager.input.EnableInput();
+            manager.input.EnableGravityChange();
         }
     }
 

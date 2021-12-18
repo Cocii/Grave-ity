@@ -4882,6 +4882,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2618477013751155077, guid: 1cfaffc4be4094847b8dc8d70e01cc9b, type: 3}
+      propertyPath: forceMagnitude
+      value: 1750
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618477013751155077, guid: 1cfaffc4be4094847b8dc8d70e01cc9b, type: 3}
+      propertyPath: defaultForceMagnitude
+      value: 1750
+      objectReference: {fileID: 0}
     - target: {fileID: 2618477013751155078, guid: 1cfaffc4be4094847b8dc8d70e01cc9b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

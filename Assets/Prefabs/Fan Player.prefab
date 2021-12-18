@@ -137,6 +137,7 @@ MonoBehaviour:
   applyForce: 0
   targetDistance: 0
   rayHitDistance: 0
+  targetType: 1
 --- !u!114 &1287133035840163930
 MonoBehaviour:
   m_ObjectHideFlags: 0

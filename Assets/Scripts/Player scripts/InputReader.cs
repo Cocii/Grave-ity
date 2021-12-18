@@ -47,6 +47,7 @@ public class InputReader : MonoBehaviour
     public bool inputBlocked = false; 
     public bool inputEnabled = true;
     public bool resetMoveInputIfBlocked = true;
+    public bool gravityChangeEnabled = true;
 
     void Start() {
         inputBlocked = false;
@@ -85,14 +86,14 @@ public class InputReader : MonoBehaviour
     }
 
     void ExcecuteInputActions() {
-        if (inputGravityUpsideD && !inputBlocked) {
+        if (inputGravityUpsideD && !inputBlocked && gravityChangeEnabled) {
             GravityManager.instance.RotateGravityUpsideDown();
         }
-        if (inputGravityStrongerD && !inputBlocked) {
+        if (inputGravityStrongerD && !inputBlocked && gravityChangeEnabled) {
             GravityManager.instance.StrongerGravity();
             PlayerManager.instance.sound.PlayGravvityStronger();
         }
-        if (inputGravityWeakerD && !inputBlocked) {
+        if (inputGravityWeakerD && !inputBlocked && gravityChangeEnabled) {
             GravityManager.instance.WeakerGravity();
             PlayerManager.instance.sound.PlayGravvityWeaker();
         }
@@ -135,6 +136,14 @@ public class InputReader : MonoBehaviour
 
     public void EnableInput() {
         inputEnabled = true;
+    }
+
+    public void DisableGravityChange() {
+        gravityChangeEnabled = false;
+    }
+
+    public void EnableGravityChange() {
+        gravityChangeEnabled = true;
     }
 
     public Vector2 GetMoveInput {

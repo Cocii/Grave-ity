@@ -7,7 +7,12 @@ public class Fan : MonoBehaviour
     public enum VentStates {
         NoTarget,
         TargetAcquired,
-        TargetPushed
+        TargetPushing
+    }
+
+    public enum TargetTypeEnum {
+        Prop,
+        Player
     }
 
     GravityManager gManager;
@@ -25,6 +30,8 @@ public class Fan : MonoBehaviour
     public float targetDistance;
     public float rayHitDistance;
     private Vector2 hitPoint;
+    public TargetTypeEnum targetType;
+    
 
     void Start()
     {
@@ -68,12 +75,15 @@ public class Fan : MonoBehaviour
                 }
 
                 if (targetDistance <= pushHeightThreshold) {
-                    state = VentStates.TargetPushed;
+                    state = VentStates.TargetPushing;
+                }
+                else {
+                    ResetPropCollider();
                 }
 
                 break;
 
-            case VentStates.TargetPushed:
+            case VentStates.TargetPushing:
                 target = CheckObjectBox(raiseHeight * 2f);
 
                 if (target==null) {
@@ -93,6 +103,21 @@ public class Fan : MonoBehaviour
                 }
 
                 MovePropCollider(CheckObjectDistanceRay());
+
+                switch (targetType) {
+                    case TargetTypeEnum.Player:
+                        
+                        if(gManager.gravityRatio <= 1f) {
+                            print("locking player movement");
+                            targetBody.velocity *= new Vector2(0, 1);
+                        }
+                        
+                        break;
+
+                    default:
+                        break;
+                }
+
                 break;
 
             default:
