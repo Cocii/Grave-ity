@@ -13,14 +13,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     public Vector2 boostForce;
     public Vector2 dashForce;
 
-    [Header("Ground check settings")]
-    public LayerMask groundLayer;
-    public Vector2 groundCapsuleCastSize;
-    public float maxSlopeAngle;
-    public float lateralOffset = 0f;
-    public float groundRayCastDistance;
-
-    [Header("Ground type settings")]
+    [Header("Ground types")]
     public const string grassSurfaceTag = "GrassSurface";
     public const string glassSurfaceTag = "GlassSurface";
     public const string metalSurfaceTag = "MetalSurface";
@@ -46,7 +39,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager = PlayerManager.instance;
 
         rayCastOrigin = new Vector2(0f, (-(manager.bodyCollider.size.y / 2) + manager.bodyCollider.offset.y) * transform.localScale.y);
-        capsuleCastOrigin.y = rayCastOrigin.y + (-(groundCapsuleCastSize.y  / 2) * transform.localScale.y);
+        capsuleCastOrigin.y = rayCastOrigin.y + (-(manager.groundCapsuleCastSize.y  / 2) * transform.localScale.y);
         
         wallbackOrigin = new Vector2 (((-manager.bodyCollider.size.x * 0.5f) * transform.localScale.x) - wallbackBoxcastSize.x*0.5f, (manager.bodyCollider.size.y * 0.15f) * transform.localScale.y);
 
@@ -98,7 +91,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         RaycastHit2D hit;
         //Debug.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance, Color.yellow);
-        hit = Physics2D.BoxCast(wallbackRayOriginAdjst, wallbackBoxcastSize, 0f, direction, 0f, groundLayer);
+        hit = Physics2D.BoxCast(wallbackRayOriginAdjst, wallbackBoxcastSize, 0f, direction, 0f, manager.groundLayer);
         if (hit) {
             manager.isBackOnWall = true;
 
@@ -116,7 +109,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager.isGrounded = false;
 
 
-        float offsetAdjst = manager.isFacingRight ? lateralOffset : -lateralOffset;
+        float offsetAdjst = manager.isFacingRight ? manager.lateralOffset : -manager.lateralOffset;
         capsuleCastOrigin.x = offsetAdjst;
         rayCastOrigin.x = offsetAdjst;
 
@@ -124,7 +117,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
 
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(rayOriginAdjst, -transform.up.normalized, groundRayCastDistance, groundLayer);
+        hit = Physics2D.Raycast(rayOriginAdjst, -transform.up.normalized, manager.groundRayCastDistance, manager.groundLayer);
         //Debug.DrawRay(rayOriginAdjst, -transform.up.normalized * groundRayCastDistance, Color.green);
         if (hit) {
             GroundHit(hit);
@@ -132,7 +125,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             Debug.DrawRay(hitPoint, groundNormalPerpendicular * 0.75f, Color.red);
         }
         else {
-            hit = Physics2D.CapsuleCast(capsuleOriginAdjst, groundCapsuleCastSize, CapsuleDirection2D.Horizontal, 0f, Vector2.right, 0, groundLayer);
+            hit = Physics2D.CapsuleCast(capsuleOriginAdjst, manager.groundCapsuleCastSize, CapsuleDirection2D.Horizontal, 0f, Vector2.right, 0, manager.groundLayer);
             if (hit) {
                 GroundHit(hit);
                 Debug.DrawRay(hitPoint, groundNormal * 0.75f, Color.green);
@@ -327,7 +320,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         RaycastHit2D hit;
         float distance = manager.distanceRotationMin;
         float speed = manager.minRotationSpeed;
-        hit = Physics2D.Raycast(transform.position, gravityForce.normalized, manager.distanceRotationMin, groundLayer);
+        hit = Physics2D.Raycast(transform.position, gravityForce.normalized, manager.distanceRotationMin, manager.groundLayer);
 
         if (hit) {
             distance = hit.distance;
@@ -354,7 +347,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             return;
         }
 
-        if (groundAngle >= maxSlopeAngle) {
+        if (groundAngle >= manager.maxSlopeAngle) {
             print("Check max slope");
             manager.isOnHighSlope = true;
         }

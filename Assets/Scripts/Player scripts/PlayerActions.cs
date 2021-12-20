@@ -252,8 +252,12 @@ public class PlayerActions : MonoBehaviour
     public void Crouch() {
         if (!manager.isCrouching) {
             manager.currentMaxMoveSpeed *= manager.crouchMoveSpeedMult;
-            manager.bodyCollider.size *= new Vector2(1f, manager.crouchColliderHeightMult);
-            manager.bodyCollider.offset = new Vector2(manager.bodyCollider.offset.x, manager.bodyCollider.offset.y - (manager.bodyCollider.size.y * manager.crouchColliderHeightMult));
+            manager.moveForceMagnitude *= manager.crouchMoveSpeedMult;
+            //manager.bodyCollider.size *= new Vector2(1f, manager.crouchColliderHeightMult);
+            //manager.bodyCollider.offset = new Vector2(manager.bodyCollider.offset.x, manager.bodyCollider.offset.y - (manager.bodyCollider.size.y * manager.crouchColliderHeightMult));
+            manager.bodyCollider.size = manager.crouchColliderSize;
+            manager.bodyCollider.offset = manager.crouchColliderOffset;
+        
         }
         
         manager.isCrouching = true;
@@ -263,8 +267,12 @@ public class PlayerActions : MonoBehaviour
     public void CrouchStop() {
         if (manager.isCrouching) {
             manager.currentMaxMoveSpeed *= (1f/manager.crouchMoveSpeedMult);
-            manager.bodyCollider.offset = new Vector2(manager.bodyCollider.offset.x, manager.bodyCollider.offset.y + (manager.bodyCollider.size.y * manager.crouchColliderHeightMult));
-            manager.bodyCollider.size *= new Vector2(1f, 1f/manager.crouchColliderHeightMult);
+            manager.moveForceMagnitude *= (1f / manager.crouchMoveSpeedMult);
+            //manager.bodyCollider.offset = new Vector2(manager.bodyCollider.offset.x, manager.bodyCollider.offset.y + (manager.bodyCollider.size.y * manager.crouchColliderHeightMult));
+            //manager.bodyCollider.size *= new Vector2(1f, 1f/manager.crouchColliderHeightMult);
+            manager.bodyCollider.size = manager.defaultColliderSize;
+            manager.bodyCollider.offset = manager.defaultColliderOffset;
+
         }
 
         manager.isCrouching = false;

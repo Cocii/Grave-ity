@@ -20,6 +20,7 @@ public class PlayerAnimations : MonoBehaviour
         anim.SetBool("grounded", manager.isGrounded);
         anim.SetBool("dashing", manager.isDashing);
         anim.SetBool("grabbing", manager.isGrabbing);
+        anim.SetBool("crouching", manager.isCrouching);
 
         bool wallback = manager.isBackOnWall && !manager.isGrounded;
         anim.SetBool("wallback", wallback);

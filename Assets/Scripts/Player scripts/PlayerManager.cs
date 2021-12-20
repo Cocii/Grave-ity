@@ -34,6 +34,17 @@ public class PlayerManager : MonoBehaviour
     [Header("Ground info")]
     public GroundTypeEnum groundType;
 
+    [Header("Collider info")]
+    public Vector2 defaultColliderSize;
+    public Vector2 defaultColliderOffset;
+
+    [Header("Ground check settings")]
+    public LayerMask groundLayer;
+    public Vector2 groundCapsuleCastSize;
+    public float maxSlopeAngle;
+    public float lateralOffset = 0f;
+    public float groundRayCastDistance;
+
     [Header("Rotation settings")]
     public float maxRotationSpeed;
     public float minRotationSpeed;
@@ -72,8 +83,8 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Crouch settings")]
     public float crouchMoveSpeedMult = 0.5f;
-    [HideInInspector]
-    public float crouchColliderHeightMult = 0.5f;
+    public Vector2 crouchColliderSize;
+    public Vector2 crouchColliderOffset;
 
     [Header("Control bools")]
     public bool isGrounded = true;
@@ -115,6 +126,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Start() {
         AdaptParametersToGravity();
+        GetColliderSize();
     }
 
     private void Update() {
@@ -154,6 +166,11 @@ public class PlayerManager : MonoBehaviour
     private void StrongGravityParams() {
         currentMaxMoveSpeed = defaultMaxMoveSpeed * strongGravityMoveSpeedMult;
         currentJumpBoostMult = defaultJumpBoostMult;
+    }
+
+    private void GetColliderSize() {
+        defaultColliderSize = bodyCollider.size;
+        defaultColliderOffset = bodyCollider.offset;
     }
 
 }

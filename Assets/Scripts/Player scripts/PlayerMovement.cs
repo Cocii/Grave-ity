@@ -56,6 +56,10 @@ public class PlayerMovement : MonoBehaviour
         if (jumpInput && CanJump()) {
             force = -gravityForce.normalized * manager.jumpForceMagnitude;
             manager.characterController.SetJumpForce(force);
+
+            if (manager.isCrouching) {
+                manager.actions.CrouchStop();
+            }
         }
         //
 
