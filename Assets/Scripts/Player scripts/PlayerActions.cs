@@ -30,15 +30,20 @@ public class PlayerActions : MonoBehaviour
     [Header("Dash settings")]
     public float dashDistanceMult = 1.75f;
 
-    [Header("General info")]
+    [Header("Prop check info")]
     public float propCheckDistance = 2f;
+    public float proximityPropDistanceThreshold = 1f;
 
     private void Start() {
         manager = PlayerManager.instance;
 
-        grabCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * grabDistanceMult;
-        propCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * dashDistanceMult;
-    }
+        float sizeX = manager.bodyCollider.size.x * transform.localScale.x;
+        grabCheckDistance = sizeX * grabDistanceMult;
+        propCheckDistance = sizeX * dashDistanceMult;
+
+        propCheckDistance = sizeX * 2f;
+        proximityPropDistanceThreshold = sizeX * 0.525f;
+}
 
     private void Update() {
         CheckGrabbedObj();
@@ -50,16 +55,16 @@ public class PlayerActions : MonoBehaviour
     private void CheckGrabbedObj() {
         if (grabbedObj == null) {
 
-            Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
-            float distance = grabCheckDistance;
+            //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+            //float distance = grabCheckDistance;
 
-            if (manager.characterController.groundAngle != 0f) {
-                direction = new Vector2(1, 1) * -manager.characterController.groundNormalPerpendicular * direction.x * Mathf.Sign(transform.right.x);
-                //direction = (new Vector2(direction.x, 1) * (manager.characterController.groundNormalPerpendicular) * Mathf.Sign(-manager.currentGravity.y)).normalized;
-                distance *= grabDistanceMultOnSlope;
-            }
+            //if (manager.characterController.groundAngle != 0f) {
+            //    direction = new Vector2(1, 1) * -manager.characterController.groundNormalPerpendicular * direction.x * Mathf.Sign(transform.right.x);
+            //    //direction = (new Vector2(direction.x, 1) * (manager.characterController.groundNormalPerpendicular) * Mathf.Sign(-manager.currentGravity.y)).normalized;
+            //    distance *= grabDistanceMultOnSlope;
+            //}
 
-            Debug.DrawRay(transform.position, direction.normalized * distance, Color.red);
+            //Debug.DrawRay(transform.position, direction.normalized * distance, Color.red);
 
             return;
         }
@@ -71,15 +76,6 @@ public class PlayerActions : MonoBehaviour
             ReleaseGrab();
             return;
         }
-
-
-        //float distance = Vector3.Distance(transform.position, grabbedObj.transform.position);
-        //float distanceOffset = Mathf.Abs(distance - grabPositioningDistance);
-        //if (distanceOffset < 0.001) {
-        //    distanceOffset = 0f;
-        //}
-        //print(distanceOffset);
-
 
         Vector2 directionToPlayer = (transform.position - grabbedObj.transform.position);
         Vector2 scale = grabbedObj.transform.lossyScale * 1.5f;

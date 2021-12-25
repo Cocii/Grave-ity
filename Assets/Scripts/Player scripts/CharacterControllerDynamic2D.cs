@@ -45,6 +45,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         wallbackRaycastDistance = manager.bodyCollider.size.x * transform.localScale.y * 1.1f;
 
+        manager.obstacleCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * manager.obstacleCheckDistanceMult;
     }
 
     private void FixedUpdate() {
@@ -69,7 +70,29 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         SlopeCheck();
 
+        ObstaclesCheck();
+
         VelocityLimit();
+    }
+
+    private void ObstaclesCheck() {
+        manager.isFacingObstacle = false;
+        Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+        Vector3 sizeAdjs = manager.scaledColliderSize;
+        sizeAdjs.y *= 0.975f;
+        Vector3 offset = manager.obstacleCheckOffset;
+        offset.x *= direction.x;
+        Vector3 posAdjs = transform.position + offset;
+
+        //Debug.DrawRay(posAdjs, direction * 20f, Color.yellow);
+
+        RaycastHit2D hit;
+        //hit = Physics2D.Raycast(transform.position, direction, manager.obstacleCheckDistance, manager.obstaclesLayer);
+        hit = Physics2D.CapsuleCast(posAdjs, sizeAdjs, CapsuleDirection2D.Vertical, 0f, Vector2.right, 0f, manager.obstaclesLayer);
+        if (hit) {
+            manager.isFacingObstacle = true;
+            //print("obstacle hit");
+        }
     }
 
     private void VelocityLimit() {
@@ -182,7 +205,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
                 break;
 
             default:
-                print("Ground tag not recognized");
+                //print("Ground tag not recognized");
                 detected = GroundTypeEnum.grass;
                 break;
         }
@@ -391,16 +414,24 @@ public class CharacterControllerDynamic2D : MonoBehaviour
   
     }
 
-
     //----------------------------------------------------------
 
     private void OnDrawGizmos() {
-        
+        //if (manager == null)
+        //    return;
+
         Gizmos.color = Color.cyan;
         
 
         Gizmos.color = Color.red;
+        //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+
+        //Vector3 offset = manager.obstacleCheckOffset;
+        //offset.x *= direction.x;
+        //Vector3 posAdjs = transform.position + manager.obstacleCheckOffset;
         
+        //print(posAdjs);
+        //Gizmos.DrawSphere(posAdj  s, 0.05f);
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(hitPoint, .15f);
@@ -422,7 +453,14 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         SlopeMoveAdjustement();
 
-        //print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude + " - angle: " + groundAngle);
+        if (manager.isFacingObstacle && !manager.isGrabbing) {
+
+            moveForce *= new Vector2(0, 1f);
+            manager.body.velocity *= new Vector2(0f, 1f);
+
+        }
+
+        print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude + " - angle: " + groundAngle);
 
         Debug.DrawRay(transform.position, moveForce * 0.005f, Color.green);
 

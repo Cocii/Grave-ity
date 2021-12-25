@@ -88,6 +88,7 @@ public class InputReader : MonoBehaviour
     void ExcecuteInputActions() {
         if (inputGravityUpsideD && !inputBlocked && gravityChangeEnabled) {
             GravityManager.instance.RotateGravityUpsideDown();
+            DisableGravityChange();
         }
         if (inputGravityStrongerD && !inputBlocked && gravityChangeEnabled) {
             GravityManager.instance.StrongerGravity();

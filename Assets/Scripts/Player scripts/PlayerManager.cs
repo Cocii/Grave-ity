@@ -37,6 +37,7 @@ public class PlayerManager : MonoBehaviour
     [Header("Collider info")]
     public Vector2 defaultColliderSize;
     public Vector2 defaultColliderOffset;
+    public Vector2 scaledColliderSize;
 
     [Header("Ground check settings")]
     public LayerMask groundLayer;
@@ -86,6 +87,14 @@ public class PlayerManager : MonoBehaviour
     public Vector2 crouchColliderSize;
     public Vector2 crouchColliderOffset;
 
+    [Header("Obstacle detection settings")]
+    public LayerMask obstaclesLayer;
+    public float obstacleCheckDistanceMult = 0.55f;
+    public Vector3 obstacleCheckOffset = new Vector3(0.05f, 0f, 0f);
+
+    [Header("Obstacle detection settings")]
+    public float obstacleCheckDistance;
+
     [Header("Control bools")]
     public bool isGrounded = true;
     public bool wasGrounded = true;
@@ -100,6 +109,7 @@ public class PlayerManager : MonoBehaviour
     public bool isGrabbing;
     public bool isDashing;
     public bool isCrouching;
+    public bool isFacingObstacle;
 
     //[Header("Materials")]
     //public PhysicsMaterial2D fullFrictionMaterial;
@@ -171,6 +181,7 @@ public class PlayerManager : MonoBehaviour
     private void GetColliderSize() {
         defaultColliderSize = bodyCollider.size;
         defaultColliderOffset = bodyCollider.offset;
+        scaledColliderSize = bodyCollider.size * transform.localScale;
     }
 
 }
