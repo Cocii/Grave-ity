@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour
 {
+    public float speed = 0.01f;
+
     void Update()
     {
         PlayerManager manager = PlayerManager.instance;
@@ -14,7 +16,9 @@ public class PlayerAnimations : MonoBehaviour
         float velocityXAbs = Mathf.Abs(velocityX);
         float velocityY = (Mathf.Round(body.velocity.y * 10f) / 10f) * -Mathf.Sign(manager.currentGravity.y);
 
-        anim.SetFloat("velocityX", velocityXAbs);
+
+        anim.SetFloat("velocityX", Mathf.MoveTowards(anim.GetFloat("velocityX"), velocityXAbs, speed));
+        //anim.SetFloat("velocityX", velocityXAbs);
         anim.SetFloat("velocityY", velocityY);
 
         anim.SetBool("grounded", manager.isGrounded);
