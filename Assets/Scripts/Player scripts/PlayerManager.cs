@@ -71,7 +71,7 @@ public class PlayerManager : MonoBehaviour
     public float currentJumpBoostMult = 0.5f;
     public float defaultJumpBoostMult = 0.5f;
     public float weakGravityJumpBoostMult = 0.85f;
-    public float jumpBoostVelocityThreshold = 1.5f;
+    public float jumpBoostStopVelocityThreshold = 1.5f;
 
     [Header("Walljump settings")]
     public Vector2 wallJumpDirection = new Vector2(0.5f, 0.5f);

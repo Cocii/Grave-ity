@@ -27,4 +27,9 @@ public class GameManager : MonoBehaviour
 
         Application.targetFrameRate = framerate;
     }
+
+    private void Update() {
+        if(Application.targetFrameRate != framerate)
+            Application.targetFrameRate = framerate;
+    }
 }

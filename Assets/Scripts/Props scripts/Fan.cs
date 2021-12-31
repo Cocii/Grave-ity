@@ -104,19 +104,7 @@ public class Fan : MonoBehaviour
 
                 MovePropCollider(CheckObjectDistanceRay());
 
-                switch (targetType) {
-                    case TargetTypeEnum.Player:
-                        
-                        if(gManager.gravityRatio <= 1f) {
-                            print("locking player movement");
-                            targetBody.velocity *= new Vector2(0, 1);
-                        }
-                        
-                        break;
-
-                    default:
-                        break;
-                }
+                ApplyBehaviourTargetTypeBased();
 
                 break;
 
@@ -124,6 +112,22 @@ public class Fan : MonoBehaviour
                 break;
         }
 
+    }
+
+    private void ApplyBehaviourTargetTypeBased() {
+        switch (targetType) {
+            case TargetTypeEnum.Player:
+
+                if (gManager.gravityRatio <= 1f) {
+                    print("locking player movement");
+                    PlayerManager.instance.characterController.SetMoveForce(Vector2.zero);
+                }
+
+                break;
+
+            default:
+                break;
+        }
     }
 
     private GameObject CheckObjectBox(float checkDistance) {
@@ -185,7 +189,7 @@ public class Fan : MonoBehaviour
     private void MovePropCollider(float distance) {
         //print("Fan: moving coll at distance " + distance);
 
-        if (distance == 0) {
+        if (distance == 0 || gManager.gravityRatio >= 1f) {
             ResetPropCollider();
             return;
         }

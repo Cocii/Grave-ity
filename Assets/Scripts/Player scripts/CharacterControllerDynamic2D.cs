@@ -65,8 +65,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         GroundCheck();
 
-        if(!manager.isGrounded)
-            WallBackCheck();
+        if (!manager.isGrounded) {
+            WallBackCheck();      
+        }
 
         SlopeCheck();
 
@@ -366,7 +367,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager.wasOnHighSlope = manager.isOnHighSlope;
         manager.isOnHighSlope = false;
 
-        if (groundAngle == 0) {
+        if (groundAngle == 0 || !manager.isGrounded) {
             return;
         }
 
@@ -408,8 +409,13 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             //print("Adjusting move force to slope");
             moveForce = new Vector2(moveForce.magnitude, moveForce.magnitude) * -groundNormalPerpendicular * moveForce.normalized.x * Mathf.Sign(transform.right.x);
 
-            moveForce *= manager.moveForceMultOnSlopes;
-            
+            float mult = manager.moveForceMultOnSlopes;
+
+            if(Vector2.Dot(Vector2.up, moveForce.normalized)>0 && groundAngle > 20) {
+                mult += 0.3f;
+            }
+
+            moveForce *= mult;
         }
   
     }
@@ -454,10 +460,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         SlopeMoveAdjustement();
 
         if (manager.isFacingObstacle && !manager.isGrabbing) {
-
             moveForce *= new Vector2(0, 1f);
             manager.body.velocity *= new Vector2(0f, 1f);
-
         }
 
         print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude + " - angle: " + groundAngle);

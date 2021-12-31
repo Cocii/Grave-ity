@@ -407,19 +407,19 @@ MonoBehaviour:
   distanceRotationMin: 4
   distanceRotationMax: 1.25
   rotationSpeed: 500
-  moveForceMagnitude: 1000
-  currentMaxMoveSpeed: 12
-  defaultMaxMoveSpeed: 10
+  moveForceMagnitude: 600
+  currentMaxMoveSpeed: 9
+  defaultMaxMoveSpeed: 9
   weakGravityMoveSpeedMult: 0.75
   strongGravityMoveSpeedMult: 0.5
   moveForceMultOnSlopes: 1.3
-  moveAirForceMult: 0.75
+  moveAirForceMult: 1
   gravityBoostMult: 8
   jumpForceMagnitude: 30000
   currentJumpBoostMult: 0.5
   defaultJumpBoostMult: 0.5
   weakGravityJumpBoostMult: 0.85
-  jumpBoostVelocityThreshold: 1.5
+  jumpBoostStopVelocityThreshold: 1.5
   wallJumpDirection: {x: 0.3, y: 0.9}
   walljumpForceMult: 2
   dashForceMult: 1.25
@@ -530,6 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e165ac46dbabf64bbbf5738bab5854c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0.15
 --- !u!114 &2610700083937107178
 MonoBehaviour:
   m_ObjectHideFlags: 0

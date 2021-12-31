@@ -39,7 +39,10 @@ public class PlayerMovement : MonoBehaviour
                 force *= -1f;
             }
 
-            force = force * 100f * Time.fixedDeltaTime;
+            
+            float timeMult = Time.smoothDeltaTime;
+            //print(timeMult);
+            force = force * 100f * timeMult;
 
             //manager.characterController.SetMoveForce(force);
             manager.characterController.AddMoveForce(force);
@@ -76,7 +79,10 @@ public class PlayerMovement : MonoBehaviour
         if (jumpInput && CanBoostJump(gravityForce)) {
             //print("Boost jump");
             force = -gravityForce.normalized * manager.jumpForceMagnitude * manager.currentJumpBoostMult;
-            force *= Time.fixedDeltaTime;
+
+            float timeMult = Time.smoothDeltaTime;
+
+            force *= timeMult;
             manager.characterController.AddBoostForce(force);
         }
         //
@@ -101,17 +107,22 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanBoostJump(Vector2 gravityForce) {
         bool can = false;
+
         if(Mathf.Sign(gravityForce.y) < 0f) {
-            can = manager.body.velocity.y > manager.jumpBoostVelocityThreshold;
+            can = manager.body.velocity.y > manager.jumpBoostStopVelocityThreshold;
         }
         else {
-            can = manager.body.velocity.y < -manager.jumpBoostVelocityThreshold;
+            can = manager.body.velocity.y < -manager.jumpBoostStopVelocityThreshold;
         }
 
         return can;
     }
 
     private bool CanBoostgravity(float gravityRatio, Vector2 gravityForce) {
-        return !manager.isGrounded && gravityRatio <= 1 && Mathf.Sign(manager.body.velocity.y) == Mathf.Sign(gravityForce.y);
+        bool can = !manager.isGrounded;
+        can &= gravityRatio <= 1;
+        can &= Mathf.Sign(manager.body.velocity.y) == Mathf.Sign(gravityForce.y);
+
+        return can;
     }
 }

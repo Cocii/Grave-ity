@@ -53,7 +53,7 @@ public class PlayerActions : MonoBehaviour
     //CHECKS-----------------------------
 
     private void CheckGrabbedObj() {
-        if (grabbedObj == null) {
+        if (!manager.isGrabbing) {
 
             //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
             //float distance = grabCheckDistance;
