@@ -224,7 +224,17 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     private void PlayerLand() {
-            
+        ProjectVelocityLanding();
+    }
+
+    private void ProjectVelocityLanding() {
+        if (manager.input.GetMoveInput.x == 0f)
+            return;
+
+        Vector2 velocity = manager.body.velocity;
+        velocity *= new Vector2(1f, 0f);
+
+        manager.body.velocity = velocity;
     }
 
     private void PlayerWalljump() {
@@ -427,7 +437,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         //    return;
 
         Gizmos.color = Color.cyan;
-        
+        if (manager)
+            Gizmos.DrawRay(transform.position, manager.body.velocity * 0.5f);
 
         Gizmos.color = Color.red;
         //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
@@ -464,9 +475,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             manager.body.velocity *= new Vector2(0f, 1f);
         }
 
-        print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude + " - angle: " + groundAngle);
+        //print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude + " - angle: " + groundAngle);
 
-        Debug.DrawRay(transform.position, moveForce * 0.005f, Color.green);
+        //Debug.DrawRay(transform.position, moveForce * 0.005f, Color.green);
 
         manager.body.AddForce(moveForce);
         

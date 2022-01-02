@@ -55,7 +55,7 @@ public class Fan : MonoBehaviour
 
         switch (state) {
             case VentStates.NoTarget:
-                target = CheckObjectBox(raiseHeight * 1.25f);
+                target = GetObjectOnTopBoxCast(raiseHeight * 1.25f);
 
                 if (target != null) {
                     targetBody=target.GetComponent<Rigidbody2D>();
@@ -64,13 +64,14 @@ public class Fan : MonoBehaviour
                 break;
 
             case VentStates.TargetAcquired:
-                target = CheckObjectBox(raiseHeight * 1.25f);
+                target = GetObjectOnTopBoxCast(raiseHeight * 1.25f);
 
                 if (target == null) {
-                    applyForce = false;
-                    targetBody = null;
-                    ResetPropCollider();
-                    state = VentStates.NoTarget;
+                    //applyForce = false;
+                    //targetBody = null;
+                    //ResetPropCollider();
+                    //state = VentStates.NoTarget;
+                    ResetState();
                     break;
                 }
 
@@ -84,13 +85,14 @@ public class Fan : MonoBehaviour
                 break;
 
             case VentStates.TargetPushing:
-                target = CheckObjectBox(raiseHeight * 2f);
+                target = GetObjectOnTopBoxCast(raiseHeight * 2f);
 
                 if (target==null) {
-                    applyForce = false;
-                    targetBody = null;
-                    ResetPropCollider();
-                    state = VentStates.NoTarget;
+                    //applyForce = false;
+                    //targetBody = null;
+                    //ResetPropCollider();
+                    //state = VentStates.NoTarget;
+                    ResetState();
                     break;
                 }
 
@@ -102,8 +104,6 @@ public class Fan : MonoBehaviour
                     applyForce = false;
                 }
 
-                MovePropCollider(CheckObjectDistanceRay());
-
                 ApplyBehaviourTargetTypeBased();
 
                 break;
@@ -114,13 +114,27 @@ public class Fan : MonoBehaviour
 
     }
 
+    private void ResetState() {
+        applyForce = false;
+        targetBody = null;
+        ResetPropCollider();
+        state = VentStates.NoTarget;
+    }
+
     private void ApplyBehaviourTargetTypeBased() {
         switch (targetType) {
+            case TargetTypeEnum.Prop:
+                //print("moving collider");
+                MovePropCollider(GetObjectOnTopDistanceRayCast());
+
+                break;
+
+
             case TargetTypeEnum.Player:
 
                 if (gManager.gravityRatio <= 1f) {
-                    print("locking player movement");
-                    PlayerManager.instance.characterController.SetMoveForce(Vector2.zero);
+                    //print("locking player movement");
+                    PlayerManager.instance.body.velocity *= Vector2.up;
                 }
 
                 break;
@@ -130,7 +144,7 @@ public class Fan : MonoBehaviour
         }
     }
 
-    private GameObject CheckObjectBox(float checkDistance) {
+    private GameObject GetObjectOnTopBoxCast(float checkDistance) {
         Vector2 size = transform.lossyScale;
         size.x *= 0.9f;
         size.y = checkDistance * 2f;
@@ -146,7 +160,7 @@ public class Fan : MonoBehaviour
         return null;
     }
 
-    private GameObject CheckObjectRay(float checkDistance) {
+    private GameObject GetObjectOnTopRayCast(float checkDistance) {
         Vector3 origin = new Vector3(targetBody.transform.position.x, transform.position.y, transform.position.z);
 
         Debug.DrawRay(origin, transform.up * checkDistance, Color.green);
@@ -160,7 +174,7 @@ public class Fan : MonoBehaviour
         return null;
     }
 
-    private float CheckObjectDistanceRay() {
+    private float GetObjectOnTopDistanceRayCast() {
         Vector2 origin = new Vector3(targetBody.transform.position.x, transform.position.y, transform.position.z);
 
         Debug.DrawRay(origin, transform.up * raiseHeight * 2f, Color.green);
@@ -195,8 +209,8 @@ public class Fan : MonoBehaviour
         }
 
         float sizeOffset = transform.lossyScale.y * underPropCollider.size.y;
-
-        underPropCollider.offset = new Vector2(0f, (distance - sizeOffset) * (1 / transform.lossyScale.y));
+        float distanceOffset = (distance - sizeOffset) * (1 / transform.lossyScale.y) * 0.999f;
+        underPropCollider.offset = new Vector2(0f, distanceOffset);
 
         underPropCollider.size = colliderDefaultSize;
     }
