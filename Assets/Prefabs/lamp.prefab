@@ -140,6 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4348079542228021223}
   - component: {fileID: 4348079542228021222}
+  - component: {fileID: 1888844886}
   m_Layer: 0
   m_Name: Point Light 2D
   m_TagString: Untagged
@@ -175,7 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 1
-  m_FalloffIntensity: 0.691
+  m_FalloffIntensity: 0.892
   m_Color: {r: 1, g: 0.95573294, b: 0.7122642, a: 1}
   m_Intensity: 0.73
   m_LightVolumeOpacity: 0.939
@@ -202,3 +203,17 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &1888844886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348079542228021216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c540179e28aefb40a45d6f94ce1f4d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFlickering: 0
+  timeDelay: 0
