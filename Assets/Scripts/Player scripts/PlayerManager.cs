@@ -24,8 +24,6 @@ public class PlayerManager : MonoBehaviour
     public PlayerActions actions;
     public PlayerSounds sound;
 
-    public Text debugText;
-
     [Header("Gravity info")]
     public Vector2 currentGravity;
     public Vector2 currentGravityNormal;
@@ -38,6 +36,7 @@ public class PlayerManager : MonoBehaviour
     public Vector2 defaultColliderSize;
     public Vector2 defaultColliderOffset;
     public Vector2 scaledColliderSize;
+    public Vector2 scaledCrouchedColliderSize;
 
     [Header("Ground check settings")]
     public LayerMask groundLayer;
@@ -89,11 +88,10 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Obstacle detection settings")]
     public LayerMask obstaclesLayer;
-    public float obstacleCheckDistanceMult = 0.55f;
-    public Vector3 obstacleCheckOffset = new Vector3(0.05f, 0f, 0f);
-
-    [Header("Obstacle detection settings")]
-    public float obstacleCheckDistance;
+    //public float obstacleCheckDistanceMult = 0.6f;
+    public Vector3 obstacleCheckOffset = new Vector3(0.125f, 0f, 0f);
+    public Vector3 crouchedObstacleCheckOffset = new Vector3(0.125f, 0f, 0f);
+    //public float obstacleCheckDistance;
 
     [Header("Control bools")]
     public bool isGrounded = true;
@@ -182,6 +180,7 @@ public class PlayerManager : MonoBehaviour
         defaultColliderSize = bodyCollider.size;
         defaultColliderOffset = bodyCollider.offset;
         scaledColliderSize = bodyCollider.size * transform.localScale;
+        scaledCrouchedColliderSize = crouchColliderSize * transform.localScale;
     }
 
 }

@@ -8,7 +8,7 @@ public class GameMenuManager : MonoBehaviour
 {
     [Header("References")]
     public static GameMenuManager instance;
-    public OptionSettingScriptable optionSettings;
+    public AudioOptionSettingScriptable optionSettings;
     private PlayerManager pManager;
     private GameManager gameManager;
 
@@ -87,24 +87,25 @@ public class GameMenuManager : MonoBehaviour
     public void UpdateAmbientVolumeFromSlider() {
         float volume = ambiendSoundsVolumeSlider.value;
         optionSettings.ambientSoundsVolume = volume;
-        UpdateAudioSourcesVolumes(gameManager.ambientAudioSources, volume);
+        UpdateAudioSourcesVolumes(gameManager.audioGroup.ambientAudioSources.ToArray(), volume);
     }
 
     public void UpdatePlayerVolumeFromSlider() {
         float volume = playerSoundsVolumeSlider.value;
         optionSettings.playerSoundsVolume = volume;
-        UpdateAudioSourcesVolumes(gameManager.playerAudioSources, volume);
+        UpdateAudioSourcesVolumes(gameManager.audioGroup.playerAudioSources.ToArray(), volume);
     }
 
     public void UpdateGravityVolumeFromSlider() {
         float volume = gravityChangeSoundsVolumeSlider.value;
         optionSettings.gravityChangeSoundsVolume = volume;
-        UpdateAudioSourcesVolumes(gameManager.gravityChangeAudioSources, volume);
+        UpdateAudioSourcesVolumes(gameManager.audioGroup.gravityChangeAudioSources.ToArray(), volume);
     }
 
     private void UpdateAudioSourcesVolumes(AudioSource[] sources, float volume) {
         foreach(AudioSource s in sources) {
-            s.volume = volume;
+            if(s != null)
+                s.volume = volume;
         }
     }
 

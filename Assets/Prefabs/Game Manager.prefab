@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8420618052255881493}
   - component: {fileID: 8420618052255881514}
+  - component: {fileID: 1722098359}
   m_Layer: 2
   m_Name: Game Manager
   m_TagString: Untagged
@@ -24,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8420618052255881515}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -44,10 +45,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   framerate: 60
-  ambientAudioSources:
-  - {fileID: 0}
-  playerAudioSources:
-  - {fileID: 0}
-  gravityChangeAudioSources:
-  - {fileID: 0}
   inPause: 0
+  audioGroup: {fileID: 1722098359}
+--- !u!114 &1722098359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8420618052255881515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f642ae33484097742b5821ec2995aa56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ambientAudioSources: []
+  playerAudioSources: []
+  gravityChangeAudioSources: []
+  audioSettings: {fileID: 11400000, guid: 0c81e88664c4be34183f6722781c0d03, type: 2}

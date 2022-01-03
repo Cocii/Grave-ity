@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 858041cb87b25184c8fcf7065cc9a953, type: 3}
-  m_Name: OptionSettingsObject
+  m_Name: AudioOptionSettingsObject
   m_EditorClassIdentifier: 
-  ambientSoundsVolume: 0.4460694
-  playerSoundsVolume: 1
-  gravityChangeSoundsVolume: 0.33305976
+  ambientSoundsVolume: 0.5521561
+  playerSoundsVolume: 0.20338838
+  gravityChangeSoundsVolume: 0.27027526

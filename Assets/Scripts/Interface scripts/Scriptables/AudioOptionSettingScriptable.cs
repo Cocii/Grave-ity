@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class OptionSettingScriptable : ScriptableObject
+public class AudioOptionSettingScriptable : ScriptableObject
 {
     [Range(0,1)]
     public float ambientSoundsVolume;

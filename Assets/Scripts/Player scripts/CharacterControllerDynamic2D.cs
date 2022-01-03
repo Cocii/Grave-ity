@@ -45,7 +45,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         wallbackRaycastDistance = manager.bodyCollider.size.x * transform.localScale.y * 1.1f;
 
-        manager.obstacleCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * manager.obstacleCheckDistanceMult;
+        //manager.obstacleCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * manager.obstacleCheckDistanceMult;
     }
 
     private void FixedUpdate() {
@@ -79,9 +79,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     private void ObstaclesCheck() {
         manager.isFacingObstacle = false;
         Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
-        Vector3 sizeAdjs = manager.scaledColliderSize;
+        Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
         sizeAdjs.y *= 0.975f;
-        Vector3 offset = manager.obstacleCheckOffset;
+        Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
         offset.x *= direction.x;
         Vector3 posAdjs = transform.position + offset;
 
@@ -441,12 +441,23 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             Gizmos.DrawRay(transform.position, manager.body.velocity * 0.5f);
 
         Gizmos.color = Color.red;
+
+        //if (manager) {
+        //    Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+        //    Vector3 sizeAdjs = !manager.isCrouching? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
+        //    sizeAdjs.y *= 0.975f;
+        //    Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
+        //    offset.x *= direction.x;
+        //    Vector3 posAdjs = transform.position + offset;
+
+        //    Gizmos.DrawCube(posAdjs, sizeAdjs);
+        //}
         //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
 
         //Vector3 offset = manager.obstacleCheckOffset;
         //offset.x *= direction.x;
         //Vector3 posAdjs = transform.position + manager.obstacleCheckOffset;
-        
+
         //print(posAdjs);
         //Gizmos.DrawSphere(posAdj  s, 0.05f);
 
