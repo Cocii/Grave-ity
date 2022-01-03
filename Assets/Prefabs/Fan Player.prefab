@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2618477013751155078}
   - component: {fileID: 2618477013751155079}
   - component: {fileID: 2618477013751155077}
-  - component: {fileID: 1287133035840163930}
   m_Layer: 11
   m_Name: Fan Player
   m_TagString: Untagged
@@ -138,19 +137,3 @@ MonoBehaviour:
   targetDistance: 0
   rayHitDistance: 0
   targetType: 1
---- !u!114 &1287133035840163930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2618477013751155097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shaderTypes: 0
-  normalStrenght: 5
-  normalSmoothing: 1
-  computingNormal: 0
