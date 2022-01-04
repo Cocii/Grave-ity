@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7840429367633761761}
   - component: {fileID: 7840429367633761760}
   - component: {fileID: 7057995407987797948}
+  - component: {fileID: -6594491854909051627}
   m_Layer: 12
   m_Name: useless_desk
   m_TagString: Untagged
@@ -144,3 +145,21 @@ PolygonCollider2D:
       - {x: 2.7984772, y: 1.3676004}
       - {x: 2.8, y: -1.875}
       - {x: 5.92, y: -1.875}
+--- !u!114 &-6594491854909051627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840429367633761763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456bd9583c49ef94c81707cbe51997ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 7840429367633761760}
+  force: {x: 0, y: 0}
+  gravityMult: 2
+  cosSpeed: 2.8
+  rangeToInfluenceLevitation: 3.5
+  rotationSpeed: 30

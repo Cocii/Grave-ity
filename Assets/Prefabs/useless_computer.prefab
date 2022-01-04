@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3452191752653468417}
   - component: {fileID: 195633923568978307}
   - component: {fileID: 3668996554888409290}
+  - component: {fileID: -8003871120845725786}
   m_Layer: 12
   m_Name: useless_computer
   m_TagString: Untagged
@@ -142,3 +143,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-8003871120845725786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340860419143233352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456bd9583c49ef94c81707cbe51997ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 3668996554888409290}
+  force: {x: 0, y: 0}
+  gravityMult: 2
+  cosSpeed: 2.8
+  rangeToInfluenceLevitation: 3.5
+  rotationSpeed: 30
