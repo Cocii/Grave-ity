@@ -22,11 +22,13 @@ public class WeakgravityLevitation : MonoBehaviour
     //public float minHeight;
     //public float maxHeight;
 
-
     void Start()
     {
         pManager = PlayerManager.instance;
         gManager = GravityManager.instance;
+
+        if (body == null)
+            body = GetComponent<Rigidbody2D>();
     }
 
     void Update() {

@@ -334,6 +334,8 @@ GameObject:
   - component: {fileID: 7883946859703793807}
   - component: {fileID: 7883946859703793808}
   - component: {fileID: 22507600}
+  - component: {fileID: 7806402741623062288}
+  - component: {fileID: 5514559971549674118}
   m_Layer: 3
   m_Name: NewPlayer
   m_TagString: Player
@@ -415,6 +417,8 @@ MonoBehaviour:
   resources: {fileID: 2610700083937107178}
   actions: {fileID: 7883946859703793808}
   sound: {fileID: 6040511946373974410}
+  events: {fileID: 7806402741623062288}
+  powersManager: {fileID: 5514559971549674118}
   currentGravity: {x: 0, y: 0}
   currentGravityNormal: {x: 0, y: 0}
   currentGravityRatio: 0
@@ -422,6 +426,7 @@ MonoBehaviour:
   defaultColliderSize: {x: 8.5, y: 39}
   defaultColliderOffset: {x: 0, y: 0.1}
   scaledColliderSize: {x: 0, y: 0}
+  scaledCrouchedColliderSize: {x: 0, y: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 2241
@@ -458,9 +463,8 @@ MonoBehaviour:
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 2240
-  obstacleCheckDistanceMult: 0.6
   obstacleCheckOffset: {x: 0.125, y: 0, z: 0}
-  obstacleCheckDistance: 0
+  crouchedObstacleCheckOffset: {x: 1.15, y: -1, z: 0}
   isGrounded: 1
   wasGrounded: 1
   isFacingRight: 1
@@ -644,6 +648,50 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &7806402741623062288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7195747485142191336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ddb9652c3550004894dc9e5fb95839f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerSwitched:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5514559971549674118}
+        m_TargetAssemblyTypeName: PowerUpManager, Assembly-CSharp
+        m_MethodName: SwitchPower
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5514559971549674118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7195747485142191336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3efc92bb3ef75ea4299b77c78679d082, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powers:
+  - {fileID: 11400000, guid: 38e9e230d47ba234886f229d93c674ae, type: 2}
+  - {fileID: 11400000, guid: 780f2038aaa245f48aba8ae0fad487fc, type: 2}
+  - {fileID: 11400000, guid: 16ad2139ccd82294dbd8a5a787b9e817, type: 2}
+  currentPower: {fileID: 0}
 --- !u!95 &3245997715313147043
 Animator:
   serializedVersion: 3

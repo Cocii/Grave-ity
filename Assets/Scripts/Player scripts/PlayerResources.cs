@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerResources : MonoBehaviour
 {
-    public float maxGravityResourceAmount;
+    public float maxGravityResourceAmount = 1000f;
     public float currentGravityResourceAmount;
-    public float upsideGravityReductionAmount;
-    public float weakerGravityReductionAmount;
-    public float strongerGravityReductionAmount;
-    public float recoverIncreaseAmount;
+    public float upsideGravityReductionAmount=200f;
+    public float weakerGravityReductionAmount=200f;
+    public float strongerGravityReductionAmount=550f;
+    public float recoverIncreaseAmount=630f;
 
     public bool active = true;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour
 {
-    public float speed = 0.01f;
+    public float speed = 0.15f;
 
     void Update()
     {

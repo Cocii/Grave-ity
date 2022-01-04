@@ -12,6 +12,11 @@ public class Hammer : MonoBehaviour
     public Rigidbody2D body;
     public bool goingUp = false;
 
+    private void Start() {
+        if (body == null)
+            body = GetComponent<Rigidbody2D>();
+    }
+
     private void Update() {
         if (goingUp) {
             AddForceUp(defaultForceMagnitude);
@@ -41,7 +46,7 @@ public class Hammer : MonoBehaviour
 
     private void CheckLimitPosition() {
         if(transform.localPosition.y > maxHeight) {
-            transform.localPosition = new Vector3(transform.localPosition.x, maxHeight, 0f);
+            transform.localPosition = new Vector3(transform.localPosition.x, maxHeight, transform.localPosition.z);
             body.velocity *= 0f;
             goingUp = false;
         }

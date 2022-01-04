@@ -16,22 +16,22 @@ public class PlayerActions : MonoBehaviour
     [Header("Grab settings")]
     public LayerMask propsLayer;
     public LayerMask propsGround;
-    public float grabMassMult = 0.1f;
+    public float grabMassMult = 0.2f;
     //public float grabReleaseDistanceOffset = 0.001f;
     //public float grabReleaseReactionForce = Mathf.Infinity;
     public float defaultBreakForce = Mathf.Infinity;
-    public float minimalBreakForce = 1000f;
-    public float grabDistanceMult = 1.25f;
+    public float minimalBreakForce = 500f;
+    public float grabDistanceMult = 1.35f;
     public float grabDistanceMultOnSlope = 1.75f;
 
     [Header("Dash info")]
     public float lastDashTime = 0f;
 
     [Header("Dash settings")]
-    public float dashDistanceMult = 1.75f;
+    public float dashDistanceMult = 1.85f;
 
     [Header("Prop check info")]
-    public float propCheckDistance = 2f;
+    public float propCheckDistance = 0f;
     public float proximityPropDistanceThreshold = 1f;
 
     private void Start() {
