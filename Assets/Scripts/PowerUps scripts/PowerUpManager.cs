@@ -10,12 +10,20 @@ public class PowerUpManager : MonoBehaviour
 
     private void Start() {
         currentPower = powers[0];
-        currentPower.ActivationFunction();
+        ActivateCurrentPower();
     }
 
     public void SwitchPower() {
         currentPower.DeactivationFunction();
         currentPower = powers[(System.Array.IndexOf(powers, currentPower) + 1) % powers.Length];
+        ActivateCurrentPower();
+    }
+
+    private void ActivateCurrentPower() {
         currentPower.ActivationFunction();
+
+        UIManager uiManager = (UIManager)GameObject.FindObjectOfType(typeof(UIManager));
+        if (uiManager)
+            uiManager.powerNameText.text = currentPower.powerName;
     }
 }

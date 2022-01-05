@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerLessResourceConsume
   m_EditorClassIdentifier: 
   powerId: 1
-  powerName: 
+  powerName: Consume less energy
   powerIcon: {fileID: 0}
   powerDescription: 
   weakGravityAmountMult: 0.75

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerRecoverResourceFaster
   m_EditorClassIdentifier: 
   powerId: 2
-  powerName: 
+  powerName: Recover energy faster
   powerIcon: {fileID: 0}
   powerDescription: 
   weakGravityAmountMult: 0
