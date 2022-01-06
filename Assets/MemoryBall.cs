@@ -9,13 +9,17 @@ public class MemoryBall : MonoBehaviour
 
     public GameObject key_press;
 
-    private Collider2D trigger;
+    private bool canCollect = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        trigger = GetComponent<Collider2D>();
         key_press.SetActive(false);
+    }
+
+    private void Update()
+    {
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -23,13 +27,17 @@ public class MemoryBall : MonoBehaviour
         if(collision.tag == "Player")
         {
             //Collect
-            Debug.Log("YOU CAN COLLECT");
+            canCollect = true;
             key_press.SetActive(true);
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        key_press.SetActive(false);
+        if (collision.tag == "Player")
+        {
+            canCollect = false;
+            key_press.SetActive(false);
+        }
     }
 }
