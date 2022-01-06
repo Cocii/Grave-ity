@@ -8,11 +8,19 @@ public class PowerUpManager : MonoBehaviour
     public PowerUpScriptable[] powers;
     public PowerUpScriptable currentPower;
 
+    public SpriteRenderer body;
+
     public bool activated = false;
 
     private void Start() {
         currentPower = powers[0];
         ActivateCurrentPower();
+    }
+
+    public void TakeSuit()
+    {
+        activated = true;
+        body.color = Color.black;
     }
 
     public void SwitchPower() {

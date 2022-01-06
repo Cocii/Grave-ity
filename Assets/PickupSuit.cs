@@ -2,36 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShutdownEngine : MonoBehaviour
+public class PickupSuit : MonoBehaviour
 {
     public GameObject key_press;
     private bool canPress = false;
 
-    public List<GameObject> toDeactivate;
-    public Collider2D confineCollider;
-    public SpriteRenderer confineRenderer;
-
+    private PlayerManager player;
 
     // Start is called before the first frame update
     void Start()
     {
         key_press.SetActive(false);
+        player = PlayerManager.instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(canPress)
+        if (canPress)
         {
-            if(Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.C))
             {
-                foreach(GameObject go in toDeactivate)
-                {
-                    go.SetActive(false);
-                    confineCollider.enabled = false;
-                    confineRenderer.color = Color.white;
-                }
-                    gameObject.SetActive(false);
+                player.powersManager.TakeSuit();
+                gameObject.SetActive(false);
             }
         }
     }
