@@ -14,6 +14,10 @@ public class PickupSuit : MonoBehaviour
     {
         key_press.SetActive(false);
         player = PlayerManager.instance;
+        if(player.powersManager.activated)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame
