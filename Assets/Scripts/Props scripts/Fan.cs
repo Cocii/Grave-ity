@@ -133,7 +133,7 @@ public class Fan : MonoBehaviour
             case TargetTypeEnum.Player:
 
                 if (gManager.gravityRatio <= 1f) {
-                    //print("locking player movement");
+                    print("locking player movement");
                     PlayerManager.instance.body.velocity *= Vector2.up;
                 }
 
