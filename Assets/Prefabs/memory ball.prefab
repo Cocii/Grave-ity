@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1970936320960610739}
   - component: {fileID: 4702942028008855897}
   - component: {fileID: 6835951076518591754}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: memory ball
-  m_TagString: Untagged
+  m_TagString: CollectableItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

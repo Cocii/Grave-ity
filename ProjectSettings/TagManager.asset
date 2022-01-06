@@ -26,6 +26,7 @@ TagManager:
   - EndLevel
   - VirtualCamera
   - CameraRig
+  - CollectableItem
   layers:
   - Default
   - TransparentFX
