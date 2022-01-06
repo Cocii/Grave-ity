@@ -34,6 +34,9 @@ public class PlayerActions : MonoBehaviour
     public float propCheckDistance = 0f;
     public float proximityPropDistanceThreshold = 1f;
 
+    [Header("Crouch check settings")]
+    public float gettingUpCheckDistance = 2.85f;
+
     private void Start() {
         manager = PlayerManager.instance;
 
@@ -48,6 +51,8 @@ public class PlayerActions : MonoBehaviour
     private void Update() {
         CheckGrabbedObj();
         CheckDash();
+
+        
     }
 
     //CHECKS-----------------------------
@@ -262,6 +267,10 @@ public class PlayerActions : MonoBehaviour
 
     public void CrouchStop() {
         if (manager.isCrouching) {
+            if(Physics2D.Raycast(transform.position, transform.up, gettingUpCheckDistance, manager.obstaclesLayer)) {
+                return;
+            }
+
             manager.currentMaxMoveSpeed *= (1f/manager.crouchMoveSpeedMult);
             manager.moveForceMagnitude *= (1f / manager.crouchMoveSpeedMult);
             //manager.bodyCollider.offset = new Vector2(manager.bodyCollider.offset.x, manager.bodyCollider.offset.y + (manager.bodyCollider.size.y * manager.crouchColliderHeightMult));

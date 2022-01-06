@@ -8,12 +8,17 @@ public class PowerUpManager : MonoBehaviour
     public PowerUpScriptable[] powers;
     public PowerUpScriptable currentPower;
 
+    public bool activated = false;
+
     private void Start() {
         currentPower = powers[0];
         ActivateCurrentPower();
     }
 
     public void SwitchPower() {
+        if (!activated)
+            return;
+
         currentPower.DeactivationFunction();
         currentPower = powers[(System.Array.IndexOf(powers, currentPower) + 1) % powers.Length];
         ActivateCurrentPower();
