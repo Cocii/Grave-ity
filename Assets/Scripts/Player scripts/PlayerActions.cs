@@ -36,6 +36,7 @@ public class PlayerActions : MonoBehaviour
 
     [Header("Crouch check settings")]
     public float gettingUpCheckDistance = 2.85f;
+    public bool triedToGetUp = false;
 
     private void Start() {
         manager = PlayerManager.instance;
@@ -52,7 +53,7 @@ public class PlayerActions : MonoBehaviour
         CheckGrabbedObj();
         CheckDash();
 
-        
+        CheckCrouchGetUp();
     }
 
     //CHECKS-----------------------------
@@ -267,9 +268,11 @@ public class PlayerActions : MonoBehaviour
 
     public void CrouchStop() {
         if (manager.isCrouching) {
-            if(Physics2D.Raycast(transform.position, transform.up, gettingUpCheckDistance, manager.obstaclesLayer)) {
+            if (CheckCeilingCrouched()) {
+                triedToGetUp = true;
                 return;
             }
+
 
             manager.currentMaxMoveSpeed *= (1f/manager.crouchMoveSpeedMult);
             manager.moveForceMagnitude *= (1f / manager.crouchMoveSpeedMult);
@@ -281,5 +284,24 @@ public class PlayerActions : MonoBehaviour
         }
 
         manager.isCrouching = false;
+    }
+
+    private bool CheckCeilingCrouched() {
+        if (Physics2D.Raycast(transform.position, transform.up, gettingUpCheckDistance, manager.obstaclesLayer)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void CheckCrouchGetUp() {
+        if (!triedToGetUp)
+            return;
+
+        if(!CheckCeilingCrouched()) {
+            triedToGetUp = false;
+            CrouchStop();
+        }
+        
     }
 }
