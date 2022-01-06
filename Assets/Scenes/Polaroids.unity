@@ -2680,7 +2680,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3. Reaching For Hope
+  m_text: 6. Reaching For Hope
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 277a34e71432791469f082e2c4450bfb, type: 2}
   m_sharedMaterial: {fileID: -6554344056706711256, guid: 277a34e71432791469f082e2c4450bfb, type: 2}
@@ -3086,7 +3086,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3. All That Remains
+  m_text: 7. All That Remains
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 277a34e71432791469f082e2c4450bfb, type: 2}
   m_sharedMaterial: {fileID: -6554344056706711256, guid: 277a34e71432791469f082e2c4450bfb, type: 2}
@@ -13706,7 +13706,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3. Repeat
+  m_text: 8. Repeat
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 277a34e71432791469f082e2c4450bfb, type: 2}
   m_sharedMaterial: {fileID: -6554344056706711256, guid: 277a34e71432791469f082e2c4450bfb, type: 2}

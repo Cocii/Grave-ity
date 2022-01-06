@@ -5,7 +5,7 @@ using UnityEngine;
 public class MemoryBall : MonoBehaviour
 {
     [SerializeField]
-    int memory;
+    string memory;
 
     public GameObject key_press;
 
@@ -15,11 +15,29 @@ public class MemoryBall : MonoBehaviour
     void Start()
     {
         key_press.SetActive(false);
+
+        int isCollected = PlayerPrefs.GetInt(memory);
+        if(isCollected == 1)
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     private void Update()
     {
-        
+        if(canCollect)
+        {
+            if(memory != null)
+            {
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    PlayerPrefs.SetInt(memory, 1);
+                    PlayerPrefs.Save();
+                    Destroy(gameObject);
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
