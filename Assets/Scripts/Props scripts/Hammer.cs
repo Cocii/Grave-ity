@@ -7,7 +7,7 @@ public class Hammer : MonoBehaviour
     public float maxHeight;
     public float minHeight;
     public float defaultForceMagnitude;
-    public float forceToApply;
+    public float forceMagnitudeToApply;
     public float weakGravityPushMult;
     public Rigidbody2D body;
     public bool goingUp = false;
@@ -24,9 +24,9 @@ public class Hammer : MonoBehaviour
 
     private void Update() {
         if (goingUp) {
-            AddForceUp(defaultForceMagnitude);
-            //forceToApply = defaultForceMagnitude;
-            CheckLimitPosition();
+            //AddForceUp(defaultForceMagnitude);
+            forceMagnitudeToApply += defaultForceMagnitude * 100f * Time.smoothDeltaTime;
+            
 
             if (deathTrigger.enabled) {
                 deathTrigger.enabled = false;
@@ -43,31 +43,36 @@ public class Hammer : MonoBehaviour
                 }
 
                 if (GravityManager.instance.gravityRatio < 1f) {
-                    AddForceUp(defaultForceMagnitude * weakGravityPushMult);
-                    //forceToApply = defaultForceMagnitude * weakGravityPushMult;
+                    //AddForceUp(defaultForceMagnitude * weakGravityPushMult);
+                    forceMagnitudeToApply += defaultForceMagnitude * 100f * Time.smoothDeltaTime * weakGravityPushMult;
                 }
             }
 
         }
+
+        CheckLimitPosition();
     }
 
-    //private void FixedUpdate() {
-    //    if (forceToApply != 0) {
-    //        AddForceUp(forceToApply);
-    //        forceToApply = 0f;
-    //    }
-    //}
+    private void FixedUpdate() {
+        if (forceMagnitudeToApply != 0) {
+            AddForceUp(forceMagnitudeToApply);
+            forceMagnitudeToApply = 0f;
+        }
+    }
 
     private void CheckLimitPosition() {
         if(transform.localPosition.y > maxHeight) {
+            print("altezza massima raggiunta");
             transform.localPosition = new Vector3(transform.localPosition.x, maxHeight, transform.localPosition.z);
             body.velocity *= 0f;
             goingUp = false;
+
+            forceMagnitudeToApply = 0f;
         }
     }
 
     private void AddForceUp(float magnitude) {
-        body.AddForce(Vector2.up * magnitude);
+        body.AddForce(transform.up * magnitude);
     }
 
 }

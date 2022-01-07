@@ -15,17 +15,17 @@ public class GameManager : MonoBehaviour
 
     public LevelTimer timer;
 
-    void OnEnable() {
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
-    }
+    //void OnEnable() {
+    //    SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    //}
 
-    void OnDisable() {
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-    }
+    //void OnDisable() {
+    //    SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    //}
 
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
-        audioGroup.ClearAll();
-    }
+    //void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+    //    audioGroup.ClearAll();
+    //}
 
     private void Awake() {
         if (instance == null) {
@@ -58,9 +58,6 @@ public class GameManager : MonoBehaviour
     }
 
     public void RegisterAmbientAudioSource(AudioSource source) {
-        if (audioGroup.ambientAudioSources.Contains(source))
-            return;
-
         source.volume = audioGroup.audioSettings.ambientSoundsVolume;
         audioGroup.ambientAudioSources.Add(source);
     }
@@ -73,6 +70,27 @@ public class GameManager : MonoBehaviour
     public void RegisterGravityChangeAudioSource(AudioSource source) {
         source.volume = audioGroup.audioSettings.gravityChangeSoundsVolume;
         audioGroup.gravityChangeAudioSources.Add(source);
+    }
+
+    public void UnregisterAmbientAudioSource(AudioSource source) {
+        if (!audioGroup.ambientAudioSources.Contains(source))
+            return;
+
+        audioGroup.ambientAudioSources.Remove(source);
+    }
+
+    public void UnregisterPlayerAudioSource(AudioSource source) {
+        if (!audioGroup.playerAudioSources.Contains(source))
+            return;
+
+        audioGroup.playerAudioSources.Remove(source);
+    }
+
+    public void UnregisterGravityChangeAudioSource(AudioSource source) {
+        if (!audioGroup.gravityChangeAudioSources.Contains(source))
+            return;
+
+        audioGroup.gravityChangeAudioSources.Remove(source);
     }
 }
  

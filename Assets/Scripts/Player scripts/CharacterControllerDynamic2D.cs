@@ -383,11 +383,11 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         }
 
         if (groundAngle >= manager.maxSlopeAngle) {
-            print("Check max slope");
+            //print("Check max slope");
             manager.isOnHighSlope = true;
         }
         else if (manager.input.GetMoveInput.magnitude > 0f && Mathf.Approximately(Mathf.Floor(manager.body.velocity.magnitude), 0f) && !manager.isGrounded) {
-            print("Check slope with vel");
+            print("Check slope with velocity");
             manager.isOnHighSlope = true;
         }
     }

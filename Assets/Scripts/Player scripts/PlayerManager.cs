@@ -144,6 +144,7 @@ public class PlayerManager : MonoBehaviour
     private void Start() {
         AdaptParametersToGravity();
         GetColliderSize();
+        currentMaxMoveSpeed = defaultMaxMoveSpeed;
     }
 
     private void Update() {

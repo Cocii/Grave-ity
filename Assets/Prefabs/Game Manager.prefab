@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8420618052255881493}
   - component: {fileID: 8420618052255881514}
-  - component: {fileID: 1722098359}
   - component: {fileID: 394110127967269635}
+  - component: {fileID: 1722098359}
   m_Layer: 2
   m_Name: Game Manager
   m_TagString: Untagged
@@ -49,6 +49,18 @@ MonoBehaviour:
   inPause: 0
   audioGroup: {fileID: 1722098359}
   timer: {fileID: 0}
+--- !u!114 &394110127967269635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8420618052255881515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b2afa26e1199444bae99458188d1f45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1722098359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,15 +77,3 @@ MonoBehaviour:
   playerAudioSources: []
   gravityChangeAudioSources: []
   audioSettings: {fileID: 11400000, guid: 0c81e88664c4be34183f6722781c0d03, type: 2}
---- !u!114 &394110127967269635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8420618052255881515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b2afa26e1199444bae99458188d1f45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

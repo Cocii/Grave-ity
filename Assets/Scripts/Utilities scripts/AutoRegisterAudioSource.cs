@@ -32,4 +32,30 @@ public class AutoRegisterAudioSource : MonoBehaviour
 
         }
     }
+
+    private void OnDisable() {
+        AudioSource source = GetComponent<AudioSource>();
+        GameManager gManager = GameManager.instance;
+
+        if (gManager == null)
+            return;
+
+        switch (sourceType) {
+            case SourceTypeEnum.Player:
+                gManager.UnregisterPlayerAudioSource(source);
+                break;
+
+            case SourceTypeEnum.Ambient:
+                gManager.UnregisterAmbientAudioSource(source);
+                break;
+
+            case SourceTypeEnum.GravityChange:
+                gManager.UnregisterGravityChangeAudioSource(source);
+                break;
+
+            default:
+                break;
+
+        }
+    }
 }
