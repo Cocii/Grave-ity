@@ -18,16 +18,30 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadMemoriesPage()
     {
-        StartCoroutine(LoadLevel(1));
+        StartCoroutine(LoadLevel(4));
+    }
+
+    public void LoadTimerPage()
+    {
+        
+        PlayerManager.instance.ManualDestroy();
+        GravityManager.instance.ManualDestroy();
+        Checkpoint.instance.ManualDestroy();
+        StartCoroutine(LoadLevel(2));
     }
 
     public void LoadFirstLevel()
     {
-        StartCoroutine(LoadLevel(2));
+        StartCoroutine(LoadLevel(1));
+    }
+    public void LoadSecondLevel()
+    {
+        StartCoroutine(LoadLevel(3));
     }
 
     public void LoadNextLevel()
     {
+        
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
@@ -43,9 +57,6 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadMainMenuScene()
     {
-        PlayerManager.instance.ManualDestroy();
-        GravityManager.instance.ManualDestroy();
-        Checkpoint.instance.ManualDestroy();
         StartCoroutine(LoadLevel(0));
     }
 

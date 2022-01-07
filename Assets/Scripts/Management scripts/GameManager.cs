@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     public AudioSourceGroup audioGroup;
 
+    public LevelTimer timer;
+
     void OnEnable() {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
@@ -42,6 +44,12 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelWasLoaded(int level) {
         
+    }
+
+    private void Start()
+    {
+        timer = GetComponent<LevelTimer>();
+        timer.StartTimer();
     }
 
     private void Update() {

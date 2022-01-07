@@ -52,8 +52,15 @@ public class TriggerChecker : MonoBehaviour
         {
 
             //StartCoroutine(DelayReset());
+            GameManager manager = GameManager.instance;
+            manager.timer.EndTimer();
+
+            float currentTimer = manager.timer.GetTimer();
+            string currentTimerStr = currentTimer.ToString();
+            PlayerPrefs.SetString("Timer", currentTimerStr);
+
             LevelLoader loader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
-            loader.LoadMainMenuScene();
+            loader.LoadTimerPage();
             
 
         }
