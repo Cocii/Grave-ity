@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 195633923568978307}
   - component: {fileID: 3668996554888409290}
   - component: {fileID: -8003871120845725786}
+  - component: {fileID: 5875532481874582243}
   m_Layer: 12
   m_Name: useless_computer
   m_TagString: Untagged
@@ -161,3 +162,15 @@ MonoBehaviour:
   cosSpeed: 2.8
   rangeToInfluenceLevitation: 3.5
   rotationSpeed: 30
+--- !u!114 &5875532481874582243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340860419143233352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270829b0c8fd155499984459d0f8cdbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

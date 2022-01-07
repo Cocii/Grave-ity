@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3314552385715720959}
   - component: {fileID: 2710862911669756628}
   - component: {fileID: 1412470941195650557}
+  - component: {fileID: 8817840350543584589}
   m_Layer: 12
   m_Name: useless_drink
   m_TagString: Untagged
@@ -162,3 +163,15 @@ MonoBehaviour:
   cosSpeed: 2.8
   rangeToInfluenceLevitation: 3.5
   rotationSpeed: 30
+--- !u!114 &8817840350543584589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4960070805149705366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270829b0c8fd155499984459d0f8cdbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8503339248805528711}
   - component: {fileID: 8503339248805528712}
   - component: {fileID: 8503339248805528713}
+  - component: {fileID: 6233383644713699813}
   m_Layer: 0
   m_Name: useless_hangBox
   m_TagString: Untagged
@@ -122,6 +123,18 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: -1.1}
   m_ConnectedAnchor: {x: 218.18253, y: 23.2}
   m_AutoConfigureDistance: 1
-  m_Distance: 5.5600014
+  m_Distance: 242.36157
   m_DampingRatio: 0
   m_Frequency: 1
+--- !u!114 &6233383644713699813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8503339248805528715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270829b0c8fd155499984459d0f8cdbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

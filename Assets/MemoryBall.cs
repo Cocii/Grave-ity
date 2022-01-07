@@ -19,7 +19,7 @@ public class MemoryBall : MonoBehaviour
         int isCollected = PlayerPrefs.GetInt(memory);
         if(isCollected == 1)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 
     }
