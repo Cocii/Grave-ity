@@ -147,6 +147,11 @@ public class PlayerManager : MonoBehaviour
         currentMaxMoveSpeed = defaultMaxMoveSpeed;
     }
 
+    private void OnEnable()
+    {
+        input.EnableInput();
+    }
+
     private void Update() {
         GravityManager gManager = GravityManager.instance;
 
