@@ -54,6 +54,7 @@ public class PlayerActions : MonoBehaviour
         CheckDash();
 
         CheckCrouchGetUp();
+        
     }
 
     //CHECKS-----------------------------
@@ -295,6 +296,8 @@ public class PlayerActions : MonoBehaviour
     }
 
     private void CheckCrouchGetUp() {
+        Debug.DrawRay(transform.position, transform.up * gettingUpCheckDistance, Color.cyan);
+
         if (!triedToGetUp)
             return;
 

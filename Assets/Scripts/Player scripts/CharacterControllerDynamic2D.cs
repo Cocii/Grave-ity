@@ -443,17 +443,19 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         Gizmos.color = Color.red;
 
-        if (manager) {
-            Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
-            Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
-            sizeAdjs.y *= 0.975f;
-            Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
-            offset.x *= direction.x;
-            offset.y *= Mathf.Sign(transform.up.y);
-            Vector3 posAdjs = transform.position + offset;
+        //if (manager) {
+        //    Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+        //    Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
+        //    sizeAdjs.y *= 0.975f;
+        //    Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
+        //    offset.x *= direction.x;
+        //    offset.y *= Mathf.Sign(transform.up.y);
+        //    Vector3 posAdjs = transform.position + offset;
 
-            Gizmos.DrawCube(posAdjs, sizeAdjs);
-        }
+        //    Gizmos.DrawCube(posAdjs, sizeAdjs);
+        //}
+
+
         //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
 
         //Vector3 offset = manager.obstacleCheckOffset;

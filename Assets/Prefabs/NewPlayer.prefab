@@ -631,7 +631,7 @@ MonoBehaviour:
   dashDistanceMult: 1.85
   propCheckDistance: 0
   proximityPropDistanceThreshold: 1
-  gettingUpCheckDistance: 2.85
+  gettingUpCheckDistance: 3
   triedToGetUp: 0
 --- !u!114 &22507600
 MonoBehaviour:

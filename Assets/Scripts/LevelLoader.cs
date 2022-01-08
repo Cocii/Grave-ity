@@ -23,11 +23,8 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadTimerPage()
     {
-        
-        GameManager.instance.ManualDestroy();
-        PlayerManager.instance.ManualDestroy();
-        GravityManager.instance.ManualDestroy();
-        Checkpoint.instance.ManualDestroy();
+        DestroySingletons();
+
         StartCoroutine(LoadLevel(2));
     }
 
@@ -43,6 +40,7 @@ public class LevelLoader : MonoBehaviour
     public void LoadNextLevel()
     {
 
+        DestroySingletons();
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
@@ -58,7 +56,7 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadMainMenuScene()
     {
-        
+        DestroySingletons();
         StartCoroutine(LoadLevel(0));
     }
 
@@ -76,5 +74,17 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(levelIndex);
     }
 
-
+    private void DestroySingletons() {
+        if(GameManager.instance)
+            GameManager.instance.ManualDestroy();
+        
+        if(PlayerManager.instance)
+            PlayerManager.instance.ManualDestroy();
+        
+        if(GravityManager.instance)
+            GravityManager.instance.ManualDestroy();
+        
+        if(Checkpoint.instance)
+            Checkpoint.instance.ManualDestroy();
+    }
 }

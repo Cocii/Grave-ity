@@ -53,9 +53,12 @@ public class MovementAI : MonoBehaviour
     private void DetectPlayer() {
         moveInput = Vector2.zero;
 
+        if (!PlayerManager.instance)
+            return;
+
         Vector3 playerPosition = PlayerManager.instance.transform.position;
         float distance = Vector3.Distance(transform.position, playerPosition);
-        print(distance);
+        //print(distance);
         if (distance <= detectionMaxRange && distance>detectionMinRange) {
             Vector3 playerDirection = (playerPosition - transform.position);
             float dot = Vector3.Dot(transform.up, playerDirection.normalized);

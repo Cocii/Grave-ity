@@ -78,17 +78,18 @@ public class GravityManager : MonoBehaviour
     }
 
     public void StrongerGravity() {
-        if (gravityMagnitude < defaultGravityMagnitude)
-            gravityMagnitude = defaultGravityMagnitude;
-        else if (gravityMagnitude == defaultGravityMagnitude)
+        if (gravityMagnitude == defaultGravityMagnitude)
             gravityMagnitude = defaultGravityMagnitude * strongerGravityMult;
+        else
+            gravityMagnitude = defaultGravityMagnitude; 
     }
 
     public void WeakerGravity() {
-        if (gravityMagnitude > defaultGravityMagnitude)
-            gravityMagnitude = defaultGravityMagnitude;
-        else if (gravityMagnitude == defaultGravityMagnitude)
+        if (gravityMagnitude == defaultGravityMagnitude)
             gravityMagnitude = defaultGravityMagnitude * weakerGravityMult;
+        else
+            gravityMagnitude = defaultGravityMagnitude;
+
     }
 
     public void ResetGravity() {
