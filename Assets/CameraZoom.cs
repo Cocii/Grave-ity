@@ -7,6 +7,7 @@ public class CameraZoom : MonoBehaviour
 {
     //default is 15
     public float distance;
+    public bool lowerCam = false;
     
     GameObject cameraRig;
     CinemachineVirtualCamera vCam;
@@ -32,6 +33,11 @@ public class CameraZoom : MonoBehaviour
             if(componentBase is CinemachineFramingTransposer)
             {
                 (componentBase as CinemachineFramingTransposer).m_CameraDistance = distance;
+            }
+
+            if(lowerCam)
+            {
+                (componentBase as CinemachineFramingTransposer).m_ScreenY = 0.53f;
             }
         }
     }
