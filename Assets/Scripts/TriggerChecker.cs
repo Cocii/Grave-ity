@@ -29,8 +29,8 @@ public class TriggerChecker : MonoBehaviour
     {
         if (collision.tag == "Checkpoint")
         {
+            PlayerManager.instance.input.EnableInput();
 
-            
             if (!GameObject.ReferenceEquals(currentCheckpoint, collision.gameObject))
             {
                   currentCheckpoint = collision.gameObject;
@@ -41,7 +41,7 @@ public class TriggerChecker : MonoBehaviour
 
         if (collision.tag == "Death Trigger")
         {
-            
+            PlayerManager.instance.input.DisableInput();
             StartCoroutine(DelayReset());
             LevelLoader loader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
             loader.ReloadScene();
