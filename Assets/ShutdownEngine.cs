@@ -5,11 +5,13 @@ using UnityEngine;
 public class ShutdownEngine : MonoBehaviour
 {
     public GameObject key_press;
+    public GameObject glitch;
     private bool canPress = false;
 
     public List<GameObject> toDeactivate;
     public Collider2D confineCollider;
     public SpriteRenderer confineRenderer;
+
 
 
     // Start is called before the first frame update
@@ -27,6 +29,7 @@ public class ShutdownEngine : MonoBehaviour
             {
                 foreach(GameObject go in toDeactivate)
                 {
+                    glitch.SetActive(false);
                     go.SetActive(false);
                     confineCollider.enabled = false;
                     confineRenderer.color = Color.white;

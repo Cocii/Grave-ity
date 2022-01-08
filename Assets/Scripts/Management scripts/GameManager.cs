@@ -52,6 +52,12 @@ public class GameManager : MonoBehaviour
         timer.StartTimer();
     }
 
+    public void ManualDestroy()
+    {
+        if (gameObject != null)
+            Destroy(gameObject);
+    }
+
     private void Update() {
         if(Application.targetFrameRate != framerate)
             Application.targetFrameRate = framerate;

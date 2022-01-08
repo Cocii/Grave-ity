@@ -9,6 +9,10 @@ public class MessageTrigger : MonoBehaviour
     [SerializeField]
     string text;
 
+    [SerializeField]
+    float time;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +23,13 @@ public class MessageTrigger : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            uiManager.SetUpperCenterTextAndDelay(text, 7f);
+            uiManager.SetUpperCenterTextAndDelay(text, time);
             Destroy(gameObject);
         }
+    }
+
+    public void ShowMessage()
+    {
+        uiManager.SetUpperCenterTextAndDelay(text, time);
     }
 }

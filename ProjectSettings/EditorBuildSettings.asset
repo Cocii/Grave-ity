@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LabScene.unity
     guid: 097c90569dce37e47b90d56ceeb172b3
   - enabled: 1
+    path: Assets/Scenes/FinalScene.unity
+    guid: f0c44fc23735f9f479cdd67628b2e077
+  - enabled: 1
     path: Assets/Scenes/Polaroids.unity
     guid: 7613f6dc79a71824e9aaadae587c7695
   m_configObjects: {}

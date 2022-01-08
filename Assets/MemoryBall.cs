@@ -8,6 +8,8 @@ public class MemoryBall : MonoBehaviour
     string memory;
 
     public GameObject key_press;
+    public GameObject msgTrigger;
+    private MessageTrigger msg;
 
     private bool canCollect = false;
 
@@ -15,6 +17,9 @@ public class MemoryBall : MonoBehaviour
     void Start()
     {
         key_press.SetActive(false);
+
+        msg = msgTrigger.GetComponent<MessageTrigger>();
+        msgTrigger.SetActive(false);
 
         int isCollected = PlayerPrefs.GetInt(memory);
         if(isCollected == 1)
@@ -32,6 +37,8 @@ public class MemoryBall : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.C))
                 {
+                    msgTrigger.SetActive(true);
+                    msg.ShowMessage();
                     PlayerPrefs.SetInt(memory, 1);
                     PlayerPrefs.Save();
                     Destroy(gameObject);

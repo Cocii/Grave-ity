@@ -11,6 +11,7 @@ public class GameMenuManager : MonoBehaviour
     public AudioOptionSettingScriptable optionSettings;
     private PlayerManager pManager;
     private GameManager gameManager;
+    private LevelLoader loader;
 
     [Header("References")]
     public bool inPause = false;
@@ -35,6 +36,7 @@ public class GameMenuManager : MonoBehaviour
     }
 
     void Start() {
+        loader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         pManager = PlayerManager.instance;
@@ -76,6 +78,11 @@ public class GameMenuManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
+    }
+
+    public void BackToMainMenu()
+    {
+        loader.LoadMainMenuScene();
     }
 
     public void InitializeOptions() {

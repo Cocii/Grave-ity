@@ -23,7 +23,8 @@ public class Checkpoint : MonoBehaviour
 
     public void ManualDestroy()
     {
-        Destroy(gameObject);
+        if(gameObject != null)
+            Destroy(gameObject);
     }
 
     private void Start()

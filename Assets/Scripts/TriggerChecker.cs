@@ -60,7 +60,7 @@ public class TriggerChecker : MonoBehaviour
             PlayerPrefs.SetString("Timer", currentTimerStr);
 
             LevelLoader loader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
-            loader.LoadTimerPage();
+            loader.LoadNextLevel();
             
 
         }

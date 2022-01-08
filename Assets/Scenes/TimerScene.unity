@@ -6127,7 +6127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1930023550}
-  nextButton: {fileID: 434017622}
 --- !u!4 &767257376
 Transform:
   m_ObjectHideFlags: 0
@@ -7920,7 +7919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518b273cc89e5fc4195cf4dba43e8ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelLoader: {fileID: 0}
+  levelLoader: {fileID: 893779114}
 --- !u!4 &1992436412
 Transform:
   m_ObjectHideFlags: 0

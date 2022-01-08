@@ -12,13 +12,15 @@ public class GUITimer : MonoBehaviour
     string minutes, seconds;
 
     [SerializeField]
-    GameObject timerText, nextButton;
+    GameObject timerText;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+
         timerString = PlayerPrefs.GetString("Timer");
 
         if(timerString == null)
