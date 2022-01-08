@@ -12,11 +12,11 @@ public class UIManager : MonoBehaviour
     public Text powerNameText;
     public Text upperCentertext;
 
-    //private void Update() {
-    //    if (Input.GetKeyDown(KeyCode.J)) {
-    //        SetUpperCenterTextAndDelay("test attivazione 2 secondi", 2f);
-    //    }
-    //}
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.J)) {
+            SetUpperCenterTextAndDelay("test attivazione 2 secondi", 2f);
+        }
+    }
 
     public void SetUpperCenterTextAndDelay(string text, float delay) {
         upperCentertext.text = text;
