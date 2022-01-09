@@ -6,7 +6,8 @@ public class AudioSourceGroup : MonoBehaviour
 {
     public List<AudioSource> ambientAudioSources;
     public List<AudioSource> playerAudioSources;
-    public List<AudioSource> gravityChangeAudioSources;
+    public List<AudioSource> effectsAudioSources;
+
     public AudioOptionSettingScriptable audioSettings;
 
     public void ClearAllNonSingleton() {
@@ -16,6 +17,6 @@ public class AudioSourceGroup : MonoBehaviour
     public void ClearAll() {
         ambientAudioSources.Clear();
         playerAudioSources.Clear();
-        gravityChangeAudioSources.Clear();
+        effectsAudioSources.Clear();
     }
 }

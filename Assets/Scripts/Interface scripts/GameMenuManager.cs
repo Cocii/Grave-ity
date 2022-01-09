@@ -88,7 +88,7 @@ public class GameMenuManager : MonoBehaviour
     public void InitializeOptions() {
         ambiendSoundsVolumeSlider.value = optionSettings.ambientSoundsVolume;
         playerSoundsVolumeSlider.value = optionSettings.playerSoundsVolume;
-        gravityChangeSoundsVolumeSlider.value = optionSettings.gravityChangeSoundsVolume;
+        gravityChangeSoundsVolumeSlider.value = optionSettings.effectsSoundsVolume;
     }
 
     public void UpdateAmbientVolumeFromSlider() {
@@ -105,8 +105,8 @@ public class GameMenuManager : MonoBehaviour
 
     public void UpdateGravityVolumeFromSlider() {
         float volume = gravityChangeSoundsVolumeSlider.value;
-        optionSettings.gravityChangeSoundsVolume = volume;
-        UpdateAudioSourcesVolumes(gameManager.audioGroup.gravityChangeAudioSources.ToArray(), volume);
+        optionSettings.effectsSoundsVolume = volume;
+        UpdateAudioSourcesVolumes(gameManager.audioGroup.effectsAudioSources.ToArray(), volume);
     }
 
     private void UpdateAudioSourcesVolumes(AudioSource[] sources, float volume) {

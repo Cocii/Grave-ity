@@ -1058,6 +1058,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4037591869061417882, guid: 62b977d06f3874d4f848b8e46b7cdb83, type: 3}
+      propertyPath: m_Text
+      value: Effects sounds volume
+      objectReference: {fileID: 0}
     - target: {fileID: 4037591869184479736, guid: 62b977d06f3874d4f848b8e46b7cdb83, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.159

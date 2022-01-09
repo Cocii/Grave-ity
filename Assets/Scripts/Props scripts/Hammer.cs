@@ -62,7 +62,7 @@ public class Hammer : MonoBehaviour
 
     private void CheckLimitPosition() {
         if(transform.localPosition.y > maxHeight) {
-            print("altezza massima raggiunta");
+            //print("altezza massima raggiunta");
             transform.localPosition = new Vector3(transform.localPosition.x, maxHeight, transform.localPosition.z);
             body.velocity *= 0f;
             goingUp = false;

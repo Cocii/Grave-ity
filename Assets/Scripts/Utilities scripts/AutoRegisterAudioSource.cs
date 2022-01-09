@@ -7,7 +7,7 @@ public class AutoRegisterAudioSource : MonoBehaviour
     public enum SourceTypeEnum {
         Player,
         Ambient,
-        GravityChange
+        Effects
     }
 
     public SourceTypeEnum sourceType;
@@ -23,8 +23,8 @@ public class AutoRegisterAudioSource : MonoBehaviour
                 GameManager.instance.RegisterAmbientAudioSource(source);
                 break;
 
-            case SourceTypeEnum.GravityChange:
-                GameManager.instance.RegisterGravityChangeAudioSource(source);
+            case SourceTypeEnum.Effects:
+                GameManager.instance.RegisterEffectsAudioSource(source);
                 break;
 
             default:
@@ -49,8 +49,8 @@ public class AutoRegisterAudioSource : MonoBehaviour
                 gManager.UnregisterAmbientAudioSource(source);
                 break;
 
-            case SourceTypeEnum.GravityChange:
-                gManager.UnregisterGravityChangeAudioSource(source);
+            case SourceTypeEnum.Effects:
+                gManager.UnregisterEffectsAudioSource(source);
                 break;
 
             default:

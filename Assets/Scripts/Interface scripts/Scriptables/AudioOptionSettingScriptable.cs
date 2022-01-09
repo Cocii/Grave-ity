@@ -10,5 +10,5 @@ public class AudioOptionSettingScriptable : ScriptableObject
     [Range(0, 1)]
     public float playerSoundsVolume;
     [Range(0, 1)]
-    public float gravityChangeSoundsVolume;
+    public float effectsSoundsVolume;
 }

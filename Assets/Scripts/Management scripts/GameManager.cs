@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -73,9 +70,9 @@ public class GameManager : MonoBehaviour
         audioGroup.playerAudioSources.Add(source);
     }
 
-    public void RegisterGravityChangeAudioSource(AudioSource source) {
-        source.volume = audioGroup.audioSettings.gravityChangeSoundsVolume;
-        audioGroup.gravityChangeAudioSources.Add(source);
+    public void RegisterEffectsAudioSource(AudioSource source) {
+        source.volume = audioGroup.audioSettings.effectsSoundsVolume;
+        audioGroup.effectsAudioSources.Add(source);
     }
 
     public void UnregisterAmbientAudioSource(AudioSource source) {
@@ -92,11 +89,11 @@ public class GameManager : MonoBehaviour
         audioGroup.playerAudioSources.Remove(source);
     }
 
-    public void UnregisterGravityChangeAudioSource(AudioSource source) {
-        if (!audioGroup.gravityChangeAudioSources.Contains(source))
+    public void UnregisterEffectsAudioSource(AudioSource source) {
+        if (!audioGroup.effectsAudioSources.Contains(source))
             return;
 
-        audioGroup.gravityChangeAudioSources.Remove(source);
+        audioGroup.effectsAudioSources.Remove(source);
     }
 }
  
