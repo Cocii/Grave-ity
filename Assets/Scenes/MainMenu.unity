@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 226492642}
   - component: {fileID: 226492641}
   - component: {fileID: 226492640}
+  - component: {fileID: 226492643}
   m_Layer: 5
   m_Name: Play (1)
   m_TagString: Untagged
@@ -390,6 +391,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226492638}
   m_CullTransparentMesh: 1
+--- !u!114 &226492643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226492638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50faf5d4f8ecee34f8ccaecdb9a409b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levels: {fileID: 11400000, guid: 7c49a26a5bbfa7a4083b467847da4b49, type: 2}
+  levelName: Forest
 --- !u!1 &338784857
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +684,7 @@ GameObject:
   - component: {fileID: 521886054}
   - component: {fileID: 521886053}
   - component: {fileID: 521886052}
+  - component: {fileID: 521886055}
   m_Layer: 5
   m_Name: Play (2)
   m_TagString: Untagged
@@ -790,6 +806,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521886050}
   m_CullTransparentMesh: 1
+--- !u!114 &521886055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521886050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50faf5d4f8ecee34f8ccaecdb9a409b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levels: {fileID: 11400000, guid: 7c49a26a5bbfa7a4083b467847da4b49, type: 2}
+  levelName: Lab
 --- !u!1 &525001980
 GameObject:
   m_ObjectHideFlags: 0
