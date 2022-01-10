@@ -29,10 +29,13 @@ public class ShutdownEngine : MonoBehaviour
             {
                 foreach(GameObject go in toDeactivate)
                 {
+                    GetComponentInChildren<AudioSource>().Play();
+
                     glitch.SetActive(false);
                     go.SetActive(false);
                     confineCollider.enabled = false;
                     confineRenderer.color = Color.white;
+                    
                 }
                     gameObject.SetActive(false);
             }

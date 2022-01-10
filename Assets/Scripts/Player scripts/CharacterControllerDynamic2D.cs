@@ -327,7 +327,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         if (!manager.isRotating) {
             manager.isRotating = true;
             //manager.input.DisableInput();
-            manager.input.DisableGravityChange();
+            manager.input.DisableGravityInversion();
         }
     }
 
@@ -370,7 +370,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         if (manager.wasRotating && manager.isGrounded) {
             manager.wasRotating = false;
             //manager.input.EnableInput();
-            manager.input.EnableGravityChange();
+            manager.input.EnableGravityInversion();
         }
     }
 

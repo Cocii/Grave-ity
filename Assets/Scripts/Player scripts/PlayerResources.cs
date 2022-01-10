@@ -45,6 +45,7 @@ public class PlayerResources : MonoBehaviour
 
         if (currentGravityResourceAmount <= 0f) {
             GravityManager.instance.ResetGravity();
+            //PlayerManager.instance.input.EnableGravityInversion();
             return;
         }
     }
