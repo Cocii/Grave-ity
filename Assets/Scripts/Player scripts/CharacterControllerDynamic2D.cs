@@ -109,7 +109,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager.wasBackOnWall = manager.isBackOnWall;
         manager.isBackOnWall = false;
 
-        
         Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
 
         Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackOrigin.x * -Mathf.Sign(direction.x), wallbackOrigin.y) * transform.up.y;
@@ -443,18 +442,25 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
         Gizmos.color = Color.red;
 
-        //if (manager) {
-        //    Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
-        //    Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
-        //    sizeAdjs.y *= 0.975f;
-        //    Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
-        //    offset.x *= direction.x;
-        //    offset.y *= Mathf.Sign(transform.up.y);
-        //    Vector3 posAdjs = transform.position + offset;
+        if (manager) {
+            //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+            //Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
+            //sizeAdjs.y *= 0.975f;
+            //Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
+            //offset.x *= direction.x;
+            //offset.y *= Mathf.Sign(transform.up.y);
+            //Vector3 posAdjs = transform.position + offset;
 
-        //    Gizmos.DrawCube(posAdjs, sizeAdjs);
-        //}
+            //Gizmos.DrawCube(posAdjs, sizeAdjs);
 
+            //Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
+
+            //Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackOrigin.x * -Mathf.Sign(direction.x), wallbackOrigin.y) * transform.up.y;
+
+            //Gizmos.DrawCube(wallbackRayOriginAdjst, wallbackBoxcastSize);
+        }
+
+        
 
         //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
 
@@ -466,7 +472,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         //Gizmos.DrawSphere(posAdj  s, 0.05f);
 
         Gizmos.color = Color.magenta;
-        Gizmos.DrawSphere(hitPoint, .15f);
+
+        if (hitPoint != Vector2.zero)
+            Gizmos.DrawSphere(hitPoint, .15f);
 
         Gizmos.color = Color.yellow;
 

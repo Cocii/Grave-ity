@@ -22,4 +22,11 @@ public static class Utilities
         v.Set(Mathf.Round(v.x), Mathf.Round(v.y), Mathf.Round(v.z));
         return v;
     }
+
+    public static bool LayerInLayermask(int layerValue, LayerMask layerMask) {
+        if ((layerMask.value & (1 << layerValue)) > 0) {
+            return true;
+        }
+        return false;
+    }
 }

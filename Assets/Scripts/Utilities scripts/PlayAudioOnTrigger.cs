@@ -11,11 +11,15 @@ public class PlayAudioOnTrigger : MonoBehaviour
     }
 
     public triggerModeEnum mode;
-    public LayerMask layer;
+    public LayerMask layerMask;
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (mode == triggerModeEnum.enter || mode == triggerModeEnum.both) {
-            if ((layer.value & (1 << collision.transform.gameObject.layer)) > 0) {
+            //if ((layer.value & (1 << collision.transform.gameObject.layer)) > 0) {
+            //    PlaySource();
+            //    //print(collision.tag);
+            //}
+            if (Utilities.LayerInLayermask(collision.gameObject.layer, layerMask)) {
                 PlaySource();
                 //print(collision.tag);
             }
@@ -25,7 +29,11 @@ public class PlayAudioOnTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision) {
         if (mode == triggerModeEnum.exit || mode == triggerModeEnum.both) {
-            if ((layer.value & (1 << collision.transform.gameObject.layer)) > 0) {
+            //if ((layerMask.value & (1 << collision.transform.gameObject.layer)) > 0) {
+            //    PlaySource();
+            //    //print(collision.tag);
+            //}
+            if (Utilities.LayerInLayermask(collision.gameObject.layer, layerMask)) {
                 PlaySource();
                 //print(collision.tag);
             }

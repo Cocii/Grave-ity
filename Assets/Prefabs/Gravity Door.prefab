@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 2
-  layer:
+  layerMask:
     serializedVersion: 2
     m_Bits: 64
 --- !u!114 &225241613

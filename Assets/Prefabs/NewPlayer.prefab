@@ -497,7 +497,7 @@ MonoBehaviour:
   dashForce: {x: 0, y: 0}
   wallbackOrigin: {x: 0, y: 0}
   wallbackRaycastDistance: 0
-  wallbackBoxcastSize: {x: 0.75, y: 3}
+  wallbackBoxcastSize: {x: 1, y: 3}
   rayCastOrigin: {x: 0, y: 0}
   capsuleCastOrigin: {x: 0, y: 0}
   currentDistanceFromGround: 0
@@ -535,7 +535,7 @@ MonoBehaviour:
   inputBlocked: 0
   inputEnabled: 1
   resetMoveInputIfBlocked: 1
-  gravityChangeEnabled: 1
+  gravityInversionEnabled: 1
 --- !u!114 &7195747485142191346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,9 +575,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxGravityResourceAmount: 1000
   currentGravityResourceAmount: 0
-  upsideGravityReductionAmount: 200
-  weakerGravityReductionAmount: 200
-  strongerGravityReductionAmount: 550
+  upsideGravityReductionAmount: 250
+  weakerGravityReductionAmount: 250
+  strongerGravityReductionAmount: 350
   recoverIncreaseAmount: 630
   active: 1
 --- !u!114 &7883946859703793807
@@ -631,7 +631,7 @@ MonoBehaviour:
   dashDistanceMult: 1.85
   propCheckDistance: 0
   proximityPropDistanceThreshold: 1
-  gettingUpCheckDistance: 3
+  gettingUpCheckDistance: 3.25
   triedToGetUp: 0
 --- !u!114 &22507600
 MonoBehaviour:
