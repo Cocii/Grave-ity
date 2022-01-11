@@ -18,7 +18,7 @@ public class GameMenuManager : MonoBehaviour
 
     [Header("UI References")]
     public GameObject pauseMenuPanel;
-    public GameObject gravityInfoPanel;
+    public List<GameObject> panelsToDeactivate;
     public Slider ambiendSoundsVolumeSlider;
     public Slider playerSoundsVolumeSlider;
     public Slider gravityChangeSoundsVolumeSlider;
@@ -62,8 +62,10 @@ public class GameMenuManager : MonoBehaviour
         if (pauseMenuPanel)
             pauseMenuPanel.SetActive(inPause);
 
-        if (gravityInfoPanel)
-            gravityInfoPanel.SetActive(!inPause);
+        foreach(GameObject pnl in panelsToDeactivate) {
+            if (pnl)
+                pnl.SetActive(!inPause);
+        }
     }
 
     private void UpdateInputState() {
