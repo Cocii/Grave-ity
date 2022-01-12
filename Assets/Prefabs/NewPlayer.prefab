@@ -462,7 +462,7 @@ MonoBehaviour:
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 2240
-  obstacleCheckOffset: {x: 0.125, y: 0, z: 0}
+  obstacleCheckOffset: {x: 0.125, y: 0.7, z: 0}
   crouchedObstacleCheckOffset: {x: 1.15, y: -1, z: 0}
   isGrounded: 1
   wasGrounded: 1

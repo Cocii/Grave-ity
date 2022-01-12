@@ -85,7 +85,7 @@ public class CharacterControllerAI : MonoBehaviour
         hit = Physics2D.CapsuleCast(posAdjs, sizeAdjs, CapsuleDirection2D.Vertical, 0f, Vector2.right, 0f, manager.obstaclesLayer);
         if (hit) {
             manager.isFacingObstacle = true;
-            //print("obstacle hit");
+            print("obstacle hit");
         }
     }
 
@@ -360,7 +360,7 @@ public class CharacterControllerAI : MonoBehaviour
         }
 
         if (groundAngle >= manager.maxSlopeAngle) {
-            print("Check max slope");
+            //print("Check max slope");
             manager.isOnHighSlope = true;
         }
         //else if (manager.input.GetMoveInput.magnitude > 0f && Mathf.Approximately(Mathf.Floor(manager.body.velocity.magnitude), 0f) && !manager.isGrounded) {

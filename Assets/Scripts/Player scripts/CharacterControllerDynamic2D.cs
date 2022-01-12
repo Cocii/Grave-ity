@@ -460,7 +460,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             //Gizmos.DrawCube(wallbackRayOriginAdjst, wallbackBoxcastSize);
         }
 
-        
+
 
         //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
 

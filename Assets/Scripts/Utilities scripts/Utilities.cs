@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using System.Linq;
 
 public static class Utilities
 {
@@ -28,5 +29,15 @@ public static class Utilities
             return true;
         }
         return false;
+    }
+
+    public static float AngleOfVectorOnZAxis(Vector3 targetVector) {
+        return Mathf.Atan2(targetVector.y, targetVector.x) * Mathf.Rad2Deg;
+    }
+
+    public static string FormatTimeMinSec(float time) {
+        int minutes = (int)(time / 60f);
+        int seconds = (int)(time % 60f);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

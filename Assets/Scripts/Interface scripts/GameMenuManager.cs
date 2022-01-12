@@ -2,26 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class GameMenuManager : MonoBehaviour
 {
     [Header("References")]
     public static GameMenuManager instance;
-    public AudioOptionSettingScriptable optionSettings;
     private PlayerManager pManager;
     private GameManager gameManager;
     private LevelLoader loader;
+    
+    [Header("Options")]
+    public AudioOptionSettingScriptable optionSettings;
+    public PerformanceOptionSettingScriptable performanceOptions;
 
-    [Header("References")]
+    [Header("Bools")]
     public bool inPause = false;
 
-    [Header("UI References")]
+    [Header("Panels")]
     public GameObject pauseMenuPanel;
     public List<GameObject> panelsToDeactivate;
+
+    [Header("Sliders")]
     public Slider ambiendSoundsVolumeSlider;
     public Slider playerSoundsVolumeSlider;
     public Slider gravityChangeSoundsVolumeSlider;
+
+    [Header("Toggles")]
+    public Toggle lowPerformanceToggle;
+
+    [Header("Texts")]
+    public Text levelNameText;
+    public Text timerText;
 
     private void Awake() {
         if (instance == null) {
@@ -91,6 +103,23 @@ public class GameMenuManager : MonoBehaviour
         ambiendSoundsVolumeSlider.value = optionSettings.ambientSoundsVolume;
         playerSoundsVolumeSlider.value = optionSettings.playerSoundsVolume;
         gravityChangeSoundsVolumeSlider.value = optionSettings.effectsSoundsVolume;
+
+        string name="";
+        switch (SceneManager.GetActiveScene().buildIndex) {
+            case 1:
+                name = "Forest";
+                break;
+            case 3:
+                name = "Lab";
+                break;
+            default:
+                name = "Level not in build";
+                break;
+        }
+        levelNameText.text = name;
+
+        //timerText.text = "00:00";
+        LowPerformanceToggleActivation();
     }
 
     public void UpdateAmbientVolumeFromSlider() {
@@ -120,6 +149,12 @@ public class GameMenuManager : MonoBehaviour
 
     private void UpdateAudioSourceVolume(AudioSource source, float volume) {
         source.volume = volume;
+    }
+
+    public void LowPerformanceToggleActivation() {
+        bool activation = lowPerformanceToggle.isOn;
+
+        print("Low performance is: " + activation);
     }
 
 }

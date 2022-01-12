@@ -18,6 +18,7 @@ public class AIManager : MonoBehaviour
     public Animator animator;
     public CharacterControllerAI characterController;
     public MovementAI movement;
+    public GameObject headBone;
 
 
     [Header("Gravity info")]

@@ -8,7 +8,7 @@ public enum PowerUpIdEnum {
     RecoverResourceFaster,
 }
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Scriptables/PowerUpScriptable")]
 public class PowerUpScriptable : ScriptableObject {
     public PowerUpIdEnum powerId;
     public string powerName;

@@ -15,6 +15,9 @@ public class MovementAI : MonoBehaviour
 
     public float gettingUpCheckDistance = 3f;
 
+    public float angleLimit = 40f;
+    
+
     void Start()
     {
         if (manager == null)
@@ -59,21 +62,41 @@ public class MovementAI : MonoBehaviour
         Vector3 playerPosition = PlayerManager.instance.transform.position;
         float distance = Vector3.Distance(transform.position, playerPosition);
         //print(distance);
-        if (distance <= detectionMaxRange && distance>detectionMinRange) {
-            Vector3 playerDirection = (playerPosition - transform.position);
-            float dot = Vector3.Dot(transform.up, playerDirection.normalized);
-            if (Mathf.Abs(dot) < detectionMaxDot) {
-                //print("player in range: " + (playerPosition - transform.position));
-                moveInput = new Vector2(Mathf.Sign(playerDirection.x), 0f);
-                moveForceToApply = Mathf.MoveTowards(moveForceToApply, manager.moveForceMagnitude, moveChangeSpeed);
-
+        if (distance <= detectionMaxRange) {
+            if (distance > detectionMinRange) {
+                Vector3 playerDirection = (playerPosition - transform.position);
+                float dot = Vector3.Dot(transform.up, playerDirection.normalized);
+                if (Mathf.Abs(dot) < detectionMaxDot) {
+                    //print("player in range: " + (playerPosition - transform.position));
+                    moveInput = new Vector2(Mathf.Sign(playerDirection.x), 0f);
+                    moveForceToApply = Mathf.MoveTowards(moveForceToApply, manager.moveForceMagnitude, moveChangeSpeed);
+                    
+                }
             }
+            else {
+                moveForceToApply = 0f;
+            }
+
+            //rotateHead = true;
+            HeadRotation();
+
         }
         else {
             moveForceToApply = 0f;
+            //rotateHead = false;
+            ResetHeadRotation();
         }
 
     }
+
+    //private void LateUpdate() {
+    //    if (rotateHead) {
+    //        HeadRotation();
+    //    }
+    //    else {
+    //        ResetHeadRotation();
+    //    }
+    //}
 
     private void HorizontalMovementUpdate() {
         Vector2 force = Vector2.zero;
@@ -132,5 +155,47 @@ public class MovementAI : MonoBehaviour
         }
 
         manager.isCrouching = false;
+    }
+
+    private void HeadRotation() {
+        float angle = 0f;
+
+        Vector3 targetPosVector = PlayerManager.instance.transform.position - transform.position;
+        angle = Utilities.AngleOfVectorOnZAxis(targetPosVector);
+        angle = Mathf.Round(angle);
+        //print("angle before modifications: " + angle);
+        if (!manager.isFacingRight) {
+            if (angle >= 0)
+                angle -= 180f;
+            else
+                angle += 180f;
+
+            angle *= -1f;
+        }
+            
+        angle = Mathf.Clamp(angle, -angleLimit, angleLimit);
+
+        //angle = Mathf.MoveTowards(manager.headBone.transform.eulerAngles.z, angle, rotationHeadSpeed);
+
+        //Debug.DrawRay(transform.position, targetPosVector, Color.cyan);
+
+        if (manager.headBone) {
+            //manager.headBone.transform.LookAt(PlayerManager.instance.transform, worldUp);
+
+            //angle = Mathf.MoveTowardsAngle(manager.headBone.transform.localEulerAngles.z, angle, rotationHeadSpeed);
+            manager.headBone.transform.localEulerAngles = new Vector3(0, 0, angle);
+            
+            //bone.localEulerAngles = new Vector3(0, 0, angle);
+            //manager.headBone.transform.eulerAngles = Vector3.MoveTowards(manager.headBone.transform.eulerAngles, new Vector3(0, 0, angle), rotationHeadSpeed);
+            //print("rotating head to: " + angle);
+        }
+    }
+
+    private void ResetHeadRotation() {
+        if (manager.headBone) {
+            manager.headBone.transform.localEulerAngles = Vector3.zero;
+            //manager.headBone.transform.eulerAngles = Vector3.MoveTowards(manager.headBone.transform.eulerAngles, Vector3.zero, Mathf.Infinity);
+            //print("reset head rotation");
+        }
     }
 }

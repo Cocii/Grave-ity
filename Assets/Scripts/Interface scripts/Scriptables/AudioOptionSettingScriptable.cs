@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Scriptables/AudioOptions")]
 public class AudioOptionSettingScriptable : ScriptableObject
 {
     [Range(0,1)]

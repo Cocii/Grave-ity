@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Scriptables/ResourceAmountChangePowerUp")]
 public class ResourceAmountChangePowerUp : PowerUpScriptable
 {
     public float weakGravityAmountMult;
