@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterControllerAI : MonoBehaviour
 {
-    AIManager manager;
+    ManagerAI manager;
 
     [Header("Forces info")]
     public Vector2 gravityForce;
@@ -38,7 +38,7 @@ public class CharacterControllerAI : MonoBehaviour
 
     private void Start() {
         if (manager == null)
-            manager = GetComponent<AIManager>();
+            manager = GetComponent<ManagerAI>();
 
         rayCastOrigin = new Vector2(0f, (-(manager.bodyCollider.size.y / 2) + manager.bodyCollider.offset.y) * transform.localScale.y);
         capsuleCastOrigin.y = rayCastOrigin.y + (-(manager.groundCapsuleCastSize.y / 2) * transform.localScale.y);
@@ -64,31 +64,10 @@ public class CharacterControllerAI : MonoBehaviour
 
         SlopeCheck();
 
-        //ObstaclesCheck();
-
         VelocityLimit();
     }
 
-    private void ObstaclesCheck() {
-        manager.isFacingObstacle = false;
-        Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
-        Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
-        sizeAdjs.y *= 0.975f;
-        Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
-        offset.x *= direction.x;
-        Vector3 posAdjs = transform.position + offset;
-
-        //Debug.DrawRay(posAdjs, direction * 20f, Color.yellow);
-
-        RaycastHit2D hit;
-        //hit = Physics2D.Raycast(transform.position, direction, manager.obstacleCheckDistance, manager.obstaclesLayer);
-        hit = Physics2D.CapsuleCast(posAdjs, sizeAdjs, CapsuleDirection2D.Vertical, 0f, Vector2.right, 0f, manager.obstaclesLayer);
-        if (hit) {
-            manager.isFacingObstacle = true;
-            print("obstacle hit");
-        }
-    }
-
+    
     private void VelocityLimit() {
         if (Mathf.Abs(manager.body.velocity.x) < 0.01f)
             manager.body.velocity *= new Vector2(0f, 1f);
@@ -97,29 +76,6 @@ public class CharacterControllerAI : MonoBehaviour
             manager.body.velocity = new Vector2(Mathf.Clamp(manager.body.velocity.x, -manager.currentMaxMoveSpeed, manager.currentMaxMoveSpeed), manager.body.velocity.y);
     }
 
-    //private void WallBackCheck() {
-    //    manager.wasBackOnWall = manager.isBackOnWall;
-    //    manager.isBackOnWall = false;
-
-
-    //    Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
-
-    //    Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackOrigin.x * -Mathf.Sign(direction.x), wallbackOrigin.y) * transform.up.y;
-
-    //    RaycastHit2D hit;
-    //    //Debug.DrawRay(wallbackRayOriginAdjst, direction * wallbackRaycastDistance, Color.yellow);
-    //    hit = Physics2D.BoxCast(wallbackRayOriginAdjst, wallbackBoxcastSize, 0f, direction, 0f, manager.groundLayer);
-    //    if (hit) {
-    //        manager.isBackOnWall = true;
-
-    //        if (!manager.canWalljump && !manager.wasBackOnWall) {
-    //            manager.canWalljump = true;
-    //        }
-    //        if (!manager.wasGrounded && manager.isBackOnWall) {
-    //            manager.canWalljump = true;
-    //        }
-    //    }
-    //}
 
     private void GroundCheck() {
         manager.wasGrounded = manager.isGrounded;
@@ -217,21 +173,8 @@ public class CharacterControllerAI : MonoBehaviour
     }
 
     private void Land() {
-        //ProjectVelocityLanding();
+        
     }
-
-    //private void ProjectVelocityLanding() {
-
-    //    Vector2 velocity = manager.body.velocity;
-    //    velocity *= new Vector2(1f, 0f);
-
-    //    manager.body.velocity = velocity;
-    //}
-
-    //private void PlayerWalljump() {
-    //    //print("Walljump with force: " + jumpForce);
-    //    manager.canWalljump = false;
-    //}
 
     private void FlipFacingAndSprite() {
         manager.isFacingRight = !manager.isFacingRight;
@@ -296,38 +239,25 @@ public class CharacterControllerAI : MonoBehaviour
             return;
         }
 
-        //if (manager.isGrounded)
-        //    return;
+        if (!manager.isRotating) {
+            manager.isRotating = true;
+            manager.currentRotationSpeed = CalculateRotationSpeed();
+        }
 
         Rotate(targetAngle);
 
         AdjustFlipToGravity();
-
-        if (!manager.isRotating) {
-            manager.isRotating = true;
-            //manager.input.DisableInput();
-            //manager.input.DisableGravityChange();
-        }
     }
 
     private void Rotate(float targetAngle) {
-        float currentRotationSpeed = CalculateRotationSpeed();
-
         Quaternion targetRotation = Quaternion.Euler(0f, 0f, targetAngle);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, currentRotationSpeed * Time.deltaTime);
-
-        //transform.eulerAngles = Vector3.MoveTowards(transform.eulerAngles, new Vector3(0f, 0f, targetAngle), manager.rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, manager.currentRotationSpeed * Time.deltaTime);
 
         float absDiff = Mathf.Abs(transform.eulerAngles.z - targetAngle);
         if (absDiff < 10f || absDiff > 350f) {
             transform.eulerAngles = new Vector3(0f, 0f, targetAngle);
             return;
         }
-
-        //if(manager.isRotating && manager.isGrounded) {
-        //    transform.eulerAngles = new Vector3(0f, 0f, targetAngle);
-        //    print("Rotation stuck bug fix applied");
-        //}
     }
 
     private float CalculateRotationSpeed() {
@@ -363,24 +293,13 @@ public class CharacterControllerAI : MonoBehaviour
             //print("Check max slope");
             manager.isOnHighSlope = true;
         }
-        //else if (manager.input.GetMoveInput.magnitude > 0f && Mathf.Approximately(Mathf.Floor(manager.body.velocity.magnitude), 0f) && !manager.isGrounded) {
-        //    print("Check slope with vel");
-        //    manager.isOnHighSlope = true;
-        //}
+
     }
 
     private void SlopeMoveAdjustement() {
         if (groundAngle == 0f) {
             return;
         }
-
-        //moveForce = new Vector2(moveForce.magnitude, moveForce.magnitude) * -groundNormalPerpendicular * moveForce.normalized.x * Mathf.Sign(transform.right.x);
-        //if (groundAngle != 0f) {
-        //    moveForce *= manager.moveForceMultOnSlopes;
-        //}
-        //if (groundAngle > maxSlopeAngle) {
-        //    moveForce = Vector2.zero;
-        //}
 
         if (manager.isOnHighSlope) {
             Vector2 position = transform.position;
@@ -411,15 +330,13 @@ public class CharacterControllerAI : MonoBehaviour
     //----------------------------------------------------------
 
     private void OnDrawGizmos() {
-        
-        Gizmos.color = Color.cyan;
-        
+        if (!manager)
+            return;
+
 
         Gizmos.color = Color.red;
-        if(manager)
-            Gizmos.DrawWireSphere(transform.position, manager.movement.detectionMaxRange);
+        Gizmos.DrawWireSphere(transform.position, manager.movement.detectionMaxRange);
         
-
         Gizmos.color = Color.white;
     }
 
@@ -434,15 +351,6 @@ public class CharacterControllerAI : MonoBehaviour
         }
 
         SlopeMoveAdjustement();
-
-        if (manager.isFacingObstacle && !manager.isGrabbing) {
-            moveForce *= new Vector2(0, 1f);
-            manager.body.velocity *= new Vector2(0f, 1f);
-        }
-
-        //print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude + " - angle: " + groundAngle);
-
-        //Debug.DrawRay(transform.position, moveForce * 0.005f, Color.green);
 
         manager.body.AddForce(moveForce);
 

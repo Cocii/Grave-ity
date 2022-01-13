@@ -42,10 +42,8 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         capsuleCastOrigin.y = rayCastOrigin.y + (-(manager.groundCapsuleCastSize.y  / 2) * transform.localScale.y);
         
         wallbackOrigin = new Vector2 (((-manager.bodyCollider.size.x * 0.5f) * transform.localScale.x) - wallbackBoxcastSize.x*0.5f, (manager.bodyCollider.size.y * 0.15f) * transform.localScale.y);
-
         wallbackRaycastDistance = manager.bodyCollider.size.x * transform.localScale.y * 1.1f;
 
-        //manager.obstacleCheckDistance = manager.bodyCollider.size.x * transform.localScale.x * manager.obstacleCheckDistanceMult;
     }
 
     private void FixedUpdate() {
@@ -313,41 +311,31 @@ public class CharacterControllerDynamic2D : MonoBehaviour
                 manager.wasRotating = true;
                 manager.isRotating = false;
             }
-            return;
+            return; // --- Se non deve ruotare si ferma qua
         }
 
-        //if (manager.isGrounded)
-        //    return;
+        // --- Se sono qua allora sto ruotando
+
+        if (!manager.isRotating) {
+            manager.isRotating = true;
+            manager.input.DisableGravityInversion();
+            manager.currentRotationSpeed = CalculateRotationSpeed();
+        }
 
         PlayerRotate(targetAngle);
 
         AdjustFlipToGravity();
-
-        if (!manager.isRotating) {
-            manager.isRotating = true;
-            //manager.input.DisableInput();
-            manager.input.DisableGravityInversion();
-        }
     }
 
     private void PlayerRotate(float targetAngle) {
-        float currentRotationSpeed = CalculateRotationSpeed();
-
         Quaternion targetRotation = Quaternion.Euler(0f, 0f, targetAngle);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, currentRotationSpeed * Time.deltaTime);
-
-        //transform.eulerAngles = Vector3.MoveTowards(transform.eulerAngles, new Vector3(0f, 0f, targetAngle), manager.rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, manager.currentRotationSpeed * Time.deltaTime);
 
         float absDiff = Mathf.Abs(transform.eulerAngles.z - targetAngle);
         if (absDiff < 10f || absDiff > 350f) {
             transform.eulerAngles = new Vector3(0f, 0f, targetAngle);
             return;
         }
-
-        //if(manager.isRotating && manager.isGrounded) {
-        //    transform.eulerAngles = new Vector3(0f, 0f, targetAngle);
-        //    print("Rotation stuck bug fix applied");
-        //}
     }
 
     private float CalculateRotationSpeed() {
@@ -395,14 +383,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         if (groundAngle == 0f) {
             return;
         }
-
-        //moveForce = new Vector2(moveForce.magnitude, moveForce.magnitude) * -groundNormalPerpendicular * moveForce.normalized.x * Mathf.Sign(transform.right.x);
-        //if (groundAngle != 0f) {
-        //    moveForce *= manager.moveForceMultOnSlopes;
-        //}
-        //if (groundAngle > maxSlopeAngle) {
-        //    moveForce = Vector2.zero;
-        //}
 
         if (manager.isOnHighSlope) {
             Vector2 position = transform.position;
@@ -496,6 +476,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         if (manager.isFacingObstacle && !manager.isGrabbing) {
             moveForce *= new Vector2(0, 1f);
             manager.body.velocity *= new Vector2(0f, 1f);
+            //print("Movement blocked cause obstacle");
         }
 
         //print("Moving force and magnitude: " + moveForce + " - " + moveForce.magnitude + " - angle: " + groundAngle);

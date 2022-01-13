@@ -24,19 +24,20 @@ public class PlayerResources : MonoBehaviour
 
     private void CheckGravity() {
         Vector2 gravity = GravityManager.instance.physicsGravity;
+        float defaultGravityMagnitude = GravityManager.instance.defaultGravityMagnitude;
         float amount = 0f;
 
-        if (gravity.magnitude > GravityManager.instance.defaultGravityMagnitude) {
+        if (gravity.magnitude > defaultGravityMagnitude) {
             amount -= strongerGravityReductionAmount * Time.deltaTime;
         }
-        else if (gravity.magnitude < GravityManager.instance.defaultGravityMagnitude) {
+        else if (gravity.magnitude < defaultGravityMagnitude) {
             amount -= weakerGravityReductionAmount * Time.deltaTime;
         }
 
         if (gravity.normalized != Vector2.down) {
             amount -= upsideGravityReductionAmount * Time.deltaTime;
         } 
-        else if (gravity.magnitude == GravityManager.instance.defaultGravityMagnitude) {
+        else if (gravity.magnitude == defaultGravityMagnitude) {
             amount += recoverIncreaseAmount * Time.deltaTime;
         }
 

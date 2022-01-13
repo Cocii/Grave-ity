@@ -19,6 +19,9 @@ public class PlayerSounds : MonoBehaviour
     }
 
     public void PlayStepSound() {
+        if (!stepAudioSource)
+            return;
+
         switch (manager.groundType) {
             case GroundTypeEnum.grass:
                 stepAudioSource.clip = SelectRandomFrom(grassStepAudioClips);

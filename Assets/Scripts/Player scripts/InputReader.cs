@@ -5,13 +5,12 @@ using Cinemachine;
 
 public class InputReader : MonoBehaviour
 {
-    [HideInInspector]
-    public GameObject mainCamera; 
-    [HideInInspector]
-    public CinemachineFreeLook mainFreeCam;
-    [HideInInspector]
-    public CinemachineVirtualCamera mainVirtualCamera;
-    
+    //[HideInInspector]
+    //public GameObject mainCamera; 
+    //[HideInInspector]
+    //public CinemachineFreeLook mainFreeCam;
+    //[HideInInspector]
+    //public CinemachineVirtualCamera mainVirtualCamera;
     [Header("Movement inputs")]
     public Vector2 inputMovement; 
     public Vector2 inputCamera;
@@ -37,10 +36,6 @@ public class InputReader : MonoBehaviour
     private bool inputCrouchU;
     private bool inputMenuD;
     private bool inputSwitchPowerD;
-
-    //private float lastTimeInput;
-    //public float doubleClickThreshold;
-
     private bool inputGrabD;
     private bool inputGrabU;
 
@@ -67,8 +62,8 @@ public class InputReader : MonoBehaviour
         else if (resetMoveInputIfBlocked)
             inputMovement = Vector2.zero;
             
-        if(!inputBlocked && mainFreeCam)
-            inputCamera.Set(mainFreeCam.m_XAxis.Value, mainFreeCam.m_YAxis.Value);
+        //if(!inputBlocked && mainFreeCam)
+        //    inputCamera.Set(mainFreeCam.m_XAxis.Value, mainFreeCam.m_YAxis.Value);
 
         inputJump = Input.GetKey(jumpKey);
         inputJumpD = Input.GetKeyDown(jumpKey);

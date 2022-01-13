@@ -41,10 +41,8 @@ public class PlayerMovement : MonoBehaviour
 
             
             float timeMult = Time.smoothDeltaTime;
-            //print(timeMult);
             force = force * 100f * timeMult;
 
-            //manager.characterController.SetMoveForce(force);
             manager.characterController.AddMoveForce(force);
         }
     }

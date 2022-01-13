@@ -25,6 +25,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerSounds sound;
     public PlayerEvents events;
     public PowerUpManager powersManager;
+    GravityManager gManager;
 
     [Header("Gravity info")]
     public Vector2 currentGravity;
@@ -52,8 +53,7 @@ public class PlayerManager : MonoBehaviour
     public float minRotationSpeed = 500f;
     public float distanceRotationMin = 4f;
     public float distanceRotationMax = 1.25f;
-    //[HideInInspector]
-    //public float rotationSpeed = 1f;
+    public float currentRotationSpeed = 0;
 
     [Header("Movement settings")]
     public float moveForceMagnitude = 600f;
@@ -90,10 +90,8 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Obstacle detection settings")]
     public LayerMask obstaclesLayer;
-    //public float obstacleCheckDistanceMult = 0.6f;
     public Vector3 obstacleCheckOffset = new Vector3(0.125f, 0f, 0f);
     public Vector3 crouchedObstacleCheckOffset = new Vector3(1.15f, -1f, 0f);
-    //public float obstacleCheckDistance;
 
     [Header("Control bools")]
     public bool isGrounded = true;
@@ -110,10 +108,6 @@ public class PlayerManager : MonoBehaviour
     public bool isDashing;
     public bool isCrouching;
     public bool isFacingObstacle;
-
-    //[Header("Materials")]
-    //public PhysicsMaterial2D fullFrictionMaterial;
-    //public PhysicsMaterial2D defaultPhysicsMaterial;
 
     private void Awake() {
         if (instance == null) {
@@ -143,16 +137,13 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void Start() {
+        gManager = GravityManager.instance;
         AdaptParametersToGravity();
         GetColliderSize();
         currentMaxMoveSpeed = defaultMaxMoveSpeed;
     }
 
-   
-
     private void Update() {
-        GravityManager gManager = GravityManager.instance;
-
         if(gManager.physicsGravity != currentGravity) {
             currentGravity = gManager.physicsGravity;
             currentGravityNormal = gManager.physicsGravityNormal;

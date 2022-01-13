@@ -4,37 +4,35 @@ using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour
 {
+    PlayerManager manager;
     public float speed = 0.15f;
+
+    private void Start() {
+        manager = PlayerManager.instance;
+    }
 
     void Update()
     {
-        PlayerManager manager = PlayerManager.instance;
-        Rigidbody2D body = manager.body;
-        Animator anim = manager.animator;
-
-        float velocityX = Mathf.Round((body.velocity.x / manager.defaultMaxMoveSpeed) * 10f) / 10f;
+        float velocityX = Mathf.Round((manager.body.velocity.x / manager.defaultMaxMoveSpeed) * 10f) * 0.1f;
         float velocityXAbs = Mathf.Abs(velocityX);
-        float velocityY = (Mathf.Round(body.velocity.y * 10f) / 10f) * -Mathf.Sign(manager.currentGravity.y);
+        float smoothedVelocityX = Mathf.MoveTowards(manager.animator.GetFloat("velocityX"), velocityXAbs, speed);
+        manager.animator.SetFloat("velocityX", smoothedVelocityX);
 
+        float velocityY = (Mathf.Round(manager.body.velocity.y * 10f) / 10f) * -Mathf.Sign(manager.currentGravity.y);
+        manager.animator.SetFloat("velocityY", velocityY);
 
-        anim.SetFloat("velocityX", Mathf.MoveTowards(anim.GetFloat("velocityX"), velocityXAbs, speed));
-        //anim.SetFloat("velocityX", velocityXAbs);
-        anim.SetFloat("velocityY", velocityY);
-
-        anim.SetBool("grounded", manager.isGrounded);
-        anim.SetBool("dashing", manager.isDashing);
-        anim.SetBool("grabbing", manager.isGrabbing);
-        anim.SetBool("crouching", manager.isCrouching);
+        manager.animator.SetBool("grounded", manager.isGrounded);
+        manager.animator.SetBool("dashing", manager.isDashing);
+        manager.animator.SetBool("grabbing", manager.isGrabbing);
+        manager.animator.SetBool("crouching", manager.isCrouching);
 
         bool wallback = manager.isBackOnWall && !manager.isGrounded;
-        anim.SetBool("wallback", wallback);
+        manager.animator.SetBool("wallback", wallback);
 
         float grabVelocityX = velocityX * manager.actions.grabbedObjPlayerSide.x;
-        anim.SetFloat("grabVelocityX", grabVelocityX);
+        manager.animator.SetFloat("grabVelocityX", grabVelocityX);
 
         float grabHeight = manager.actions.grabbedHeight;
-        anim.SetFloat("grabHeight", grabHeight);
-
-
+        manager.animator.SetFloat("grabHeight", grabHeight);
     }
 }

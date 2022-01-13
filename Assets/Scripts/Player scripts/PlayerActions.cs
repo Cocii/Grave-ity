@@ -17,8 +17,6 @@ public class PlayerActions : MonoBehaviour
     public LayerMask propsLayer;
     public LayerMask propsGround;
     public float grabMassMult = 0.2f;
-    //public float grabReleaseDistanceOffset = 0.001f;
-    //public float grabReleaseReactionForce = Mathf.Infinity;
     public float defaultBreakForce = Mathf.Infinity;
     public float minimalBreakForce = 500f;
     public float grabDistanceMult = 1.35f;
@@ -61,22 +59,10 @@ public class PlayerActions : MonoBehaviour
 
     private void CheckGrabbedObj() {
         if (!manager.isGrabbing) {
-
-            //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
-            //float distance = grabCheckDistance;
-
-            //if (manager.characterController.groundAngle != 0f) {
-            //    direction = new Vector2(1, 1) * -manager.characterController.groundNormalPerpendicular * direction.x * Mathf.Sign(transform.right.x);
-            //    //direction = (new Vector2(direction.x, 1) * (manager.characterController.groundNormalPerpendicular) * Mathf.Sign(-manager.currentGravity.y)).normalized;
-            //    distance *= grabDistanceMultOnSlope;
-            //}
-
-            //Debug.DrawRay(transform.position, direction.normalized * distance, Color.red);
-
             return;
         }
             
-        Debug.DrawLine(transform.position, grabbedObj.transform.position, Color.red);
+        //Debug.DrawLine(transform.position, grabbedObj.transform.position, Color.red);
         DistanceJoint2D grabbedObjJoint = grabbedObj.GetComponent<DistanceJoint2D>();
 
         if (grabbedObjJoint == null) {
@@ -107,21 +93,7 @@ public class PlayerActions : MonoBehaviour
             }
         }
 
-        //--------------------------------------
-
         
-
-        //float grabReactionForce = grabbedObjJoint.reactionForce.magnitude;
-
-        //print("offset: " + distanceOffset);
-
-        //if (distanceOffset > grabReleaseDistanceOffset) {
-        //    print("RELEASE FORZATO | offset: " + distanceOffset);
-        //    ReleaseGrab();
-        //}
-
-
-
 
     }
 
@@ -216,12 +188,6 @@ public class PlayerActions : MonoBehaviour
         if (manager.isDashing || (Time.time - lastDashTime) <= manager.dashCooldown || CheckPropInFront() || manager.input.GetMoveInput.magnitude==0f)
             return false;
 
-        //RaycastHit2D hit;
-        //Vector2 direction = manager.input.GetMoveInput;
-        //hit = Physics2D.Raycast(transform.position, direction, manager.dashCheckDistance, propsLayer);
-
-        //return hit.transform == null;
-
         return true;
     }
 
@@ -296,7 +262,7 @@ public class PlayerActions : MonoBehaviour
     }
 
     private void CheckCrouchGetUp() {
-        Debug.DrawRay(transform.position, transform.up * gettingUpCheckDistance, Color.cyan);
+        //Debug.DrawRay(transform.position, transform.up * gettingUpCheckDistance, Color.cyan);
 
         if (!triedToGetUp)
             return;

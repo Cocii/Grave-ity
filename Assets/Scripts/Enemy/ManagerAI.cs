@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public enum InitialPoseEnum {
     standard,
     crouched
 }
 
-public class AIManager : MonoBehaviour
+public class ManagerAI : MonoBehaviour
 {
     public InitialPoseEnum initialPose;
 
@@ -19,6 +20,8 @@ public class AIManager : MonoBehaviour
     public CharacterControllerAI characterController;
     public MovementAI movement;
     public GameObject headBone;
+    GravityManager gManager;
+    public List<GameObject> childrens;
 
 
     [Header("Gravity info")]
@@ -47,6 +50,7 @@ public class AIManager : MonoBehaviour
     public float minRotationSpeed = 500f;
     public float distanceRotationMin = 4f;
     public float distanceRotationMax = 1.25f;
+    public float currentRotationSpeed = 0f;
 
     [Header("Movement settings")]
     public float moveForceMagnitude = 600f;
@@ -83,10 +87,9 @@ public class AIManager : MonoBehaviour
 
     [Header("Obstacle detection settings")]
     public LayerMask obstaclesLayer;
-    //public float obstacleCheckDistanceMult = 0.6f;
-    public Vector3 obstacleCheckOffset = new Vector3(0.125f, 0f, 0f);
-    public Vector3 crouchedObstacleCheckOffset = new Vector3(1.15f, -1f, 0f);
-    //public float obstacleCheckDistance;
+    //public Vector3 obstacleCheckOffset = new Vector3(0.125f, 0f, 0f);
+    //public Vector3 crouchedObstacleCheckOffset = new Vector3(1.15f, -1f, 0f);
+
 
     [Header("Control bools")]
     public bool isGrounded = true;
@@ -103,6 +106,7 @@ public class AIManager : MonoBehaviour
     public bool isDashing;
     public bool isCrouching;
     public bool isFacingObstacle;
+    public bool playerDetected = false;
 
     //[Header("Materials")]
     //public PhysicsMaterial2D fullFrictionMaterial;
@@ -125,13 +129,13 @@ public class AIManager : MonoBehaviour
 
 
     private void Start() {
+        gManager = GravityManager.instance;
         AdaptParametersToGravity();
-        
+
+        //MainComponentsActivation(false);
     }
 
     private void Update() {
-        GravityManager gManager = GravityManager.instance;
-
         if (gManager.physicsGravity != currentGravity) {
             currentGravity = gManager.physicsGravity;
             currentGravityNormal = gManager.physicsGravityNormal;
@@ -173,5 +177,26 @@ public class AIManager : MonoBehaviour
         defaultColliderOffset = bodyCollider.offset;
         scaledColliderSize = bodyCollider.size * transform.localScale;
         scaledCrouchedColliderSize = crouchColliderSize * transform.localScale;
+    }
+
+    private void OnBecameVisible() {
+        print("i'm visible");
+        MainComponentsActivation(true);
+    }
+
+    private void OnBecameInvisible() {
+        print("i'm NOT visible");
+        MainComponentsActivation(false);
+    }
+
+    private void MainComponentsActivation(bool state) {
+        //bodyCollider.enabled = state;
+        GetComponent<CharacterControllerAI>().enabled = state;
+        GetComponent<MovementAI>().enabled = state;
+        GetComponent<AnimationAI>().enabled = state;
+
+        foreach (GameObject c in childrens) {
+            c.SetActive(state);
+        }
     }
 }
