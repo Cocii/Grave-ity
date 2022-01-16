@@ -5,11 +5,14 @@ using UnityEngine;
 public class PlayerSounds : MonoBehaviour
 {
     public PlayerManager manager;
+
+    [Header("Steps")]
     public AudioSource stepAudioSource;
     public AudioClip[] grassStepAudioClips;
     public AudioClip[] glassStepAudioClips;
     public AudioClip[] metalStepAudioClips;
 
+    [Header("Gravity changes")]
     public AudioSource gravityChangeAudioSource;
     public AudioClip gravityWeakerClip;
     public AudioClip gravityStrongerClip;
@@ -21,6 +24,8 @@ public class PlayerSounds : MonoBehaviour
     public void PlayStepSound() {
         if (!stepAudioSource)
             return;
+
+        //print("Playing step from " + gameObject.transform.parent.name);
 
         switch (manager.groundType) {
             case GroundTypeEnum.grass:
@@ -56,5 +61,23 @@ public class PlayerSounds : MonoBehaviour
     public void PlayGravvityStronger() {
         gravityChangeAudioSource.clip = gravityStrongerClip;
         gravityChangeAudioSource.Play();
+    }
+
+    public void PlayGravityChange(GravityChangesEnum changeRequested) {
+        switch (changeRequested) {
+            case GravityChangesEnum.Weaker:
+                //print("player sounds with request: " + changeRequested);
+                PlayGravvityWeaker();
+                break;
+
+            case GravityChangesEnum.Stronger:
+                //print("player sounds with request: " + changeRequested);
+                PlayGravvityStronger();
+                break;
+
+            default:
+                //print("sound default case");
+                break;
+        }
     }
 }

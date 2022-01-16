@@ -8,7 +8,10 @@ public class TimerTextUpdater : MonoBehaviour
 {
     public Text timerText;
     public LevelTimer timer;
-    
+
+    public float delay = 1f;
+    public float timeSinceLastUpdate = 0f;
+
     void Start()
     {
         if (timerText == null)
@@ -20,6 +23,14 @@ public class TimerTextUpdater : MonoBehaviour
 
     void Update()
     {
+        timeSinceLastUpdate += Time.deltaTime;
+        if (timeSinceLastUpdate > delay) {
+            timeSinceLastUpdate = 0f;
+            UpdateTimer();
+        }
+    }
+
+    private void UpdateTimer() {
         if (timer) {
             float time = timer.GetTimer();
             string timeString = Utilities.FormatTimeMinSec(time);
@@ -27,7 +38,7 @@ public class TimerTextUpdater : MonoBehaviour
         }
         else {
             timer = GameManager.instance.timer;
-        }  
+        }
     }
 
     

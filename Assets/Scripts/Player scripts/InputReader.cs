@@ -5,12 +5,9 @@ using Cinemachine;
 
 public class InputReader : MonoBehaviour
 {
-    //[HideInInspector]
-    //public GameObject mainCamera; 
-    //[HideInInspector]
-    //public CinemachineFreeLook mainFreeCam;
-    //[HideInInspector]
-    //public CinemachineVirtualCamera mainVirtualCamera;
+    PlayerManager pManager;
+    GravityManager gManager;
+
     [Header("Movement inputs")]
     public Vector2 inputMovement; 
     public Vector2 inputCamera;
@@ -48,6 +45,9 @@ public class InputReader : MonoBehaviour
     void Start() {
         inputBlocked = false;
         inputEnabled = true;
+
+        pManager = PlayerManager.instance;
+        gManager = GravityManager.instance;
     }
 
     void Update() {
@@ -85,51 +85,43 @@ public class InputReader : MonoBehaviour
 
     void ExcecuteInputActions() {
         if (inputGravityUpsideD && !inputBlocked && gravityInversionEnabled) {
-            GravityManager.instance.RotateGravityUpsideDown();
-            DisableGravityInversion();
+            pManager.events.gravityChangesChannel.RaiseEvent(GravityChangesEnum.Inverted);
+            pManager.events.gravityChangesChannel.RaiseEventVoid();
         }
         if (inputGravityStrongerD && !inputBlocked) {
-            GravityManager.instance.StrongerGravity();
-            PlayerManager.instance.sound.PlayGravvityStronger();
+            pManager.events.gravityChangesChannel.RaiseEvent(GravityChangesEnum.Stronger);
+            pManager.events.gravityChangesChannel.RaiseEventVoid();
         }
         if (inputGravityWeakerD && !inputBlocked) {
-            GravityManager.instance.WeakerGravity();
-            PlayerManager.instance.sound.PlayGravvityWeaker();
+            pManager.events.gravityChangesChannel.RaiseEvent(GravityChangesEnum.Weaker);
+            pManager.events.gravityChangesChannel.RaiseEventVoid();
         }
 
-        //if (inputDashD && !inputBlocked) {
-        //    if((Time.time - lastTimeInput) < doubleClickThreshold) {
-        //        PlayerManager.instance.actions.Dash();
-        //        lastTimeInput = 0f;
-        //    }
-        //    else {
-        //        lastTimeInput = Time.time;
-        //    }
-        //}
-
         if (inputDashD && !inputBlocked) {
-            PlayerManager.instance.actions.Dash();
+            pManager.actions.Dash();
         }
 
         if (inputGrabD && !inputBlocked) {
-            PlayerManager.instance.actions.Grab();
+            pManager.actions.Grab();
         }
         else if (inputGrabU && !inputBlocked) {
-            PlayerManager.instance.actions.ReleaseGrab();
+            pManager.actions.ReleaseGrab();
         }
 
         if(inputCrouchD && !inputBlocked) {
-            PlayerManager.instance.actions.Crouch();
+            pManager.actions.Crouch();
         }else if (inputCrouchU && !inputBlocked) {
-            PlayerManager.instance.actions.CrouchStop();
+            pManager.actions.CrouchStop();
         }
 
         if (inputMenuD) {
-            GameMenuManager.instance.SwitchState();
+            //GameMenuManager.instance.SwitchState();
+            pManager.events.gameMenuChannel.RaiseEvent();
         }
 
         if(inputSwitchPowerD && !inputBlocked) {
-            PlayerManager.instance.events.powerSwitched.Invoke();
+            //PlayerManager.instance.events.powerSwitched.Invoke();
+            pManager.events.powerSwitchedChannel.RaiseEvent();
         }
     }
 
@@ -143,6 +135,11 @@ public class InputReader : MonoBehaviour
 
     public void DisableGravityInversion() {
         gravityInversionEnabled = false;
+    }
+
+    public void DisableGravityInversion(GravityChangesEnum changeRequested) {
+        if(changeRequested==GravityChangesEnum.Inverted)
+            gravityInversionEnabled = false;
     }
 
     public void EnableGravityInversion() {

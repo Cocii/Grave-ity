@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GravityChangesEnum {
+    Inverted,
+    Stronger,
+    Weaker
+}
+
 public class GravityManager : MonoBehaviour
 {
     [Header("References")]
@@ -31,6 +37,7 @@ public class GravityManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+        InstantUpdateGravity();
     }
 
     public void ManualDestroy()
@@ -45,20 +52,27 @@ public class GravityManager : MonoBehaviour
         Physics2D.gravity = physicsGravity;
     }
 
-    private void Update() {
-        UpdateGravity();
-    }
+    //private void Update() {
+    //    //UpdateGravity();
+    //}
 
-    private void UpdateGravity() {
-        Vector2 targetGravity = gravityDirection * gravityMagnitude;
+    //private void UpdateGravity() {
+    //    Vector2 targetGravity = gravityDirection * gravityMagnitude;
 
-        if (physicsGravity == targetGravity)
-            return;
+    //    if (physicsGravity == targetGravity)
+    //        return;
 
-        physicsGravity = Vector2.MoveTowards(physicsGravity, targetGravity, valuesLerpSpeed * Time.deltaTime);
+    //    physicsGravity = Vector2.MoveTowards(physicsGravity, targetGravity, valuesLerpSpeed * Time.deltaTime);
+    //    physicsGravityNormal = -Vector2.Perpendicular(physicsGravity).normalized;
+    //    gravityRatio = physicsGravity.magnitude / defaultGravityMagnitude;
+
+    //    Physics2D.gravity = physicsGravity;
+    //}
+
+    private void InstantUpdateGravity() {
+        physicsGravity = gravityDirection * gravityMagnitude;
         physicsGravityNormal = -Vector2.Perpendicular(physicsGravity).normalized;
         gravityRatio = physicsGravity.magnitude / defaultGravityMagnitude;
-
         Physics2D.gravity = physicsGravity;
     }
 
@@ -93,11 +107,34 @@ public class GravityManager : MonoBehaviour
     }
 
     public void ResetGravity() {
-        if (gravityDirection != Vector2.down)
-            physicsGravity = Vector2.zero;
+        //if (gravityDirection != Vector2.down)
+        //    physicsGravity = Vector2.zero;
 
         gravityDirection = Vector2.down;
         gravityMagnitude = defaultGravityMagnitude;
+        InstantUpdateGravity();
+    }
+
+    public void GravityChange(GravityChangesEnum changeRequested) {
+        switch (changeRequested) {
+            case GravityChangesEnum.Inverted:
+                RotateGravityUpsideDown();
+                InstantUpdateGravity();
+                break;
+
+            case GravityChangesEnum.Weaker:
+                WeakerGravity();
+                InstantUpdateGravity();
+                break;
+
+            case GravityChangesEnum.Stronger:
+                StrongerGravity();
+                InstantUpdateGravity();
+                break;
+            
+            default:
+                break;
+        }
     }
 
 }

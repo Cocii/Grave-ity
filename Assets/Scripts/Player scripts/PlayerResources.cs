@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerResources : MonoBehaviour
 {
+    PlayerManager pManager;
+    GravityManager gManager;
+
     public float maxGravityResourceAmount = 1000f;
     public float currentGravityResourceAmount;
     public float upsideGravityReductionAmount=200f;
@@ -11,10 +14,12 @@ public class PlayerResources : MonoBehaviour
     public float strongerGravityReductionAmount=550f;
     public float recoverIncreaseAmount=630f;
 
+    [HideInInspector]
     public bool active = true;
 
-
     private void Start() {
+        pManager = PlayerManager.instance;
+        gManager = GravityManager.instance;
         currentGravityResourceAmount = maxGravityResourceAmount;
     }
 
@@ -45,14 +50,13 @@ public class PlayerResources : MonoBehaviour
             AddAmount(amount);
 
         if (currentGravityResourceAmount <= 0f) {
-            GravityManager.instance.ResetGravity();
-            //PlayerManager.instance.input.EnableGravityInversion();
-            return;
+            Reset();
         }
     }
 
-    private void FixedUpdate() {
-        
+    private void Reset() {
+        gManager.ResetGravity();
+        pManager.events.gravityChangesChannel.RaiseEventVoid();
     }
 
     private void Reduce(float amount) {

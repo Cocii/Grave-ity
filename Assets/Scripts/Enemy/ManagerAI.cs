@@ -22,6 +22,7 @@ public class ManagerAI : MonoBehaviour
     public GameObject headBone;
     GravityManager gManager;
     public List<GameObject> childrens;
+    public EventsAI events;
 
 
     [Header("Gravity info")]
@@ -71,15 +72,6 @@ public class ManagerAI : MonoBehaviour
     public float weakGravityJumpBoostMult = 0.85f;
     public float jumpBoostStopVelocityThreshold = 1.5f;
 
-    //[Header("Walljump settings")]
-    //public Vector2 wallJumpDirection = new Vector2(0.3f, 0.9f);
-    //public float walljumpForceMult = 2f;
-
-    //[Header("Dash settings")]
-    //public float dashForceMult = 0.5f;
-    //public float dashTime = 0.2f;
-    //public float dashCooldown = 1f;
-
     [Header("Crouch settings")]
     public float crouchMoveSpeedMult = 0.5f;
     public Vector2 crouchColliderSize = new Vector2(22.5f, 27f);
@@ -87,9 +79,6 @@ public class ManagerAI : MonoBehaviour
 
     [Header("Obstacle detection settings")]
     public LayerMask obstaclesLayer;
-    //public Vector3 obstacleCheckOffset = new Vector3(0.125f, 0f, 0f);
-    //public Vector3 crouchedObstacleCheckOffset = new Vector3(1.15f, -1f, 0f);
-
 
     [Header("Control bools")]
     public bool isGrounded = true;
@@ -107,10 +96,6 @@ public class ManagerAI : MonoBehaviour
     public bool isCrouching;
     public bool isFacingObstacle;
     public bool playerDetected = false;
-
-    //[Header("Materials")]
-    //public PhysicsMaterial2D fullFrictionMaterial;
-    //public PhysicsMaterial2D defaultPhysicsMaterial;
 
     private void Awake() {
         if (body == null)
@@ -130,19 +115,23 @@ public class ManagerAI : MonoBehaviour
 
     private void Start() {
         gManager = GravityManager.instance;
-        AdaptParametersToGravity();
+        UpdateGravity();
 
-        //MainComponentsActivation(false);
+        MainComponentsDeactivation(false);
     }
 
-    private void Update() {
-        if (gManager.physicsGravity != currentGravity) {
-            currentGravity = gManager.physicsGravity;
-            currentGravityNormal = gManager.physicsGravityNormal;
-            currentGravityRatio = gManager.gravityRatio;
+    //private void Update() {
+    //    if (gManager.physicsGravity != currentGravity) {
+    //        UpdateGravity();
+    //    }
+    //}
 
-            AdaptParametersToGravity();
-        }
+    public void UpdateGravity() {
+        currentGravity = gManager.physicsGravity;
+        currentGravityNormal = gManager.physicsGravityNormal;
+        currentGravityRatio = gManager.gravityRatio;
+
+        AdaptParametersToGravity();
     }
 
     private void AdaptParametersToGravity() {
@@ -180,16 +169,17 @@ public class ManagerAI : MonoBehaviour
     }
 
     private void OnBecameVisible() {
-        print("i'm visible");
-        MainComponentsActivation(true);
+        MainComponentsDeactivation(true);
     }
 
     private void OnBecameInvisible() {
-        print("i'm NOT visible");
-        MainComponentsActivation(false);
+        
+        MainComponentsDeactivation(false);
     }
 
-    private void MainComponentsActivation(bool state) {
+    private void MainComponentsDeactivation(bool state) {
+        //print("setting main components to state: " + state);
+
         //bodyCollider.enabled = state;
         GetComponent<CharacterControllerAI>().enabled = state;
         GetComponent<MovementAI>().enabled = state;
@@ -198,5 +188,7 @@ public class ManagerAI : MonoBehaviour
         foreach (GameObject c in childrens) {
             c.SetActive(state);
         }
+
+       
     }
 }

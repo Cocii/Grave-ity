@@ -13,9 +13,12 @@ public class PlayerAnimations : MonoBehaviour
 
     void Update()
     {
+        UpdateAnimation();
+    }
+
+    private void UpdateAnimation() {
         float velocityX = Mathf.Round((manager.body.velocity.x / manager.defaultMaxMoveSpeed) * 10f) * 0.1f;
-        float velocityXAbs = Mathf.Abs(velocityX);
-        float smoothedVelocityX = Mathf.MoveTowards(manager.animator.GetFloat("velocityX"), velocityXAbs, speed);
+        float smoothedVelocityX = Mathf.MoveTowards(manager.animator.GetFloat("velocityX"), Mathf.Abs(velocityX), speed);
         manager.animator.SetFloat("velocityX", smoothedVelocityX);
 
         float velocityY = (Mathf.Round(manager.body.velocity.y * 10f) / 10f) * -Mathf.Sign(manager.currentGravity.y);

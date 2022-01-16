@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public int framerate = 60;
+    public bool vSync = false;
 
     public bool inPause = false;
 
@@ -36,6 +37,9 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         Application.targetFrameRate = framerate;
+        if (!vSync) {
+            QualitySettings.vSyncCount = 0;
+        }
         
     }
 
@@ -53,11 +57,6 @@ public class GameManager : MonoBehaviour
     {
         if (gameObject != null)
             Destroy(gameObject);
-    }
-
-    private void Update() {
-        if(Application.targetFrameRate != framerate)
-            Application.targetFrameRate = framerate;
     }
 
     public void RegisterAmbientAudioSource(AudioSource source) {

@@ -138,19 +138,17 @@ public class PlayerManager : MonoBehaviour
 
     private void Start() {
         gManager = GravityManager.instance;
-        AdaptParametersToGravity();
+        UpdateGravity();
         GetColliderSize();
         currentMaxMoveSpeed = defaultMaxMoveSpeed;
     }
 
-    private void Update() {
-        if(gManager.physicsGravity != currentGravity) {
-            currentGravity = gManager.physicsGravity;
-            currentGravityNormal = gManager.physicsGravityNormal;
-            currentGravityRatio = gManager.gravityRatio;
+    public void UpdateGravity() {
+        currentGravity = gManager.physicsGravity;
+        currentGravityNormal = gManager.physicsGravityNormal;
+        currentGravityRatio = gManager.gravityRatio;
 
-            AdaptParametersToGravity();
-        }
+        AdaptParametersToGravity();
     }
 
     private void AdaptParametersToGravity() {
