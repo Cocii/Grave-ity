@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 22507600}
   - component: {fileID: 7806402741623062288}
   - component: {fileID: 5514559971549674118}
+  - component: {fileID: 8699284031062540855}
   m_Layer: 3
   m_Name: NewPlayer
   m_TagString: Player
@@ -519,16 +520,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputMovement: {x: 0, y: 0}
-  inputCamera: {x: 0, y: 0}
-  jumpKey: 32
-  gravityStrongerKey: 113
-  gravityWeakerKey: 101
-  gravityUpsideKey: 114
-  dashKey: 304
-  grabKey: 306
-  switchPowerKey: 9
-  crouchKey: 120
-  menuKey: 27
   inputBlocked: 0
   inputEnabled: 1
   resetMoveInputIfBlocked: 1
@@ -545,6 +536,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab26cd9fa4d9c343a8689eb13a3594f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravityForce: {x: 0, y: 0}
+  gravityForceNormal: {x: 0, y: 0}
+  gravityRatio: 0
 --- !u!114 &7195747485142191350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -665,6 +659,76 @@ MonoBehaviour:
   currentPower: {fileID: 0}
   body: {fileID: 4321586501701546854}
   activated: 0
+--- !u!114 &8699284031062540855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7195747485142191336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: da9d35ee1d48a6f41a7855e4bfa2ff67, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 24439b43-01e0-4d24-b426-a622f536f9bb
+    m_ActionName: Gameplay/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 68ba7ddc-80a9-4b4d-bc5b-11ed26a9e49f
+    m_ActionName: Gameplay/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 58eec1fd-132f-44b1-8813-fe1cecfa1a9e
+    m_ActionName: Gameplay/Dash[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ff3ffb22-8f5d-4966-ab6a-2698b3c90972
+    m_ActionName: Gameplay/Crouch[/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 61c32031-1aac-4ee5-b4fc-441b4757410e
+    m_ActionName: Gameplay/Grab[/Keyboard/leftCtrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 607a0c29-59a9-4679-80dd-2f11e7ed3d9f
+    m_ActionName: Gameplay/Gravity inverted[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: faac5160-4fa5-481a-ac8c-d904d7fcf266
+    m_ActionName: Gameplay/Gravity weaker[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 624b9d93-489c-4ae5-9191-c093f9242e45
+    m_ActionName: Gameplay/Gravity stronger[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4c782efe-d288-4f83-a76d-9e0dea12c020
+    m_ActionName: Gameplay/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ed847571-e02f-4f75-82c1-678aa8373afc
+    m_ActionName: Gameplay/SwitchPower[/Keyboard/tab]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Keyboard
+  m_DefaultActionMap: Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!95 &3245997715313147043
 Animator:
   serializedVersion: 3

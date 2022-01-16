@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
     public Rigidbody2D body;
     public CapsuleCollider2D bodyCollider;
     public Animator animator;
-    public InputReader input;
+    public InputActions input;
     public CharacterControllerDynamic2D characterController;
     public PlayerMovement movement;
     public PlayerResources resources;

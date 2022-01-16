@@ -4,122 +4,139 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    PlayerManager manager;
+    PlayerManager pManager;
     private Vector2 moveInput;
-    private bool jumpInput;
+    private bool jumpBoost;
+    public Vector2 gravityForce;
+    public Vector2 gravityForceNormal;
+    public float gravityRatio;
 
     private void Start() {
-        manager = PlayerManager.instance;
+        pManager = PlayerManager.instance;
+
+        GravityManager gManager = GravityManager.instance;
+        gravityForce = gManager.physicsGravity;
+        gravityForceNormal = gManager.physicsGravityNormal;
+        gravityRatio = gManager.gravityRatio;
     }
 
     void Update() {
-        moveInput = manager.input.GetMoveInput;
-        jumpInput = manager.input.GetJumpDInput;
+        moveInput = pManager.input.GetMoveInput;
 
-        HorizontalMovementUpdate();
-        VerticalMovementUpdate();
+        if (moveInput.magnitude > 0.1f)
+            HorizontalMovementUpdate();
+        
+        if(!pManager.isGrounded)
+            VerticalMovementUpdate();
+    }
+
+    public void UpdateGravityInfo() {
+        gravityForce = pManager.currentGravity;
+        gravityForceNormal = pManager.currentGravityNormal;
+        gravityRatio = pManager.currentGravityRatio;
     }
 
     private void HorizontalMovementUpdate() {
         Vector2 force = Vector2.zero;
-        
-        Vector2 gravityForce = manager.currentGravity;
-        Vector2 gravityForceNormal = manager.currentGravityNormal;
 
-        //WASD
-        if (moveInput.magnitude > 0.1f) {
-            if (manager.isGrounded) {
-                force = gravityForceNormal * moveInput * manager.moveForceMagnitude;
-            }
-            else {
-                force = gravityForceNormal * moveInput * manager.moveForceMagnitude * manager.moveAirForceMult;
-            }
-
-            if (gravityForce.normalized == Vector2.down) {
-                force *= -1f;
-            }
-
-            
-            float timeMult = Time.smoothDeltaTime;
-            force = force * 100f * timeMult;
-
-            manager.characterController.AddMoveForce(force);
+        if (pManager.isGrounded) {
+            force = gravityForceNormal * moveInput * pManager.moveForceMagnitude;
         }
+        else {
+            force = gravityForceNormal * moveInput * pManager.moveForceMagnitude * pManager.moveAirForceMult;
+        }
+
+        if (gravityForce.normalized == Vector2.down) {
+            force *= -1f;
+        }
+
+        force = force * 100f * Time.smoothDeltaTime;
+
+        pManager.characterController.AddMoveForce(force);        
     }
 
     private void VerticalMovementUpdate() {
         Vector2 force = Vector2.zero;
 
-        Vector2 gravityForce = manager.currentGravity;
-        float gravityRatio = manager.currentGravityRatio;
-
-        //JUMP
-        if (jumpInput && CanJump()) {
-            force = -gravityForce.normalized * manager.jumpForceMagnitude;
-            manager.characterController.SetJumpForce(force);
-
-            if (manager.isCrouching) {
-                manager.actions.CrouchStop();
-            }
-        }
-        //
-
-        //WALLJUMP
-        if (jumpInput && CanWalljump(moveInput.x)) {
-            force.Set(manager.wallJumpDirection.x * moveInput.x, manager.wallJumpDirection.y * -gravityForce.normalized.y);
-            force *= manager.jumpForceMagnitude * manager.walljumpForceMult;
-            manager.characterController.SetJumpForce(force);
-        }
-        //
-
         //JUMP BOOSTER
-        jumpInput = manager.input.GetJumpInput;
-        if (jumpInput && CanBoostJump(gravityForce)) {
+        if (jumpBoost && CanBoostJump(gravityForce)) {
             //print("Boost jump");
-            force = -gravityForce.normalized * manager.jumpForceMagnitude * manager.currentJumpBoostMult;
+            force = -gravityForce.normalized * pManager.jumpForceMagnitude * pManager.currentJumpBoostMult;
 
             float timeMult = Time.smoothDeltaTime;
 
             force *= timeMult;
-            manager.characterController.AddBoostForce(force);
+            pManager.characterController.AddBoostForce(force);
         }
         //
 
         //GRAVITY BOOSTER
         if (CanBoostgravity(gravityRatio, gravityForce)) {
             //print("Boost gravity");
-            force = gravityForce * manager.gravityBoostMult;
+            force = gravityForce * pManager.gravityBoostMult;
             //force *= (2f - gravityRatio);
-            manager.characterController.AddBoostForce(force);
+            pManager.characterController.AddBoostForce(force);
         }
         //
     }
 
+    public void Jump() {
+        //print("Jump " + (jumpInput && CanJump()));
+        Vector2 force = Vector2.zero;
+
+        if (CanJump()) {
+            force = -gravityForce.normalized * pManager.jumpForceMagnitude;
+            pManager.characterController.SetJumpForce(force);
+
+            if (pManager.isCrouching) {
+                pManager.actions.CrouchStop();
+            }
+        }
+    }
+
+    public void Walljump() {
+        Vector2 force = Vector2.zero;
+
+        if (CanWalljump(moveInput.x)) {
+            force.Set(pManager.wallJumpDirection.x * moveInput.x, pManager.wallJumpDirection.y * -gravityForce.normalized.y);
+            force *= pManager.jumpForceMagnitude * pManager.walljumpForceMult;
+            pManager.characterController.SetJumpForce(force);
+        }
+    }
+
+    public void JumpBoostActivation() {
+        jumpBoost = true;
+    }
+
+    public void JumpBoostDeactivation() {
+        jumpBoost = false;
+    }
+
     private bool CanJump() {
-        return manager.isGrounded && !manager.isOnHighSlope && !manager.isGrabbing;
+        return pManager.isGrounded && !pManager.isOnHighSlope && !pManager.isGrabbing;
     }
 
     private bool CanWalljump(float xInput) {
-        return !manager.isGrounded && manager.isBackOnWall && manager.canWalljump && xInput != 0f;
+        return !pManager.isGrounded && pManager.isBackOnWall && pManager.canWalljump && xInput != 0f;
     }
 
     private bool CanBoostJump(Vector2 gravityForce) {
         bool can = false;
 
         if(Mathf.Sign(gravityForce.y) < 0f) {
-            can = manager.body.velocity.y > manager.jumpBoostStopVelocityThreshold;
+            can = pManager.body.velocity.y > pManager.jumpBoostStopVelocityThreshold;
         }
         else {
-            can = manager.body.velocity.y < -manager.jumpBoostStopVelocityThreshold;
+            can = pManager.body.velocity.y < -pManager.jumpBoostStopVelocityThreshold;
         }
 
         return can;
     }
 
     private bool CanBoostgravity(float gravityRatio, Vector2 gravityForce) {
-        bool can = !manager.isGrounded;
+        bool can = !pManager.isGrounded;
         can &= gravityRatio <= 1;
-        can &= Mathf.Sign(manager.body.velocity.y) == Mathf.Sign(gravityForce.y);
+        can &= Mathf.Sign(pManager.body.velocity.y) == Mathf.Sign(gravityForce.y);
 
         return can;
     }

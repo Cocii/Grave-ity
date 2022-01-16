@@ -25,6 +25,7 @@ public class PlayerEvents : MonoBehaviour
         gravityChangesChannel.OnEventRaised += pManager.input.DisableGravityInversion;
         
         gravityChangesChannel.OnEventRaisedVoid += pManager.UpdateGravity;
+        gravityChangesChannel.OnEventRaisedVoid += pManager.movement.UpdateGravityInfo;
     }
 
     private void RegisterPowerSwitchedActions() {
