@@ -113,9 +113,6 @@ public class InputActions : MonoBehaviour
     }
 
     public void PauseGameInputPerformed(InputAction.CallbackContext context) {
-        if (inputBlocked)
-            return;
-
         pManager.events.gameMenuChannel.RaiseEvent();
     }
 

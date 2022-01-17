@@ -128,6 +128,9 @@ public class PlayerManager : MonoBehaviour
         if (bodyCollider == null) {
             bodyCollider = GetComponent<CapsuleCollider2D>();
         }
+
+        GetColliderSize();
+        currentMaxMoveSpeed = defaultMaxMoveSpeed;
     }
 
     public void ManualDestroy()
@@ -139,8 +142,7 @@ public class PlayerManager : MonoBehaviour
     private void Start() {
         gManager = GravityManager.instance;
         UpdateGravity();
-        GetColliderSize();
-        currentMaxMoveSpeed = defaultMaxMoveSpeed;
+        
     }
 
     public void UpdateGravity() {

@@ -44,6 +44,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         wallbackOrigin = new Vector2 (((-manager.bodyCollider.size.x * 0.5f) * transform.localScale.x) - wallbackBoxcastSize.x*0.5f, (manager.bodyCollider.size.y * 0.15f) * transform.localScale.y);
         wallbackRaycastDistance = manager.bodyCollider.size.x * transform.localScale.y * 1.1f;
 
+        //print(manager.scaledColliderSize);
+        //manager.obstacleCheckOffset.x = manager.scaledColliderSize.x * 0.01f;
+        //manager.obstacleCheckOffset.y = manager.scaledColliderSize.y * 0.01f;
     }
 
     private void FixedUpdate() {
@@ -79,6 +82,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
         Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
         sizeAdjs.y *= 0.975f;
+        sizeAdjs.x *= 0.1f;
         Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
         offset.x *= direction.x;
         offset.y *= Mathf.Sign(transform.up.y);
@@ -423,15 +427,16 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         Gizmos.color = Color.red;
 
         if (manager) {
-            //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
-            //Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
-            //sizeAdjs.y *= 0.975f;
-            //Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
-            //offset.x *= direction.x;
-            //offset.y *= Mathf.Sign(transform.up.y);
-            //Vector3 posAdjs = transform.position + offset;
+            Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+            Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
+            sizeAdjs.y *= 0.975f;
+            sizeAdjs.x *= 0.1f;
+            Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
+            offset.x *= direction.x;
+            offset.y *= Mathf.Sign(transform.up.y);
+            Vector3 posAdjs = transform.position + offset;
 
-            //Gizmos.DrawCube(posAdjs, sizeAdjs);
+            Gizmos.DrawWireCube(posAdjs, sizeAdjs);
 
             //Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
 
