@@ -132,6 +132,8 @@ public class ManagerAI : MonoBehaviour
         currentGravityRatio = gManager.gravityRatio;
 
         AdaptParametersToGravity();
+
+        characterController.UpdateGravityForce();
     }
 
     private void AdaptParametersToGravity() {

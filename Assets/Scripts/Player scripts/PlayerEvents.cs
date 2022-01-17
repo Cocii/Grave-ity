@@ -26,6 +26,7 @@ public class PlayerEvents : MonoBehaviour
         
         gravityChangesChannel.OnEventRaisedVoid += pManager.UpdateGravity;
         gravityChangesChannel.OnEventRaisedVoid += pManager.movement.UpdateGravityInfo;
+        gravityChangesChannel.OnEventRaisedVoid += pManager.characterController.StartRotation;
     }
 
     private void RegisterPowerSwitchedActions() {

@@ -430,7 +430,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 2241
-  groundCapsuleCastSize: {x: 1.475, y: 0.1}
+  groundCapsuleCastSize: {x: 1.275, y: 0.1}
   maxSlopeAngle: 60
   lateralOffset: 0
   groundRayCastDistance: 0.3
@@ -463,7 +463,7 @@ MonoBehaviour:
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 2240
-  obstacleCheckOffset: {x: 0.85, y: -0.075, z: 0}
+  obstacleCheckOffset: {x: 0.85, y: 0, z: 0}
   crouchedObstacleCheckOffset: {x: 2.5, y: -1, z: 0}
   isGrounded: 1
   wasGrounded: 1

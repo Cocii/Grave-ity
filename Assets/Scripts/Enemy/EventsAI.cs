@@ -19,5 +19,6 @@ public class EventsAI : MonoBehaviour
 
     private void RegisterGravityChangesActions() {
         gravityChangesChannel.OnEventRaisedVoid += aiManager.UpdateGravity;
+        gravityChangesChannel.OnEventRaisedVoid += aiManager.characterController.StartRotation;
     }
 }

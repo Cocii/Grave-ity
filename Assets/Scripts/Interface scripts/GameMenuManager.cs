@@ -154,7 +154,7 @@ public class GameMenuManager : MonoBehaviour
     public void LowPerformanceToggleActivation() {
         bool activation = lowPerformanceToggle.isOn;
 
-        print("Low performance is: " + activation);
+        //print("Low performance is: " + activation);
     }
 
 }

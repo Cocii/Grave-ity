@@ -53,21 +53,31 @@ public class CharacterControllerAI : MonoBehaviour
     }
 
     void Update() {
-        gravityForce = manager.currentGravity;
+        //gravityForce = manager.currentGravity;
 
-        RotateTowardsGravity();
-
-        CheckSpriteFlip();
-        CheckRotationLimitations();
-
+        if (manager.isRotating)
+            RotateTowardsGravity();
+        
         GroundCheck();
 
-        SlopeCheck();
+        if(manager.isGrounded)
+            SlopeCheck();
+        
+        CheckSpriteFlip();
 
         VelocityLimit();
     }
 
-    
+    public void UpdateGravityForce() {
+        gravityForce = manager.currentGravity;
+    }
+
+    public void StartRotation() {
+        manager.isRotating = true;
+        manager.currentRotationSpeed = CalculateRotationSpeed();
+        RotateTowardsGravity();
+    }
+
     private void VelocityLimit() {
         if (Mathf.Abs(manager.body.velocity.x) < 0.01f)
             manager.body.velocity *= new Vector2(0f, 1f);
@@ -273,12 +283,6 @@ public class CharacterControllerAI : MonoBehaviour
 
         //print("Speed is " + speed + " for distance " + distance);
         return speed;
-    }
-
-    private void CheckRotationLimitations() {
-        if (manager.wasRotating && manager.isGrounded) {
-            manager.wasRotating = false;
-        }
     }
 
     private void SlopeCheck() {

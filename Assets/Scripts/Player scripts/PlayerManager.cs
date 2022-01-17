@@ -151,6 +151,8 @@ public class PlayerManager : MonoBehaviour
         currentGravityRatio = gManager.gravityRatio;
 
         AdaptParametersToGravity();
+
+        characterController.UpdateGravityForce();
     }
 
     private void AdaptParametersToGravity() {

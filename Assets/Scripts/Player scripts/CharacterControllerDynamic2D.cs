@@ -2,6 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum RotationStateEnum {
+    Stable,
+    CurrentlyRotating,
+    MidairAfterRotating
+}
+
+public enum GroundStateEnum {
+    Grounded,
+    Midair
+}
+
 public class CharacterControllerDynamic2D : MonoBehaviour
 {
     private PlayerManager manager;
@@ -57,24 +68,37 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     void Update() {
-        gravityForce = manager.currentGravity;
-
-        RotateTowardsGravity();
-
-        CheckSpriteFlip();
-        CheckRotationLimitations();
+        if(manager.isRotating)
+            RotateTowardsGravity();
+        else 
+            if(manager.wasRotating)
+                CheckRotationLimitations();
 
         GroundCheck();
 
         if (!manager.isGrounded) {
-            WallBackCheck();      
+            WallBackCheck();
         }
-
-        SlopeCheck();
+        else {
+            SlopeCheck();
+        }
 
         ObstaclesCheck();
 
+        CheckSpriteFlip();
+
         VelocityLimit();
+    }
+
+    public void UpdateGravityForce() {
+        gravityForce = manager.currentGravity;
+    }
+
+    public void StartRotation() {
+        manager.isRotating = true;
+        manager.input.DisableGravityInversion();
+        manager.currentRotationSpeed = CalculateRotationSpeed();
+        RotateTowardsGravity();
     }
 
     private void ObstaclesCheck() {
@@ -306,29 +330,20 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     private void RotateTowardsGravity() {
-        float targetAngle = 0f;
-        if (gravityForce.normalized == Vector2.up)
-            targetAngle = 180f;
+        float targetAngle = Vector2.Angle(Vector2.down, manager.currentGravity.normalized);
+
+        PlayerRotate(targetAngle);
+        print("Rotating player");
+        
+        AdjustFlipToGravity();
 
         if (transform.eulerAngles.z == targetAngle) {
             if (manager.isRotating) {
                 manager.wasRotating = true;
                 manager.isRotating = false;
             }
-            return; // --- Se non deve ruotare si ferma qua
         }
 
-        // --- Se sono qua allora sto ruotando
-
-        if (!manager.isRotating) {
-            manager.isRotating = true;
-            manager.input.DisableGravityInversion();
-            manager.currentRotationSpeed = CalculateRotationSpeed();
-        }
-
-        PlayerRotate(targetAngle);
-
-        AdjustFlipToGravity();
     }
 
     private void PlayerRotate(float targetAngle) {
@@ -358,6 +373,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     private void CheckRotationLimitations() {
+        //print("Checking limitarions");
         if (manager.wasRotating && manager.isGrounded) {
             manager.wasRotating = false;
             //manager.input.EnableInput();
@@ -421,29 +437,30 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         //    return;
 
         Gizmos.color = Color.cyan;
-        if (manager)
-            Gizmos.DrawRay(transform.position, manager.body.velocity * 0.5f);
+        //if (manager)
+        //    Gizmos.DrawRay(transform.position, manager.body.velocity * 0.5f);
 
-        Gizmos.color = Color.red;
+        //Gizmos.color = Color.red;
 
+        //if (manager) {
+        //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+        //Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
+        //sizeAdjs.y *= 0.975f;
+        //sizeAdjs.x *= 0.1f;
+        //Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
+        //offset.x *= direction.x;
+        //offset.y *= Mathf.Sign(transform.up.y);
+        //Vector3 posAdjs = transform.position + offset;
+
+        //Gizmos.DrawWireCube(posAdjs, sizeAdjs);
         if (manager) {
-            Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
-            Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
-            sizeAdjs.y *= 0.975f;
-            sizeAdjs.x *= 0.1f;
-            Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
-            offset.x *= direction.x;
-            offset.y *= Mathf.Sign(transform.up.y);
-            Vector3 posAdjs = transform.position + offset;
-
-            Gizmos.DrawWireCube(posAdjs, sizeAdjs);
-
-            //Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
-
-            //Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackOrigin.x * -Mathf.Sign(direction.x), wallbackOrigin.y) * transform.up.y;
-
-            //Gizmos.DrawCube(wallbackRayOriginAdjst, wallbackBoxcastSize);
+            Gizmos.color = Color.cyan;
+            Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
+            Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
+            Gizmos.DrawWireCube(capsuleOriginAdjst, manager.groundCapsuleCastSize);
         }
+        
+        //}
 
 
 
@@ -461,7 +478,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         if (hitPoint != Vector2.zero)
             Gizmos.DrawSphere(hitPoint, .15f);
 
-        Gizmos.color = Color.yellow;
+        //Gizmos.color = Color.yellow;
 
         Gizmos.color = Color.white;
     }
