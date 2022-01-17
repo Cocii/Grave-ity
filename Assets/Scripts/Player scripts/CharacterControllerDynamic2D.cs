@@ -105,11 +105,19 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager.isFacingObstacle = false;
         Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
         Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
-        sizeAdjs.y *= 0.975f;
-        sizeAdjs.x *= 0.1f;
         Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
+
+        if (!manager.isGrounded) {
+            offset.y *= 0;
+            sizeAdjs.y *= 0.975f;
+        }
+        else {
+            offset.y *= Mathf.Sign(transform.up.y);
+            sizeAdjs.y *= 0.7f;
+        }
         offset.x *= direction.x;
-        offset.y *= Mathf.Sign(transform.up.y);
+        sizeAdjs.x *= 0.1f;
+
         Vector3 posAdjs = transform.position + offset;
 
         //Debug.DrawRay(posAdjs, direction * 20f, Color.yellow);
@@ -159,9 +167,12 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager.isGrounded = false;
 
 
-        float offsetAdjst = manager.isFacingRight ? manager.lateralOffset : -manager.lateralOffset;
-        capsuleCastOrigin.x = offsetAdjst;
-        rayCastOrigin.x = offsetAdjst;
+        //float offsetAdjst = manager.isFacingRight ? manager.lateralOffset : -manager.lateralOffset;
+        //capsuleCastOrigin.x = offsetAdjst;
+        //rayCastOrigin.x = offsetAdjst;
+
+        capsuleCastOrigin.x = 0;
+        rayCastOrigin.x = 0;
 
         Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
         Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
@@ -436,23 +447,38 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         //if (manager == null)
         //    return;
 
-        Gizmos.color = Color.cyan;
+        
         //if (manager)
         //    Gizmos.DrawRay(transform.position, manager.body.velocity * 0.5f);
 
-        //Gizmos.color = Color.red;
+        Gizmos.color = Color.red;
 
-        //if (manager) {
-        //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
-        //Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
-        //sizeAdjs.y *= 0.975f;
-        //sizeAdjs.x *= 0.1f;
-        //Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
-        //offset.x *= direction.x;
-        //offset.y *= Mathf.Sign(transform.up.y);
-        //Vector3 posAdjs = transform.position + offset;
+        if (manager) {
+            Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+            Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
+            Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
+            
+            if (!manager.isGrounded) {
+                offset.y *= 0;
+                sizeAdjs.y *= 0.975f;
+            }
+            else {
+                offset.y *= Mathf.Sign(transform.up.y);
+                sizeAdjs.y *= 0.7f;
+            }
+            offset.x *= direction.x;
+            sizeAdjs.x *= 0.1f;
 
-        //Gizmos.DrawWireCube(posAdjs, sizeAdjs);
+            Vector3 posAdjs = transform.position + offset;
+
+            Gizmos.DrawWireCube(posAdjs, sizeAdjs);
+
+
+            Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
+            Gizmos.DrawRay(rayOriginAdjst, -transform.up.normalized * manager.groundRayCastDistance);
+        }
+
+        Gizmos.color = Color.cyan;
         if (manager) {
             Gizmos.color = Color.cyan;
             Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
