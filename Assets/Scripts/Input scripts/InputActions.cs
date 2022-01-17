@@ -79,7 +79,7 @@ public class InputActions : MonoBehaviour
                 break;
 
             case InputActionPhase.Performed:
-                pManager.movement.JumpBoostDeactivation();
+                //pManager.movement.JumpBoostDeactivation();
                 break;
 
             case InputActionPhase.Canceled:
