@@ -274,11 +274,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         manager.body.velocity = velocity;
     }
 
-    private void PlayerWalljump() {
-        //print("Walljump with force: " + jumpForce);
-        manager.canWalljump = false;
-    }
-
     private void FlipFacingAndSprite() {
         manager.isFacingRight = !manager.isFacingRight;
         FlipSprite();
@@ -547,10 +542,6 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     private void ApplyJumpForce() {
         if (jumpForce.magnitude == 0)
             return;
-
-        if(jumpForce.x != 0f) {
-            PlayerWalljump();
-        }
 
         manager.body.AddForce(jumpForce);
         //print("Jump with force: " + jumpForce);

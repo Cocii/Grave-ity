@@ -5,12 +5,28 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("References")]
+    public static UIManager instance;
+
     [Header("Panels")]
     public GameObject upperCenterPanel;
+    public GameObject comandsPanel;
 
     [Header("Texts")]
     public Text powerNameText;
     public Text upperCentertext;
+
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+        else {
+            Destroy(gameObject);
+            return;
+        }
+
+        //DontDestroyOnLoad(gameObject);
+    }
 
     public void SetUpperCenterTextAndDelay(string text, float delay) {
         upperCentertext.text = text;
@@ -30,5 +46,9 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         obj.SetActive(false);
         yield break;
+    }
+
+    public void ActivateComandsPanel(bool activation) {
+        comandsPanel.SetActive(activation);
     }
 }

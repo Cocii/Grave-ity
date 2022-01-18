@@ -30,10 +30,14 @@ public class GameMenuManager : MonoBehaviour
 
     [Header("Toggles")]
     public Toggle lowPerformanceToggle;
+    public Toggle showComandsToggle;
 
     [Header("Texts")]
     public Text levelNameText;
     public Text timerText;
+
+    [Header("Scrollbar")]
+    public Scrollbar menuScrollbar;
 
     private void Awake() {
         if (instance == null) {
@@ -71,13 +75,18 @@ public class GameMenuManager : MonoBehaviour
     }
 
     private void UpdatePanelsState() {
-        if (pauseMenuPanel)
+        menuScrollbar.value = 1;
+
+        if (pauseMenuPanel) {
             pauseMenuPanel.SetActive(inPause);
+        }
 
         foreach(GameObject pnl in panelsToDeactivate) {
             if (pnl)
                 pnl.SetActive(!inPause);
         }
+
+        
     }
 
     private void UpdateInputState() {
@@ -157,4 +166,7 @@ public class GameMenuManager : MonoBehaviour
         //print("Low performance is: " + activation);
     }
 
+    public void ComandsActivation() {
+        UIManager.instance.ActivateComandsPanel(showComandsToggle.isOn);
+    }
 }

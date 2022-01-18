@@ -102,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
             force.Set(pManager.wallJumpDirection.x * orientation, pManager.wallJumpDirection.y * -gravityForce.normalized.y);
             force *= pManager.jumpForceMagnitude * pManager.walljumpForceMult;
             pManager.characterController.SetJumpForce(force);
+            pManager.canWalljump = false;
         }
         else {
             if (CanReverseWalljump()) {
@@ -113,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
                 
                 force *= pManager.jumpForceMagnitude * pManager.walljumpForceMult;
                 pManager.characterController.SetJumpForce(force);
+                pManager.canWalljump = false;
             }
         }
     }
