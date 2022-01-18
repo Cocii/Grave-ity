@@ -185,7 +185,7 @@ public class PlayerActions : MonoBehaviour
     //DASH-----------------------------
 
     private bool CanDash() {
-        if (manager.isDashing || (Time.time - lastDashTime) <= manager.dashCooldown || CheckPropInFront() || manager.input.GetMoveInput.magnitude==0f)
+        if (manager.isDashing || (Time.time - lastDashTime) <= manager.dashCooldown || CheckPropInFront())
             return false;
 
         return true;
@@ -201,7 +201,8 @@ public class PlayerActions : MonoBehaviour
 
     private IEnumerator DashCo() {
         manager.isDashing = true;
-        Vector2 force = manager.dashForceMult * manager.moveForceMagnitude * manager.input.GetMoveInput;
+        float orientation = manager.isFacingRight ? 1f : -1f;
+        Vector2 force = manager.dashForceMult * manager.moveForceMagnitude * transform.right * orientation;
         manager.characterController.SetDashForce(force);
         lastDashTime = Time.time;
 

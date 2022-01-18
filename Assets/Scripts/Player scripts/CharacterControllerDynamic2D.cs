@@ -476,6 +476,14 @@ public class CharacterControllerDynamic2D : MonoBehaviour
 
             Vector2 rayOriginAdjst = transform.position + new Vector3(rayCastOrigin.x, rayCastOrigin.y) * transform.up.y;
             Gizmos.DrawRay(rayOriginAdjst, -transform.up.normalized * manager.groundRayCastDistance);
+
+
+            Gizmos.color = Color.yellow;
+
+            direction *= -1;
+            Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackOrigin.x * -Mathf.Sign(direction.x), wallbackOrigin.y) * transform.up.y;
+
+            Gizmos.DrawWireCube(wallbackRayOriginAdjst, wallbackBoxcastSize);
         }
 
         Gizmos.color = Color.cyan;

@@ -97,10 +97,23 @@ public class PlayerMovement : MonoBehaviour
     public void Walljump() {
         Vector2 force = Vector2.zero;
 
-        if (CanWalljump(moveInput.x)) {
-            force.Set(pManager.wallJumpDirection.x * moveInput.x, pManager.wallJumpDirection.y * -gravityForce.normalized.y);
+        if (CanWalljump()) {
+            float orientation = pManager.isFacingRight ? 1f : -1f;
+            force.Set(pManager.wallJumpDirection.x * orientation, pManager.wallJumpDirection.y * -gravityForce.normalized.y);
             force *= pManager.jumpForceMagnitude * pManager.walljumpForceMult;
             pManager.characterController.SetJumpForce(force);
+        }
+        else {
+            if (CanReverseWalljump()) {
+                float reverseOrientation = pManager.isFacingRight ? -1f : 1f;
+                force.Set(
+                    pManager.wallJumpDirection.x * reverseOrientation, 
+                    pManager.wallJumpDirection.y * -gravityForce.normalized.y
+                    );
+                
+                force *= pManager.jumpForceMagnitude * pManager.walljumpForceMult;
+                pManager.characterController.SetJumpForce(force);
+            }
         }
     }
 
@@ -116,8 +129,12 @@ public class PlayerMovement : MonoBehaviour
         return pManager.isGrounded && !pManager.isOnHighSlope && !pManager.isGrabbing;
     }
 
-    private bool CanWalljump(float xInput) {
-        return !pManager.isGrounded && pManager.isBackOnWall && pManager.canWalljump && xInput != 0f;
+    private bool CanWalljump() {
+        return !pManager.isGrounded && pManager.isBackOnWall && pManager.canWalljump;
+    }
+
+    private bool CanReverseWalljump() {
+        return !pManager.isGrounded && pManager.isFacingObstacle;
     }
 
     private bool CanBoostJump(Vector2 gravityForce) {
