@@ -12,6 +12,8 @@ public class PlayerActions : MonoBehaviour
     public float grabCheckDistance;
     public Vector2 grabbedObjPlayerSide;
     public float grabbedHeight;
+    public Rigidbody2D grabbedBody;
+    public Vector2 moveForce;
 
     [Header("Grab settings")]
     public LayerMask propsLayer;
@@ -55,6 +57,14 @@ public class PlayerActions : MonoBehaviour
         
     }
 
+    private void FixedUpdate() {
+        if (grabbedBody && moveForce.magnitude != 0f) {
+            print("adding force to grabbed obj");
+            grabbedBody.AddForce(moveForce);
+            moveForce = Vector2.zero;
+        }
+    }
+
     //CHECKS-----------------------------
 
     private void CheckGrabbedObj() {
@@ -92,8 +102,6 @@ public class PlayerActions : MonoBehaviour
                 grabbedObjJoint.breakForce = minimalBreakForce;
             }
         }
-
-        
 
     }
 
@@ -154,23 +162,25 @@ public class PlayerActions : MonoBehaviour
         grabbedObjJoint.connectedBody = manager.body;
         grabbedObjJoint.distance = grabPositioningDistance;
 
-        grabbedObj.GetComponent<Rigidbody2D>().mass = grabbedObj.GetComponent<Rigidbody2D>().mass * grabMassMult;
+        //grabbedObj.GetComponent<Rigidbody2D>().mass = grabbedObj.GetComponent<Rigidbody2D>().mass * grabMassMult;
+        
         manager.isGrabbing = true;
         grabbedObjPlayerSide = grabbedObj.transform.position.x > transform.position.x ? Vector2.right : Vector2.left;
-        //print("lossy scale: " + grabbedObj.transform.lossyScale);
         grabbedHeight = grabbedObj.transform.lossyScale.y;
+        grabbedBody = grabbedObj.GetComponent<Rigidbody2D>();
     }
 
     public void ReleaseGrab() {
         if (grabbedObj == null)
             return;
 
-        //print("Release grab");
         manager.isGrabbing = false;
-        grabbedObj.GetComponent<Rigidbody2D>().mass = grabbedObj.GetComponent<Rigidbody2D>().mass * (1/grabMassMult);
+
+        //grabbedObj.GetComponent<Rigidbody2D>().mass = grabbedObj.GetComponent<Rigidbody2D>().mass * (1/grabMassMult);
 
         DetachToDistanceJoint();
 
+        grabbedBody = null;
         grabbedObj = null;
         grabbedHeight = 0f;
     }
@@ -180,6 +190,10 @@ public class PlayerActions : MonoBehaviour
         if (grabbedObjJoint != null) {
             grabbedObjJoint.connectedBody = grabbedObj.GetComponent<Rigidbody2D>();
         }
+    }
+
+    public void AddMoveForce(Vector2 force) {
+        moveForce += force;
     }
 
     //DASH-----------------------------

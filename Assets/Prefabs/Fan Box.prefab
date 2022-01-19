@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1546452608}
   - component: {fileID: 1546452610}
   - component: {fileID: 1546452609}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Audio effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 3858004150703960498}
   - component: {fileID: 3858004150703960496}
   - component: {fileID: 309635183}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Fan Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -52,7 +52,11 @@ public class PlayerMovement : MonoBehaviour
 
         force = force * 100f * Time.smoothDeltaTime;
 
-        pManager.characterController.AddMoveForce(force);        
+        pManager.characterController.AddMoveForce(force);
+
+        if (pManager.isGrabbing) {
+            pManager.actions.AddMoveForce(force);
+        }
     }
 
     private void VerticalMovementUpdate() {

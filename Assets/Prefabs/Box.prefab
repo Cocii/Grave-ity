@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3668235881073540427}
   - component: {fileID: 8788163409182053906}
   - component: {fileID: 1630611647187756538}
-  m_Layer: 7
+  m_Layer: 14
   m_Name: Audio effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.086354375, y: 0.013343573}
+  m_Offset: {x: -0.024362206, y: 0.0016027689}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -183,7 +183,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.4880943, y: 3.0015345}
+  m_Size: {x: 3.9612176, y: 2.6258304}
   m_EdgeRadius: 0
 --- !u!1 &2877894731223010382
 GameObject:

@@ -53,7 +53,7 @@ public class WeakgravityLevitation : MonoBehaviour
 
         float forceMagnitude = gManager.physicsGravity.magnitude * cosTime * gravityMult;
         force = forceDirection * (forceMagnitude * forceDirection.y);
-        Debug.DrawRay(transform.position, force * 0.3f, Color.blue);
+        //Debug.DrawRay(transform.position, force * 0.3f, Color.blue);
         //print(force.magnitude);
 
         

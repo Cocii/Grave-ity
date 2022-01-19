@@ -16,7 +16,7 @@ public class MessageTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        uiManager = GameObject.FindGameObjectWithTag("GameCanvas").GetComponent<UIManager>();
+        uiManager = UIManager.instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
