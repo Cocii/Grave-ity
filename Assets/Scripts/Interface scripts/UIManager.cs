@@ -16,6 +16,16 @@ public class UIManager : MonoBehaviour
     public Text powerNameText;
     public Text upperCentertext;
 
+    [Header("Animators")]
+    public Animator comandsPanelAnimator;
+
+    [Header("Channels")]
+    public VoidEventChannelSO menuSwitchEventChannel;
+
+    [Header("Bools")]
+    public bool comandsPanelActivationState = false;
+    public bool comandsPanelLastActivationState = false;
+
     private void Awake() {
         if (instance == null) {
             instance = this;
@@ -26,6 +36,10 @@ public class UIManager : MonoBehaviour
         }
 
         //DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start() {
+        menuSwitchEventChannel.OnEventRaised += UpdateAnimators;
     }
 
     public void SetUpperCenterTextAndDelay(string text, float delay) {
@@ -49,6 +63,21 @@ public class UIManager : MonoBehaviour
     }
 
     public void ActivateComandsPanel(bool activation) {
-        comandsPanel.SetActive(activation);
+        //comandsPanel.SetActive(activation);
+        comandsPanelActivationState = activation;
+    }
+    
+    public void UpdateAnimators() {
+        if(comandsPanelLastActivationState != comandsPanelActivationState) {
+            comandsPanelLastActivationState = comandsPanelActivationState;
+            comandsPanelAnimator.SetBool("Visible", comandsPanelActivationState);
+            comandsPanelAnimator.SetTrigger("Transition");
+        }
+        
+        //if(comandsPanelAnimator.GetBool("Visibile") != comandsPanelActivationState) {
+        //    comandsPanelAnimator.SetBool("Visible", comandsPanelActivationState);
+        //    comandsPanelAnimator.SetTrigger("Transition");
+        //}
+        
     }
 }

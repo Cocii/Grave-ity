@@ -16,6 +16,9 @@ public class GameMenuManager : MonoBehaviour
     public AudioOptionSettingScriptable optionSettings;
     public PerformanceOptionSettingScriptable performanceOptions;
 
+    [Header("Channels")]
+    public VoidEventChannelSO switchStateChannel;
+
     [Header("Bools")]
     public bool inPause = false;
 
@@ -72,6 +75,8 @@ public class GameMenuManager : MonoBehaviour
         UpdatePanelsState();
 
         UpdateInputState();
+
+        switchStateChannel.RaiseEvent();
     }
 
     private void UpdatePanelsState() {
