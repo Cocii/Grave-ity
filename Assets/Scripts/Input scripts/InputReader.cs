@@ -54,7 +54,14 @@ public class InputReader : MonoBehaviour
         actions.Gameplay.Crouch.canceled += CrouchInputPhases;
     }
 
-    private void DeregisterActions() {
+    private void OnDestroy() {
+        UnregisterActions();
+    }
+
+    private void UnregisterActions() {
+        if (actions == null || this==null)
+            return;
+
         actions.Gameplay.Jump.started -= JumpInputPhases;
         actions.Gameplay.Jump.performed -= JumpInputPhases;
         actions.Gameplay.Jump.canceled -= JumpInputPhases;
@@ -135,7 +142,7 @@ public class InputReader : MonoBehaviour
     }
 
     public void PauseGameInputPerformed(InputAction.CallbackContext context) {
-        //print("GAME PAUSE");
+        print("GAME PAUSE PRESSED");
         pManager.events.gameMenuChannel.RaiseEvent();
     }
 
