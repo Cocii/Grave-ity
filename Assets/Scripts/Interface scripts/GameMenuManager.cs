@@ -14,10 +14,11 @@ public class GameMenuManager : MonoBehaviour
     
     [Header("Options")]
     public AudioOptionSettingScriptable optionSettings;
-    public PerformanceOptionSettingScriptable performanceOptions;
+    public PerformanceOptionSettingScriptable performanceSettings;
 
     [Header("Channels")]
     public VoidEventChannelSO switchStateChannel;
+    public VoidEventChannelSO gameMenuChannel;
 
     [Header("Bools")]
     public bool inPause = false;
@@ -47,11 +48,30 @@ public class GameMenuManager : MonoBehaviour
             instance = this;
         }
         else {
-            Destroy(gameObject);
             return;
         }
 
         //DontDestroyOnLoad(gameObject);
+
+        instance = this;
+
+        //RegisterGameMenuActions();
+    }
+
+    private void OnEnable() {
+        RegisterGameMenuActions();
+    }
+
+    private void OnDisable() {
+        UnregisterGameMenuActions();
+    }
+
+    private void RegisterGameMenuActions() {
+        gameMenuChannel.OnEventRaised += SwitchState;
+    }
+
+    private void UnregisterGameMenuActions() {
+        gameMenuChannel.OnEventRaised -= SwitchState;
     }
 
     void Start() {
@@ -64,8 +84,10 @@ public class GameMenuManager : MonoBehaviour
     }
 
     public void SwitchState() {
+        //print("Switch state called");
+
         gameManager.inPause = !gameManager.inPause;
-        inPause = gameManager.inPause;
+        inPause = !inPause;
 
         //print("Switch: in pause state is " + inPause);
 

@@ -9,6 +9,7 @@ public class PlayerEvents : MonoBehaviour
     public GravityChangeEventChannelSO gravityChangesChannel;
     public VoidEventChannelSO powerSwitchedChannel;
     public VoidEventChannelSO gameMenuChannel;
+    //public VoidEventChannelSO 
 
     private void Start() {
         pManager = PlayerManager.instance;
@@ -16,7 +17,6 @@ public class PlayerEvents : MonoBehaviour
 
         RegisterGravityChangesActions();
         RegisterPowerSwitchedActions();
-        RegisterGameMenuActions();
     }
 
     private void RegisterGravityChangesActions() {
@@ -31,9 +31,5 @@ public class PlayerEvents : MonoBehaviour
 
     private void RegisterPowerSwitchedActions() {
         powerSwitchedChannel.OnEventRaised += pManager.powersManager.SwitchPower;
-    }
-
-    private void RegisterGameMenuActions() {
-        gameMenuChannel.OnEventRaised += GameMenuManager.instance.SwitchState;
     }
 }

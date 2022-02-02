@@ -60,8 +60,7 @@ public class PlayerActions : MonoBehaviour
     private void FixedUpdate() {
         if (grabbedBody && moveForce.magnitude != 0f) {
             print("adding force to grabbed obj");
-            grabbedBody.AddForce(moveForce);
-            moveForce = Vector2.zero;
+            MoveGrabbedObj();
         }
     }
 
@@ -196,6 +195,11 @@ public class PlayerActions : MonoBehaviour
         moveForce += force;
     }
 
+    private void MoveGrabbedObj() {
+        grabbedBody.AddForce(moveForce);
+        moveForce = Vector2.zero;
+    }
+
     //DASH-----------------------------
 
     private bool CanDash() {
@@ -216,6 +220,7 @@ public class PlayerActions : MonoBehaviour
     private IEnumerator DashCo() {
         manager.isDashing = true;
         float orientation = manager.isFacingRight ? 1f : -1f;
+        orientation *= Mathf.Sign(-manager.currentGravity.y);
         Vector2 force = manager.dashForceMult * manager.moveForceMagnitude * transform.right * orientation;
         manager.characterController.SetDashForce(force);
         lastDashTime = Time.time;

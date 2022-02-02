@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
     public Rigidbody2D body;
     public CapsuleCollider2D bodyCollider;
     public Animator animator;
-    public InputActions input;
+    public InputReader input;
     public CharacterControllerDynamic2D characterController;
     public PlayerMovement movement;
     public PlayerResources resources;
@@ -26,6 +26,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerEvents events;
     public PowerUpManager powersManager;
     GravityManager gManager;
+    //public InputReaderSO inputReaderObject;
 
     [Header("Gravity info")]
     public Vector2 currentGravity;
@@ -120,7 +121,7 @@ public class PlayerManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        this.gameObject.transform.parent = null;
+        //this.gameObject.transform.parent = null;
         
         if (body == null)
             body = GetComponent<Rigidbody2D>();

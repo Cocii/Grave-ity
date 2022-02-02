@@ -5,23 +5,34 @@ using UnityEngine;
 
 public class LightDeactivator : MonoBehaviour
 {
-    private Light2D light;
+    private Light2D lightComponent;
 
     // Start is called before the first frame update
     void Start()
     {
-        light = gameObject.GetComponent<Light2D>();
+        if (GetComponent<SpriteRenderer>() == null) {
+            gameObject.AddComponent<SpriteRenderer>();
+        }
+
+        lightComponent = gameObject.GetComponent<Light2D>();
+
+        if(!GetComponent<SpriteRenderer>().isVisible)
+            Activation(false);
     }
 
     private void OnBecameVisible()
     {
-        light.enabled = true;
-        Debug.Log("VISIBLE");
+            Activation(true);
     }
 
     private void OnBecameInvisible()
     {
-        light.enabled = false;
-        Debug.Log("INVISIBLE");
+            Activation(false);
     }
+
+    private void Activation(bool state) {
+        if(lightComponent)
+            lightComponent.enabled = state;
+    }
+
 }

@@ -183,9 +183,9 @@ public class ManagerAI : MonoBehaviour
         //print("setting main components to state: " + state);
 
         //bodyCollider.enabled = state;
-        GetComponent<CharacterControllerAI>().enabled = state;
-        GetComponent<MovementAI>().enabled = state;
-        GetComponent<AnimationAI>().enabled = state;
+        //GetComponent<CharacterControllerAI>().enabled = state;
+        //GetComponent<MovementAI>().enabled = state;
+        //GetComponent<AnimationAI>().enabled = state;
 
         foreach (GameObject c in childrens) {
             c.SetActive(state);

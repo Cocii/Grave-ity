@@ -339,7 +339,7 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         float targetAngle = Vector2.Angle(Vector2.down, manager.currentGravity.normalized);
 
         PlayerRotate(targetAngle);
-        print("Rotating player");
+        //print("Rotating player");
         
         AdjustFlipToGravity();
 

@@ -10,15 +10,26 @@ public class EventsAI : MonoBehaviour
 
     public GravityChangeEventChannelSO gravityChangesChannel;
 
-    private void Start() {
+    private void Awake() {
         aiManager = GetComponent<ManagerAI>();
         gManager = GravityManager.instance;
+    }
 
+    private void OnEnable() {   
         RegisterGravityChangesActions();
+    }
+
+    private void OnDisable() {
+        UnregisterGravityChangesActions();
     }
 
     private void RegisterGravityChangesActions() {
         gravityChangesChannel.OnEventRaisedVoid += aiManager.UpdateGravity;
         gravityChangesChannel.OnEventRaisedVoid += aiManager.characterController.StartRotation;
+    }
+
+    private void UnregisterGravityChangesActions() {
+        gravityChangesChannel.OnEventRaisedVoid -= aiManager.UpdateGravity;
+        gravityChangesChannel.OnEventRaisedVoid -= aiManager.characterController.StartRotation;
     }
 }

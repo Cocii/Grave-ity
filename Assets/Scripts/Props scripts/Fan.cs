@@ -119,13 +119,15 @@ public class Fan : MonoBehaviour
         targetBody = null;
         ResetPropCollider();
         state = VentStates.NoTarget;
+        hitPoint = Vector3.zero;
     }
 
     private void ApplyBehaviourTargetTypeBased() {
         switch (targetType) {
             case TargetTypeEnum.Prop:
                 //print("moving collider");
-                MovePropCollider(GetObjectOnTopDistanceRayCast());
+                //MovePropCollider(GetObjectOnTopDistanceRayCast());
+                MovePropCollider(Vector3.Distance(hitPoint, transform.position));
 
                 break;
 
@@ -152,7 +154,12 @@ public class Fan : MonoBehaviour
         RaycastHit2D hit = Physics2D.BoxCast(origin, size, 0f, transform.up, 0f, layerToAffect);
         if (hit) {
             targetDistance = (hit.transform.position - transform.position).y;
-            hitPoint = hit.point;
+            //hitPoint = hit.point;
+
+            //hitPoint = Physics2D.ClosestPoint(new Vector2((hit.transform.position - transform.position).x, 0f)*0.975f, hit.collider);
+            hitPoint = hit.collider.ClosestPoint(hit.transform.position - new Vector3(0f, targetDistance));
+            
+            //hitPoint = Physics2D.ClosestPoint(transform.position, hit.collider);
             return hit.transform.gameObject;
         }
 
@@ -178,9 +185,8 @@ public class Fan : MonoBehaviour
         Vector2 origin = new Vector3(targetBody.transform.position.x, transform.position.y, transform.position.z);
 
         Debug.DrawRay(origin, transform.up * raiseHeight * 2f, Color.green);
-        RaycastHit2D hit = Physics2D.Raycast(origin, transform.up, raiseHeight*2f, layerToAffect);
+        RaycastHit2D hit = Physics2D.Raycast(origin, transform.up, raiseHeight * 2f, layerToAffect);
         if (hit) {
-            
             return hit.distance;
         }
 

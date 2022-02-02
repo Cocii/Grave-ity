@@ -271,6 +271,7 @@ public class CharacterControllerAI : MonoBehaviour
     }
 
     private float CalculateRotationSpeed() {
+
         RaycastHit2D hit;
         float distance = manager.distanceRotationMin;
         float speed = manager.minRotationSpeed;

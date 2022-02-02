@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0937271e4b94e0242bb78947edf96881, type: 3}
+  m_Name: InputReaderObject
+  m_EditorClassIdentifier: 
+  _guid: 66919b4d04d811b49b2950e641436d47
+  description: Centralized input reader from new input system

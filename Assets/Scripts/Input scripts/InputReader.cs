@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputActions : MonoBehaviour
+public class InputReader : MonoBehaviour
 {
     PlayerManager pManager;
     GravityManager gManager;
@@ -52,6 +52,28 @@ public class InputActions : MonoBehaviour
 
         actions.Gameplay.Crouch.started += CrouchInputPhases;
         actions.Gameplay.Crouch.canceled += CrouchInputPhases;
+    }
+
+    private void DeregisterActions() {
+        actions.Gameplay.Jump.started -= JumpInputPhases;
+        actions.Gameplay.Jump.performed -= JumpInputPhases;
+        actions.Gameplay.Jump.canceled -= JumpInputPhases;
+
+        actions.Gameplay.Gravityinverted.performed -= InvertGravityInputPerformed;
+        actions.Gameplay.Gravitystronger.performed -= StrongGravityInputPerformed;
+        actions.Gameplay.Gravityweaker.performed -= WeakGravityInputPerformed;
+
+        actions.Gameplay.Pause.performed -= PauseGameInputPerformed;
+
+        actions.Gameplay.SwitchPower.performed -= SwitchPowerInputPerformed;
+
+        actions.Gameplay.Dash.performed -= DashInputPerformed;
+
+        actions.Gameplay.Grab.started -= GrabInputPhases;
+        actions.Gameplay.Grab.canceled -= GrabInputPhases;
+
+        actions.Gameplay.Crouch.started -= CrouchInputPhases;
+        actions.Gameplay.Crouch.canceled -= CrouchInputPhases;
     }
 
     private void ReadMovementInput() {
@@ -113,6 +135,7 @@ public class InputActions : MonoBehaviour
     }
 
     public void PauseGameInputPerformed(InputAction.CallbackContext context) {
+        //print("GAME PAUSE");
         pManager.events.gameMenuChannel.RaiseEvent();
     }
 
