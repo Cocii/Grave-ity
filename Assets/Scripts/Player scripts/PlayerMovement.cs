@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start() {
         pManager = PlayerManager.instance;
-
         GravityManager gManager = GravityManager.instance;
         gravityForce = gManager.physicsGravity;
         gravityForceNormal = gManager.physicsGravityNormal;

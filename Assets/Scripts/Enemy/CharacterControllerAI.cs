@@ -62,7 +62,9 @@ public class CharacterControllerAI : MonoBehaviour
 
         if(manager.isGrounded)
             SlopeCheck();
-        
+
+        ObstaclesCheck();
+
         CheckSpriteFlip();
 
         VelocityLimit();
@@ -76,6 +78,37 @@ public class CharacterControllerAI : MonoBehaviour
         manager.isRotating = true;
         manager.currentRotationSpeed = CalculateRotationSpeed();
         RotateTowardsGravity();
+    }
+
+
+    private void ObstaclesCheck() {
+        manager.isFacingObstacle = false;
+        Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+        Vector3 sizeAdjs = !manager.isCrouching ? manager.scaledColliderSize : manager.scaledCrouchedColliderSize;
+        Vector3 offset = !manager.isCrouching ? manager.obstacleCheckOffset : manager.crouchedObstacleCheckOffset;
+
+        if (!manager.isGrounded) {
+            offset.y *= 0;
+            sizeAdjs.y *= 0.975f;
+        }
+        else {
+            offset.y *= Mathf.Sign(transform.up.y);
+            sizeAdjs.y *= 0.7f;
+        }
+        offset.x *= direction.x;
+        sizeAdjs.x *= 0.1f;
+
+        Vector3 posAdjs = transform.position + offset;
+
+        //Debug.DrawRay(posAdjs, direction * 20f, Color.yellow);
+
+        RaycastHit2D hit;
+        //hit = Physics2D.Raycast(transform.position, direction, manager.obstacleCheckDistance, manager.obstaclesLayer);
+        hit = Physics2D.CapsuleCast(posAdjs, sizeAdjs, CapsuleDirection2D.Vertical, 0f, Vector2.right, 0f, manager.obstaclesLayer);
+        if (hit) {
+            manager.isFacingObstacle = true;
+            //print("obstacle hit");
+        }
     }
 
     private void VelocityLimit() {
@@ -342,6 +375,8 @@ public class CharacterControllerAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, manager.movement.detectionMaxRange);
         
+
+
         Gizmos.color = Color.white;
     }
 
@@ -356,6 +391,13 @@ public class CharacterControllerAI : MonoBehaviour
         }
 
         SlopeMoveAdjustement();
+
+        if (manager.isFacingObstacle && !manager.isCrouching) {
+            print("Stopping cause obstacle");
+            moveForce *= new Vector2(0, 1f);
+            manager.body.velocity *= new Vector2(0f, 1f);
+            //print("Movement blocked cause obstacle");
+        }
 
         manager.body.AddForce(moveForce);
 

@@ -12,6 +12,7 @@ public class GravityManager : MonoBehaviour
 {
     [Header("References")]
     public static GravityManager instance;
+    public GravityChangeEventChannelSO gravityResetChannel;
 
     [Header("Physics gravity info")]
     public Vector2 physicsGravity;
@@ -109,10 +110,11 @@ public class GravityManager : MonoBehaviour
     public void ResetGravity() {
         //if (gravityDirection != Vector2.down)
         //    physicsGravity = Vector2.zero;
-
+        //print("gravity reset");
         gravityDirection = Vector2.down;
         gravityMagnitude = defaultGravityMagnitude;
         InstantUpdateGravity();
+        gravityResetChannel.RaiseEventVoid();
     }
 
     public void GravityChange(GravityChangesEnum changeRequested) {

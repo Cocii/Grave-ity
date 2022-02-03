@@ -28,10 +28,6 @@ public class InputReader : MonoBehaviour
         gManager = GravityManager.instance;
     }
 
-    void Update() {
-        ReadMovementInput();
-    }
-
     private void RegisterActions() {
         actions.Gameplay.Jump.started += JumpInputPhases;
         actions.Gameplay.Jump.performed += JumpInputPhases;
@@ -52,6 +48,9 @@ public class InputReader : MonoBehaviour
 
         actions.Gameplay.Crouch.started += CrouchInputPhases;
         actions.Gameplay.Crouch.canceled += CrouchInputPhases;
+
+        actions.Gameplay.Movement.started += MoveInputPhases;
+        actions.Gameplay.Movement.canceled += MoveInputPhases;
     }
 
     private void OnDestroy() {
@@ -81,13 +80,25 @@ public class InputReader : MonoBehaviour
 
         actions.Gameplay.Crouch.started -= CrouchInputPhases;
         actions.Gameplay.Crouch.canceled -= CrouchInputPhases;
+
+        actions.Gameplay.Movement.started -= MoveInputPhases;
+        actions.Gameplay.Movement.canceled -= MoveInputPhases;
     }
 
-    private void ReadMovementInput() {
+    public void MoveInputPhases(InputAction.CallbackContext context) {
         if (!inputBlocked)
-            inputMovement = actions.Gameplay.Movement.ReadValue<Vector2>();
-        else if (resetMoveInputIfBlocked)
-            inputMovement = Vector2.zero;
+            switch (context.phase) {
+                case InputActionPhase.Started:
+                    inputMovement = actions.Gameplay.Movement.ReadValue<Vector2>();
+                    break;
+
+                case InputActionPhase.Canceled:
+                    inputMovement = Vector2.zero;
+                    break;
+            }
+        else 
+            if (resetMoveInputIfBlocked)
+                inputMovement = Vector2.zero;
     }
 
     public void JumpInputPhases(InputAction.CallbackContext context) {
@@ -142,7 +153,7 @@ public class InputReader : MonoBehaviour
     }
 
     public void PauseGameInputPerformed(InputAction.CallbackContext context) {
-        print("GAME PAUSE PRESSED");
+        //print("GAME PAUSE PRESSED");
         pManager.events.gameMenuChannel.RaiseEvent();
     }
 

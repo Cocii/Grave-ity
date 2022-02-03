@@ -2823,11 +2823,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7391773380960462143, guid: 3c9f3e05621de69428bb1ce587b7b8bf, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.63931805
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7391773380960462143, guid: 3c9f3e05621de69428bb1ce587b7b8bf, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.00000003613044
+      value: 0.36068195
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391773381342075956, guid: 3c9f3e05621de69428bb1ce587b7b8bf, type: 3}
+      propertyPath: m_Text
+      value: Low performance mode (WIP)
       objectReference: {fileID: 0}
     - target: {fileID: 7391773381342075957, guid: 3c9f3e05621de69428bb1ce587b7b8bf, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3003,7 +3007,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7391773382427615182, guid: 3c9f3e05621de69428bb1ce587b7b8bf, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 609.3001
+      value: 0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 7391773382463564257, guid: 3c9f3e05621de69428bb1ce587b7b8bf, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3071,7 +3075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7391773382780169653, guid: 3c9f3e05621de69428bb1ce587b7b8bf, type: 3}
       propertyPath: m_Value
-      value: 0.00000010017258
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7391773382780169653, guid: 3c9f3e05621de69428bb1ce587b7b8bf, type: 3}
       propertyPath: m_Colors.m_ColorMultiplier

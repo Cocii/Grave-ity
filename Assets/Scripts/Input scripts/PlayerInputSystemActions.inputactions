@@ -210,6 +210,17 @@
                 },
                 {
                     "name": "",
+                    "id": "f1e856e8-c839-4342-b5ff-a5a0ef216e85",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Gravity inverted",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "4896caaf-ca3c-4ff1-a779-0c693ca4578c",
                     "path": "<Keyboard>/e",
                     "interactions": "",

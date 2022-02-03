@@ -3,9 +3,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "InputReader", menuName = "Scriptables/Input Reader")]
-public class InputReaderSO : DescriptionBaseSO //, PlayerInputSystemActions.IGameplayActions
+public class InputReaderSO : DescriptionBaseSO, PlayerInputSystemActions.IGameplayActions
 {
-	/*
+	
 	private PlayerInputSystemActions inputSystem;
 
 	//Phases events
@@ -29,18 +29,21 @@ public class InputReaderSO : DescriptionBaseSO //, PlayerInputSystemActions.IGam
 	//Update events
 	public event UnityAction<Vector2> MoveEvent = delegate { };
 
-	private void OnEnable() {
-		if (inputSystem == null) {
-			inputSystem = new PlayerInputSystemActions();
-			inputSystem.Gameplay.SetCallbacks(this);
-		}
+	//private void OnEnable() {
+	//	if (inputSystem == null) {
+	//		inputSystem = new PlayerInputSystemActions();
+	//		inputSystem.Gameplay.Enable();
+	//		inputSystem.Gameplay.SetCallbacks(this);
+	//	}
 
-		Debug.Log("Input reader object enabled");
-	}
+	//	Debug.Log("Input reader object enabled");
+	//}
 
-	private void OnDisable() {
-		DisableAllInput();
-	}
+	//private void OnDisable() {
+	//	DisableAllInput();
+
+	//	Debug.Log("Input reader object disabled");
+	//}
 
 	public void EnableGameplayInput() {
 		inputSystem.Gameplay.Enable();
@@ -117,7 +120,7 @@ public class InputReaderSO : DescriptionBaseSO //, PlayerInputSystemActions.IGam
 
 				break;
 		}
-	}
+	} 
 
     public void OnMovement(InputAction.CallbackContext context) {
 		Debug.Log("Input reader move context: " + context.phase);
@@ -143,6 +146,6 @@ public class InputReaderSO : DescriptionBaseSO //, PlayerInputSystemActions.IGam
 	}
 
 	
-	*/
+	
 }
 

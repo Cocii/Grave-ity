@@ -79,6 +79,8 @@ public class ManagerAI : MonoBehaviour
 
     [Header("Obstacle detection settings")]
     public LayerMask obstaclesLayer;
+    public Vector3 obstacleCheckOffset = new Vector3(0.125f, 0f, 0f);
+    public Vector3 crouchedObstacleCheckOffset = new Vector3(1.15f, -1f, 0f);
 
     [Header("Control bools")]
     public bool isGrounded = true;

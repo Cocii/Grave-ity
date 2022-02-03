@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c6fc424e5aed842a8461be39a1c120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravityResetChannel: {fileID: 11400000, guid: a2953cc1c42f3514bb3596484e8d6891, type: 2}
   physicsGravity: {x: 0, y: -39.2}
   physicsGravityNormal: {x: -1, y: 0}
   gravityRatio: 1
