@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a796aeb604ba400409395b577e069c1d, type: 3}
   m_Name: UnlockedLevels
   m_EditorClassIdentifier: 
-  stringList:
-  - Forest
-  - Lab
+  stringList: []
