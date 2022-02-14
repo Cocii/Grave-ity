@@ -140,6 +140,16 @@ public class PlayerManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void OnEnable() {
+        ResetStatus();
+    }
+
+    public void ResetStatus() {
+        //all the status bools that must be resetted when die
+        isGrabbing = false;
+        isCrouching = false;
+    }
+
     private void Start() {
         gManager = GravityManager.instance;
         UpdateGravity();

@@ -110,10 +110,19 @@ public class PlayerMovement : MonoBehaviour
         else {
             if (CanReverseWalljump()) {
                 float reverseOrientation = pManager.isFacingRight ? -1f : 1f;
-                force.Set(
-                    (pManager.wallJumpDirection.x * 2.5f) * reverseOrientation, 
+
+                if (moveInput.x != 0f) {
+                    force.Set(
+                    (pManager.wallJumpDirection.x * 2.5f) * reverseOrientation,
                     (pManager.wallJumpDirection.y * 0.75f) * -gravityForce.normalized.y
                     );
+                }
+                else {
+                    force.Set(
+                    (pManager.wallJumpDirection.x) * reverseOrientation,
+                    (pManager.wallJumpDirection.y) * -gravityForce.normalized.y
+                    );
+                }
                 
                 force *= pManager.jumpForceMagnitude * pManager.walljumpForceMult;
                 pManager.characterController.SetJumpForce(force);

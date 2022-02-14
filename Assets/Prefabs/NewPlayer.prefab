@@ -445,14 +445,14 @@ MonoBehaviour:
   weakGravityMoveSpeedMult: 0.75
   strongGravityMoveSpeedMult: 0.5
   moveForceMultOnSlopes: 1.3
-  moveAirForceMult: 1
+  moveAirForceMult: 1.5
   gravityBoostMult: 8
   jumpForceMagnitude: 32500
   currentJumpBoostMult: 0.5
   defaultJumpBoostMult: 0.5
   weakGravityJumpBoostMult: 0.85
   jumpBoostStopVelocityThreshold: 4
-  wallJumpDirection: {x: 0.5, y: 0.8}
+  wallJumpDirection: {x: 0.5, y: 0.7}
   walljumpForceMult: 2.1
   dashForceMult: 1.25
   dashTime: 0.2
@@ -498,7 +498,7 @@ MonoBehaviour:
   dashForce: {x: 0, y: 0}
   wallbackOrigin: {x: 0, y: 0}
   wallbackRaycastDistance: 0
-  wallbackBoxcastSize: {x: 1, y: 3}
+  wallbackBoxcastSize: {x: 1.5, y: 5.5}
   rayCastOrigin: {x: 0, y: 0}
   capsuleCastOrigin: {x: 0, y: 0}
   currentDistanceFromGround: 0

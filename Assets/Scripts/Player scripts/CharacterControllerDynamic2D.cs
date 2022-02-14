@@ -52,7 +52,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
         rayCastOrigin = new Vector2(0f, (-(manager.bodyCollider.size.y / 2) + manager.bodyCollider.offset.y) * transform.localScale.y);
         capsuleCastOrigin.y = rayCastOrigin.y + (-(manager.groundCapsuleCastSize.y  / 2) * transform.localScale.y);
         
-        wallbackOrigin = new Vector2 (((-manager.bodyCollider.size.x * 0.5f) * transform.localScale.x) - wallbackBoxcastSize.x*0.5f, (manager.bodyCollider.size.y * 0.15f) * transform.localScale.y);
+        wallbackOrigin = new Vector2 (
+            ((-manager.bodyCollider.size.x * 0.5f) * transform.localScale.x) - wallbackBoxcastSize.x*0.5f, 
+            (manager.bodyCollider.size.y * 0.015f) * transform.localScale.y);
         wallbackRaycastDistance = manager.bodyCollider.size.x * transform.localScale.y * 1.1f;
 
         //print(manager.scaledColliderSize);
@@ -487,22 +489,20 @@ public class CharacterControllerDynamic2D : MonoBehaviour
             Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
             Vector2 capsuleOriginAdjst = transform.position + new Vector3(capsuleCastOrigin.x, capsuleCastOrigin.y) * transform.up.y;
             Gizmos.DrawWireCube(capsuleOriginAdjst, manager.groundCapsuleCastSize);
-        }
+        
         
         //}
 
 
 
-        //Vector2 direction = manager.isFacingRight ? Vector2.right : Vector2.left;
+            Gizmos.color = Color.magenta;
 
-        //Vector3 offset = manager.obstacleCheckOffset;
-        //offset.x *= direction.x;
-        //Vector3 posAdjs = transform.position + manager.obstacleCheckOffset;
+            //Vector2 direction = manager.isFacingRight ? Vector2.left : Vector2.right;
 
-        //print(posAdjs);
-        //Gizmos.DrawSphere(posAdj  s, 0.05f);
+            Vector2 wallbackRayOriginAdjst = transform.position + new Vector3(wallbackOrigin.x * -Mathf.Sign(direction.x), wallbackOrigin.y) * transform.up.y;
 
-        Gizmos.color = Color.magenta;
+            Gizmos.DrawWireCube(wallbackRayOriginAdjst, wallbackBoxcastSize);
+        }
 
         if (hitPoint != Vector2.zero)
             Gizmos.DrawSphere(hitPoint, .15f);
