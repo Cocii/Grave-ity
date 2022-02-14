@@ -16,26 +16,50 @@ public class Fan : MonoBehaviour
     }
 
     GravityManager gManager;
+    public AudioSource audioEffectSource;
+    [Space]
+
     public VentStates state = VentStates.NoTarget;
-    public Vector2 colliderDefaultSize = new Vector2(1f, 1f);
-    public float raiseHeight;
-    public float pushHeightThreshold;
+    public float maxPushDistance;
+    public float startPushThresholdDistance;
     public float defaultForceMagnitude;
-    public float forceMagnitude;
     public LayerMask layerToAffect;
+    public float maxCheckDistance = 25f;
+
+    [Space]
+
+    public bool usePropFollow = true;
+    public BoxCollider2D propFollowCollider;
+    public Vector2 propFollowColliderDefaultSize = new Vector2(1f, 1f);
+
+    [Space]
+
+    public float forceMagnitude;
     public Rigidbody2D targetBody;
-    public BoxCollider2D underPropCollider;
     public bool applyForce = false;
-    //public Vector2 forceDirection = Vector2.up;
     public float targetDistance;
     public float rayHitDistance;
     private Vector2 hitPoint;
     public TargetTypeEnum targetType;
+    public Vector2 boxCastOrigin;
+    public Vector2 boxCastSize;
     
 
     void Start()
     {
         gManager = GravityManager.instance;
+
+        Vector2 up = transform.up;
+        Vector2 perp = Vector2.Perpendicular(up);
+
+        Vector2 sizeUp = up * maxCheckDistance * 2f;
+        Vector2 sizePerp = perp * transform.lossyScale.x * 0.9f;
+        boxCastSize = new Vector2(sizePerp.x + sizeUp.x, sizePerp.y + sizeUp.y);
+        boxCastSize.Set(Mathf.Abs(boxCastSize.x), Mathf.Abs(boxCastSize.y));
+
+        Vector3 offset = up * boxCastSize * 0.5f;
+
+        boxCastOrigin = transform.position + offset;
     }
 
     private void FixedUpdate() {
@@ -45,8 +69,6 @@ public class Fan : MonoBehaviour
         //print("applying force");
         Vector2 force = transform.up * forceMagnitude;
         targetBody.AddForce(force);
-        
-
     }
 
     void Update() {
@@ -55,7 +77,7 @@ public class Fan : MonoBehaviour
 
         switch (state) {
             case VentStates.NoTarget:
-                target = GetObjectOnTopBoxCast(raiseHeight * 1.25f);
+                target = GetObjectOnTopBoxCast(maxPushDistance * 1.25f);
 
                 if (target != null) {
                     targetBody=target.GetComponent<Rigidbody2D>();
@@ -64,18 +86,14 @@ public class Fan : MonoBehaviour
                 break;
 
             case VentStates.TargetAcquired:
-                target = GetObjectOnTopBoxCast(raiseHeight * 1.25f);
+                target = GetObjectOnTopBoxCast(maxPushDistance * 1.25f);
 
                 if (target == null) {
-                    //applyForce = false;
-                    //targetBody = null;
-                    //ResetPropCollider();
-                    //state = VentStates.NoTarget;
                     ResetState();
                     break;
                 }
 
-                if (targetDistance <= pushHeightThreshold) {
+                if (targetDistance <= startPushThresholdDistance) {
                     state = VentStates.TargetPushing;
                 }
                 else {
@@ -85,19 +103,14 @@ public class Fan : MonoBehaviour
                 break;
 
             case VentStates.TargetPushing:
-                target = GetObjectOnTopBoxCast(raiseHeight * 2f);
+                target = GetObjectOnTopBoxCast(maxPushDistance * 2f);
 
                 if (target==null) {
-                    //applyForce = false;
-                    //targetBody = null;
-                    //ResetPropCollider();
-                    //state = VentStates.NoTarget;
                     ResetState();
                     break;
                 }
 
-                //print("hisdistance: " + hitDistance + " - raiseHeight: " + raiseHeight);
-                if(targetDistance < raiseHeight) {
+                if(targetDistance < maxPushDistance) {
                     applyForce = true;
                 }
                 else {
@@ -117,17 +130,18 @@ public class Fan : MonoBehaviour
     private void ResetState() {
         applyForce = false;
         targetBody = null;
-        ResetPropCollider();
         state = VentStates.NoTarget;
         hitPoint = Vector3.zero;
+
+        if (usePropFollow)
+            ResetPropCollider();
     }
 
     private void ApplyBehaviourTargetTypeBased() {
         switch (targetType) {
             case TargetTypeEnum.Prop:
-                //print("moving collider");
-                //MovePropCollider(GetObjectOnTopDistanceRayCast());
-                MovePropCollider(Vector3.Distance(hitPoint, transform.position));
+                if(usePropFollow)
+                    MovePropCollider(Vector3.Distance(hitPoint, transform.position));
 
                 break;
 
@@ -147,11 +161,12 @@ public class Fan : MonoBehaviour
     }
 
     private GameObject GetObjectOnTopBoxCast(float checkDistance) {
-        Vector2 size = transform.lossyScale;
-        size.x *= 0.9f;
-        size.y = checkDistance * 2f;
-        Vector2 origin = transform.position + new Vector3(0f, -0.1f * Mathf.Sign(transform.up.y), 0f);
-        RaycastHit2D hit = Physics2D.BoxCast(origin, size, 0f, transform.up, 0f, layerToAffect);
+        //Vector2 size = transform.lossyScale;
+        //size.x *= 0.9f;
+        //size.y = checkDistance * 2f;
+        
+        //Vector2 origin = transform.position + new Vector3(0f, -0.1f * Mathf.Sign(transform.up.y), 0f);
+        RaycastHit2D hit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, transform.up, 0f, layerToAffect);
         if (hit) {
             targetDistance = (hit.transform.position - transform.position).y;
             //hitPoint = hit.point;
@@ -184,8 +199,8 @@ public class Fan : MonoBehaviour
     private float GetObjectOnTopDistanceRayCast() {
         Vector2 origin = new Vector3(targetBody.transform.position.x, transform.position.y, transform.position.z);
 
-        Debug.DrawRay(origin, transform.up * raiseHeight * 2f, Color.green);
-        RaycastHit2D hit = Physics2D.Raycast(origin, transform.up, raiseHeight * 2f, layerToAffect);
+        Debug.DrawRay(origin, transform.up * maxPushDistance * 2f, Color.green);
+        RaycastHit2D hit = Physics2D.Raycast(origin, transform.up, maxPushDistance * 2f, layerToAffect);
         if (hit) {
             return hit.distance;
         }
@@ -194,10 +209,24 @@ public class Fan : MonoBehaviour
     }
 
     private void OnDrawGizmos() {
-        //Gizmos.color = Color.magenta;
-        //Vector2 size = transform.lossyScale;
-        //size.y = 19.5f * 1.25f;
-        //Gizmos.DrawCube(transform.position + new Vector3(0f, size.y * 0.5f, 0f), size);
+        if (!enabled)
+            return;
+
+        Gizmos.color = Color.magenta;
+
+        Vector2 up = transform.up;
+        Vector2 perp = Vector2.Perpendicular(up);
+
+        Vector2 sizeUp = up * maxCheckDistance * 2f;
+        Vector2 sizePerp = perp * transform.lossyScale.x * 0.9f;
+        Vector2 size = new Vector2(sizePerp.x + sizeUp.x, sizePerp.y + sizeUp.y);
+        size.Set(Mathf.Abs(size.x), Mathf.Abs(size.y));
+
+        Vector3 offset = up * size * 0.5f;
+
+        Vector2 origin = transform.position + offset;
+        
+        Gizmos.DrawWireCube(origin, size);
 
         Gizmos.color = Color.green;
         if (hitPoint != Vector2.zero)
@@ -209,20 +238,31 @@ public class Fan : MonoBehaviour
     private void MovePropCollider(float distance) {
         //print("Fan: moving coll at distance " + distance);
 
+        //ONLY PUSH WITH WEAK GRAVITY
         if (distance == 0 || gManager.gravityRatio >= 1f) {
             ResetPropCollider();
             return;
         }
 
-        float sizeOffset = transform.lossyScale.y * underPropCollider.size.y;
+        float sizeOffset = transform.lossyScale.y * propFollowCollider.size.y;
         float distanceOffset = (distance - sizeOffset) * (1 / transform.lossyScale.y) * 0.999f;
-        underPropCollider.offset = new Vector2(0f, distanceOffset);
+        propFollowCollider.offset = new Vector2(0f, distanceOffset);
 
-        underPropCollider.size = colliderDefaultSize;
+        propFollowCollider.size = propFollowColliderDefaultSize;
     }
 
     private void ResetPropCollider() {
-        underPropCollider.size = colliderDefaultSize;
-        underPropCollider.offset = Vector2.zero;
+        propFollowCollider.size = propFollowColliderDefaultSize;
+        propFollowCollider.offset = Vector2.zero;
+    }
+
+    public void Activation() {
+        if(audioEffectSource)
+            audioEffectSource.Play();
+    }
+
+    public void Deactivation() {
+        if(audioEffectSource)
+            audioEffectSource.Pause();
     }
 }

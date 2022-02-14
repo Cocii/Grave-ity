@@ -265,21 +265,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879219a66a61f7f478f00e632327e3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioEffectSource: {fileID: 1546452610}
   state: 0
-  colliderDefaultSize: {x: 0.9, y: 1}
-  raiseHeight: 17
-  pushHeightThreshold: 16.5
+  maxPushDistance: 17.5
+  startPushThresholdDistance: 16
   defaultForceMagnitude: 1270
-  forceMagnitude: 1900
   layerToAffect:
     serializedVersion: 2
     m_Bits: 128
+  maxCheckDistance: 20
+  usePropFollow: 1
+  propFollowCollider: {fileID: 3858004150703960498}
+  propFollowColliderDefaultSize: {x: 0.9, y: 1}
+  forceMagnitude: 1900
   targetBody: {fileID: 0}
-  underPropCollider: {fileID: 3858004150703960498}
   applyForce: 0
   targetDistance: 0
   rayHitDistance: 0
   targetType: 0
+  boxCastOrigin: {x: 0, y: 0}
+  boxCastSize: {x: 0, y: 0}
 --- !u!114 &309635183
 MonoBehaviour:
   m_ObjectHideFlags: 0

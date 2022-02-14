@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec4c9168b1693a47bf7962c0ef0ec6e, type: 3}
+  m_Name: MultifanChangeFanChannel
+  m_EditorClassIdentifier: 
+  _guid: 8e4db5684422d1245aec92ed3a8125a8
+  description: "canale il cui evento \xE8 raisato quando devo cambiare la fan attiva
+    con la successiva in un multifan"

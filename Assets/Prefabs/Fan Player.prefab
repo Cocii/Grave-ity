@@ -53,7 +53,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20.24
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -264,18 +264,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879219a66a61f7f478f00e632327e3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioEffectSource: {fileID: 953073458}
   state: 0
-  colliderDefaultSize: {x: 0.9, y: 1}
-  raiseHeight: 12.89
-  pushHeightThreshold: 4
+  maxPushDistance: 16.75
+  startPushThresholdDistance: 4
   defaultForceMagnitude: 1750
-  forceMagnitude: 1750
   layerToAffect:
     serializedVersion: 2
     m_Bits: 8
+  maxCheckDistance: 12.5
+  usePropFollow: 1
+  propFollowCollider: {fileID: 2618477013751155079}
+  propFollowColliderDefaultSize: {x: 1, y: 1}
+  forceMagnitude: 1750
   targetBody: {fileID: 0}
-  underPropCollider: {fileID: 2618477013751155079}
   applyForce: 0
   targetDistance: 0
   rayHitDistance: 0
   targetType: 1
+  boxCastOrigin: {x: 0, y: 0}
+  boxCastSize: {x: 0, y: 0}
