@@ -16,6 +16,10 @@ public class LevelLoader : MonoBehaviour
         
     }
 
+    public void LoadSettingsPage() {
+        StartCoroutine(LoadLevel(6));
+    }
+
     public void LoadMemoriesPage()
     {
         StartCoroutine(LoadLevel(5));
@@ -86,5 +90,8 @@ public class LevelLoader : MonoBehaviour
         
         if(Checkpoint.instance)
             Checkpoint.instance.ManualDestroy();
+
+        if (MusicPlayer.instance)
+            MusicPlayer.instance.ManualDestroy();
     }
 }

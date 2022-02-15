@@ -173,6 +173,7 @@ Transform:
   m_LocalScale: {x: 7.5358605, y: 0.1, z: 1}
   m_Children:
   - {fileID: 1546452608}
+  - {fileID: 6175423716401707918}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -267,7 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioEffectSource: {fileID: 1546452610}
   state: 0
-  maxPushDistance: 17.5
+  maxPushDistance: 17
   startPushThresholdDistance: 16
   defaultForceMagnitude: 1270
   layerToAffect:
@@ -276,7 +277,7 @@ MonoBehaviour:
   maxCheckDistance: 20
   usePropFollow: 1
   propFollowCollider: {fileID: 3858004150703960498}
-  propFollowColliderDefaultSize: {x: 0.9, y: 1}
+  propFollowColliderDefaultSize: {x: 0.675, y: 1}
   forceMagnitude: 1900
   targetBody: {fileID: 0}
   applyForce: 0
@@ -301,3 +302,68 @@ MonoBehaviour:
   normalStrenght: 5
   normalSmoothing: 1
   computingNormal: 0
+--- !u!1 &7369408275169496950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6175423716401707918}
+  - component: {fileID: 8395591889835914574}
+  - component: {fileID: 6463508523523868530}
+  m_Layer: 2
+  m_Name: Activator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6175423716401707918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7369408275169496950}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.4899795, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3858004150703960493}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &8395591889835914574
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7369408275169496950}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 150.39}
+  serializedVersion: 2
+  m_Radius: 1.28
+--- !u!114 &6463508523523868530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7369408275169496950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ad9211fbe5d6a45a4c283c2ab0da7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  fan: {fileID: 3858004150703960496}
+  multiFan: {fileID: 0}
