@@ -20,6 +20,11 @@ public class LevelLoader : MonoBehaviour
         StartCoroutine(LoadLevel(6));
     }
 
+    public void LoadCreditsPage() {
+        DestroySingletons();
+        StartCoroutine(LoadLevel(7));
+    }
+
     public void LoadMemoriesPage()
     {
         StartCoroutine(LoadLevel(5));
@@ -64,8 +69,15 @@ public class LevelLoader : MonoBehaviour
         StartCoroutine(LoadLevel(0));
     }
 
+    //public void LoadMainMenuWithSingletons() {
+    //    StartCoroutine(LoadLevel(0));
+    //}
+
     public void Quit()
     {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
         Application.Quit();
     }
 
