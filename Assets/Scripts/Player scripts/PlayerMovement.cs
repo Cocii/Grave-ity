@@ -111,11 +111,12 @@ public class PlayerMovement : MonoBehaviour
             if (CanReverseWalljump()) {
                 float reverseOrientation = pManager.isFacingRight ? -1f : 1f;
 
-                if (moveInput.x != 0f) {
+                if (moveInput.x != 0f && Mathf.Sign(moveInput.x) == Mathf.Sign(-reverseOrientation)) {
                     force.Set(
-                    (pManager.wallJumpDirection.x * 2.5f) * reverseOrientation,
+                    (pManager.wallJumpDirection.x * 2.5f * 1.75f) * reverseOrientation,
                     (pManager.wallJumpDirection.y * 0.75f) * -gravityForce.normalized.y
                     );
+                    print("BOOST walljump reverse");
                 }
                 else {
                     force.Set(
