@@ -537,8 +537,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50faf5d4f8ecee34f8ccaecdb9a409b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levels: {fileID: 11400000, guid: 7c49a26a5bbfa7a4083b467847da4b49, type: 2}
-  levelName: Forest
+  levelList: {fileID: 11400000, guid: ed3bcba00a17dce44a35628dd4f08142, type: 2}
+  level: 0
 --- !u!1 &338784857
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,8 +952,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50faf5d4f8ecee34f8ccaecdb9a409b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levels: {fileID: 11400000, guid: 7c49a26a5bbfa7a4083b467847da4b49, type: 2}
-  levelName: Lab
+  levelList: {fileID: 11400000, guid: ed3bcba00a17dce44a35628dd4f08142, type: 2}
+  level: 1
 --- !u!1 &525001980
 GameObject:
   m_ObjectHideFlags: 0
