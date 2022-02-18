@@ -408,13 +408,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioEffectSource: {fileID: 4832087124417507671}
   state: 0
-  maxPushDistance: 15
+  maxPushDistance: 11
   startPushThresholdDistance: 3
   defaultForceMagnitude: 1270
   layerToAffect:
     serializedVersion: 2
     m_Bits: 128
-  maxCheckDistance: 18
+  maxCheckDistance: 13.5
   usePropFollow: 0
   propFollowCollider: {fileID: 8540346577359289959}
   propFollowColliderDefaultSize: {x: 1, y: 1}
@@ -522,7 +522,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9094091830659448954}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 30.2, y: -3, z: 0}
+  m_LocalPosition: {x: 21.68, y: -3, z: 0}
   m_LocalScale: {x: 5, y: 0.1, z: 1}
   m_Children:
   - {fileID: 5458035109437427542}
@@ -620,13 +620,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioEffectSource: {fileID: 5458035109437427540}
   state: 0
-  maxPushDistance: 15
+  maxPushDistance: 11
   startPushThresholdDistance: 3
   defaultForceMagnitude: 1270
   layerToAffect:
     serializedVersion: 2
     m_Bits: 128
-  maxCheckDistance: 18
+  maxCheckDistance: 13.5
   usePropFollow: 0
   propFollowCollider: {fileID: 9094091830659448932}
   propFollowColliderDefaultSize: {x: 1, y: 1}
