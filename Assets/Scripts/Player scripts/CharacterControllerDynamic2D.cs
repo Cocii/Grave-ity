@@ -97,6 +97,9 @@ public class CharacterControllerDynamic2D : MonoBehaviour
     }
 
     public void StartRotation() {
+        if (manager == null)
+            return;
+
         manager.isRotating = true;
         manager.input.DisableGravityInversion();
         manager.currentRotationSpeed = CalculateRotationSpeed();

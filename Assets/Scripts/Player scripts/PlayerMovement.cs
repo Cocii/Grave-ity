@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void UpdateGravityInfo() {
+        if (pManager == null)
+            return;
+
         gravityForce = pManager.currentGravity;
         gravityForceNormal = pManager.currentGravityNormal;
         gravityRatio = pManager.currentGravityRatio;

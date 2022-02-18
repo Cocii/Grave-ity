@@ -129,6 +129,9 @@ public class ManagerAI : MonoBehaviour
     //}
 
     public void UpdateGravity() {
+        if (gManager == null)
+            return;
+
         currentGravity = gManager.physicsGravity;
         currentGravityNormal = gManager.physicsGravityNormal;
         currentGravityRatio = gManager.gravityRatio;

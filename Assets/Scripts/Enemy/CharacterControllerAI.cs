@@ -75,6 +75,9 @@ public class CharacterControllerAI : MonoBehaviour
     }
 
     public void StartRotation() {
+        if (manager == null)
+            return;
+
         manager.isRotating = true;
         manager.currentRotationSpeed = CalculateRotationSpeed();
         RotateTowardsGravity();

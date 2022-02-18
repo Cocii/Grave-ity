@@ -77,6 +77,7 @@ public class LevelLoader : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        DestroySingletons();
         StartCoroutine(LoadLevel(0));
     }
 
