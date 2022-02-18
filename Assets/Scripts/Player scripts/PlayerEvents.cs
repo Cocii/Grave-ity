@@ -17,6 +17,9 @@ public class PlayerEvents : MonoBehaviour
         gManager = GravityManager.instance;
         RegisterGravityChangesActions();
         RegisterPowerSwitchedActions();
+
+        //gravityChangesChannel.RaiseEvent(GravityChangesEnum.Inverted);
+        gravityChangesChannel.RaiseEventVoid();
     }
 
     private void OnDestroy() {
