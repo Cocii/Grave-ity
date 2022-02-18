@@ -49,14 +49,17 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadFirstLevel()
     {
+        DestroySingletons();
         StartCoroutine(LoadLevel(1));
     }
     public void LoadSecondLevel()
     {
+        DestroySingletons();
         StartCoroutine(LoadLevel(3));
     }
 
     public void LoadThirdLevel() {
+        DestroySingletons();
         StartCoroutine(LoadLevel(8));
     }
 
