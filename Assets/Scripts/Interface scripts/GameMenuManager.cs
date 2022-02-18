@@ -148,6 +148,9 @@ public class GameMenuManager : MonoBehaviour
             case 3:
                 name = "Lab";
                 break;
+            case 8:
+                name = "City";
+                break;
             default:
                 name = "Level not in build";
                 break;

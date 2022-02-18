@@ -29,4 +29,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CreditsScene.unity
     guid: cfa8719ad829d4246b4a8486d934e1f0
+  - enabled: 1
+    path: Assets/Scenes/CityScene.unity
+    guid: d35ce9f3e3c1554499f4f55f06a9f7b4
+  - enabled: 1
+    path: Assets/Scenes/TimerSceneIntoThirdLevel.unity
+    guid: 0d4b291e73cf8c8488c79556fb3a3a1a
   m_configObjects: {}

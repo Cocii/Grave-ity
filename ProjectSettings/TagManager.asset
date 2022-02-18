@@ -30,6 +30,7 @@ TagManager:
   - MessageTrigger
   - textpopup
   - GameCanvas
+  - EndLevelLab
   layers:
   - Default
   - TransparentFX

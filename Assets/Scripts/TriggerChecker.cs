@@ -64,6 +64,22 @@ public class TriggerChecker : MonoBehaviour
             
 
         }
+
+        if (collision.tag == "EndLevelLab") {
+
+            //StartCoroutine(DelayReset());
+            GameManager manager = GameManager.instance;
+            manager.timer.EndTimer();
+
+            float currentTimer = manager.timer.GetTimer();
+            string currentTimerStr = currentTimer.ToString();
+            PlayerPrefs.SetString("Timer", currentTimerStr);
+
+            LevelLoader loader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
+            loader.LoadSecondTimerScene();
+
+
+        }
     }
 
     public void SaveCheckpoint(Collider2D _col)

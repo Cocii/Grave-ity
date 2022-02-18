@@ -25,6 +25,16 @@ public class LevelLoader : MonoBehaviour
         StartCoroutine(LoadLevel(7));
     }
 
+    public void LoadSecondTimerScene() {
+        DestroySingletons();
+        StartCoroutine(LoadLevel(9));
+    }
+
+    public void LoadFinalScene() {
+        DestroySingletons();
+        StartCoroutine(LoadLevel(4));
+    }
+
     public void LoadMemoriesPage()
     {
         StartCoroutine(LoadLevel(5));
@@ -44,6 +54,10 @@ public class LevelLoader : MonoBehaviour
     public void LoadSecondLevel()
     {
         StartCoroutine(LoadLevel(3));
+    }
+
+    public void LoadThirdLevel() {
+        StartCoroutine(LoadLevel(8));
     }
 
     public void LoadNextLevel()
